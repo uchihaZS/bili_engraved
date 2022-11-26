@@ -52,8 +52,8 @@
           </el-dropdown>
           <el-menu-item
             index="3"
-            @mouseover="dynamicFun"
-            @mouseleave="dynamicState = false"
+            @mouseover="dynamicOver"
+            @mouseleave="dynamicLeave"
             >动态</el-menu-item
           >
           <el-menu-item index="4">订阅</el-menu-item>
@@ -178,7 +178,12 @@
           >
         </el-card>
         <!-- 动态悬浮信息 -->
-        <div class="dynamic" v-show="(dynamicState = true)">
+        <div
+          class="dynamic"
+          v-show="(dynamicState = true)"
+          @mouseover="(dynamicState = true), (funType = 0)"
+          @mouseleave="dynamicState = false"
+        >
           <!-- 动态菜单 -->
           <div
             style="
@@ -248,7 +253,7 @@
                 <div
                   style="
                     background-color: #909399;
-                    width: 40%;
+                    width: 35%;
                     height: 100%;
                     border-radius: 15px;
                   "
@@ -263,9 +268,65 @@
                     margin-left: 5px;
                   "
                 >
-                  <h4 style="margin-bottom: -15px;">集名{{ i }}</h4>
+                  <h4 style="margin-bottom: -15px">集名{{ i }}</h4>
                   <h5>番名{{ i }}</h5>
                 </div>
+              </div>
+            </div>
+          </div>
+          <!-- 专栏列表 -->
+          <div v-if="dynamicType == 2">
+            <div class="dycol">
+              <el-card
+                :body-style="{ padding: '0px', width: '100%', height: '100%' }"
+                v-for="i in 10"
+                :key="i"
+                style="
+                  border-radius: 15px;
+                  margin-bottom: 15px;
+                  width: 90%;
+                  height: 180px;
+                "
+              >
+                <div
+                  style="background-color: #909399; width: 100%; height: 60%"
+                >
+                  封面{{ i }}
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    align-content: center;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                  "
+                >
+                  <h4 style="margin-bottom: -16px; margin-top: 3px">
+                    标题{{ i }}
+                  </h4>
+                  <p>介绍{{ i }}</p>
+                </div>
+              </el-card>
+            </div>
+          </div>
+          <!-- 直播列表 -->
+          <div v-if="dynamicType==3">
+            <div class="dylive">
+              <div
+                v-for="i in 10"
+                :key="i"
+                style="
+                  margin-bottom: 10px;
+                  width: 98%;
+                  border: 1px solid #e5eaf3;
+                  border-radius: 50px;
+                  height: 70px;
+                  display: flex;
+                "
+              >
+                <el-avatar :size="50" :src="circleUrl" style="margin: 10px 20px 0px 10px;"/>
+                <h3 style="margin-top: 22px;">主播名{{i}}</h3>
               </div>
             </div>
           </div>
@@ -334,14 +395,24 @@ export default {
     let dynamic = reactive({
       dynamicState: false,
       dynamicType: 0,
+      funType: 0,
       dyVideoCss: "width: 0px;font-size:15px",
       dyAnimeCss: "width: 0px;font-size:15px",
       dyColCss: "width: 0px;font-size:15px",
       dyLiveCss: "width: 0px;font-size:15px",
       borderColor: "width: 0px;color: #409EFF;font-size:15px",
-      dynamicFun() {
-        this.dyVideo();
+      dynamicOver() {
+        dynamic.dyVideo();
         dynamic.dynamicState = true;
+      },
+      dynamicLeave() {
+        dynamic.funType = 1;
+        setTimeout(dynamic.dynamicNoDisplay, 1000);
+      },
+      dynamicNoDisplay() {
+        if (dynamic.funType == 1) {
+          dynamic.dynamicState = false;
+        }
       },
       dyVideo() {
         dynamic.dynamicType = 0;
@@ -478,7 +549,30 @@ export default {
 .dyanime::-webkit-scrollbar {
   display: none;
 }
-
+.dycol {
+  overflow-y: auto;
+  display: flex;
+  // flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  height: 483px;
+}
+.dycol::-webkit-scrollbar {
+  display: none;
+}
+.dylive{
+  overflow-y: auto;
+  display: flex;
+  // flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  height: 483px;
+}
+.dylive::-webkit-scrollbar{
+  display: none;
+}
 .example-showcase .el-dropdown-link {
   cursor: pointer;
   color: var(--el-color-primary);
