@@ -11,9 +11,13 @@
           @select="handleSelect"
         >
           <div class="flex-grow" />
-          <el-menu-item index="0">LOGO</el-menu-item>
+          <el-menu-item index="0">qiliqili</el-menu-item>
           <div class="flex-grow" />
-          <el-input v-model="headmenu.searchValue" placeholder="请输入关键词" class="input-with-select">
+          <el-input
+            v-model="headmenu.searchValue"
+            placeholder="请输入关键词"
+            class="input-with-select"
+          >
             <template #append>
               <el-button>搜索</el-button>
             </template>
@@ -21,11 +25,10 @@
           <div class="flex-grow" />
           <el-menu-item
             index="1"
-            @mouseover="headmenu.avatarState = true,headmenu.avatarUse=headmenu.avatarCss"
-            @mouseleave="headmenu.avatarState = false,headmenu.avatarUse=headmenu.avatarOri"
-            
+            @mouseover="avatarOver"
+            @mouseleave="avatarLeave"
           >
-            <el-avatar :size="40" :src="headmenu.circleUrl" :style="headmenu.avatarUse" />
+            <el-avatar :size="40" :src="circleUrl" :style="avatarUse" />
           </el-menu-item>
           <el-menu-item index="2">消息</el-menu-item>
           <el-menu-item index="3">动态</el-menu-item>
@@ -36,85 +39,119 @@
         </el-menu>
 
         <el-card
-          v-show="headmenu.avatarState"
+          v-show="avatarState"
           class="avatarInfo"
-          @mouseover="headmenu.avatarState=true,headmenu.avatarUse=headmenu.avatarCss"
-          @mouseleave="headmenu.avatarState = false,headmenu.avatarUse=headmenu.avatarOri"
+          @mouseover="(avatarState = true), (avatarUse = avatarCss)"
+          @mouseleave="(avatarState = false), (avatarUse = avatarOri)"
         >
-          <h4 style="text-align:center;margin:0px auto">用户名</h4>
-          <h5 style="text-align:center;margin-top:0px">普通会员</h5>
+          <h4 style="text-align: center; margin: 0px auto">用户名</h4>
+          <h5 style="text-align: center; margin-top: 0px">普通会员</h5>
           <div>
             <div
-              style="display:flex;justify-content: space-between;margin:-20px 0px 0px 0px;padding:0px 0px;line-height:11px"
+              style="
+                display: flex;
+                justify-content: space-between;
+                margin: -20px 0px 0px 0px;
+                padding: 0px 0px;
+                line-height: 11px;
+              "
             >
-              <p :style="headmenu.levelCss">{{headmenu.level}}</p>
-              <p style="font-size:11px;margin-top:15px">{{headmenu.xp}}/10000</p>
+              <p :style="levelCss">{{ level }}</p>
+              <p style="font-size: 11px; margin-top: 15px">{{ xp }}/10000</p>
             </div>
             <el-progress
-              :percentage="headmenu.percentage"
+              :percentage="percentage"
               text-inside="true"
-              style="margin-top:-8px"
+              style="margin-top: -8px"
             />
           </div>
           <el-divider />
           <div
-            style="display:flex;justify-content: space-between;width:auto;height:16px;text-align:center"
+            style="
+              display: flex;
+              justify-content: space-between;
+              width: auto;
+              height: 16px;
+              text-align: center;
+            "
           >
             <span
-              :style="headmenu.threeOne"
-              @mouseover="headmenu.threeOne=headmenu.threeCss"
-              @mouseleave="headmenu.threeOne=headmenu.threeOrigin"
+              :style="threeOne"
+              @mouseover="threeOne = threeCss"
+              @mouseleave="threeOne = threeOrigin"
             >
-              <p style="height:10px;font-size:15px">47</p>
-              <p style="font-size:13px">关注</p>
+              <p style="height: 10px; font-size: 15px">47</p>
+              <p style="font-size: 13px">关注</p>
             </span>
             <span
-              :style="headmenu.threeTwo"
-              @mouseover="headmenu.threeTwo=headmenu.threeCss"
-              @mouseleave="headmenu.threeTwo=headmenu.threeOrigin"
+              :style="threeTwo"
+              @mouseover="threeTwo = threeCss"
+              @mouseleave="threeTwo = threeOrigin"
             >
-              <p style="height:10px;font-size:15px">114514</p>
-              <p style="font-size:13px">粉丝</p>
+              <p style="height: 10px; font-size: 15px">114514</p>
+              <p style="font-size: 13px">粉丝</p>
             </span>
             <span
-              :style="headmenu.threeThree"
-              @mouseover="headmenu.threeThree=headmenu.threeCss"
-              @mouseleave="headmenu.threeThree=headmenu.threeOrigin"
+              :style="threeThree"
+              @mouseover="threeThree = threeCss"
+              @mouseleave="threeThree = threeOrigin"
             >
-              <p style="height:10px;font-size:15px">9</p>
-              <p style="font-size:13px">动态</p>
+              <p style="height: 10px; font-size: 15px">9</p>
+              <p style="font-size: 13px">动态</p>
             </span>
           </div>
           <el-divider />
 
-          <ul style="list-style:none;width:200px;margin-top:-20px;margin-bottom:0px">
+          <ul
+            style="
+              list-style: none;
+              width: 200px;
+              margin-top: -20px;
+              margin-bottom: 0px;
+            "
+          >
             <li
-              :style="headmenu.listOne"
-              @mouseover="headmenu.listOne=headmenu.listShadow"
-              @mouseleave="headmenu.listOne=headmenu.listOri"
-            >个人中心</li>
+              :style="listOne"
+              @mouseover="listOne = listShadow"
+              @mouseleave="listOne = listOri"
+            >
+              个人中心
+            </li>
             <li
-              :style="headmenu.listTwo"
-              @mouseover="headmenu.listTwo=headmenu.listShadow"
-              @mouseleave="headmenu.listTwo=headmenu.listOri"
-            >投稿管理</li>
+              :style="listTwo"
+              @mouseover="listTwo = listShadow"
+              @mouseleave="listTwo = listOri"
+            >
+              投稿管理
+            </li>
             <li
-              :style="headmenu.listThree"
-              @mouseover="headmenu.listThree=headmenu.listShadow"
-              @mouseleave="headmenu.listThree=headmenu.listOri"
-            >我的钱包</li>
+              :style="listThree"
+              @mouseover="listThree = listShadow"
+              @mouseleave="listThree = listOri"
+            >
+              我的钱包
+            </li>
             <li
-              :style="headmenu.listFour"
-              @mouseover="headmenu.listFour=headmenu.listShadow"
-              @mouseleave="headmenu.listFour=headmenu.listOri"
-            >直播中心</li>
+              :style="listFour"
+              @mouseover="listFour = listShadow"
+              @mouseleave="listFour = listOri"
+            >
+              直播中心
+            </li>
             <li
-              :style="headmenu.listFive"
-              @mouseover="headmenu.listFive=headmenu.listShadow"
-              @mouseleave="headmenu.listFive=headmenu.listOri"
-            >我的课程</li>
+              :style="listFive"
+              @mouseover="listFive = listShadow"
+              @mouseleave="listFive = listOri"
+            >
+              商城
+            </li>
           </ul>
-          <el-button type="info" plain style="width:100%;margin: 0px 0px 10px 0px;">退出登录</el-button>
+          <el-button
+            type="info"
+            plain
+            style="width: 100%; margin: 0px 0px 10px 0px"
+            >退出登录</el-button
+          >
         </el-card>
       </el-header>
       <!-- 主体 -->
@@ -126,7 +163,7 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import { reactive, onMounted, onUpdated } from "vue";
+import { reactive, onMounted, onUpdated, toRefs } from "vue";
 // import { Search } from '@element-plus/icons-vue'
 export default {
   name: "HomePage",
@@ -134,8 +171,11 @@ export default {
   setup() {
     // 数据
     let headmenu = reactive({
-      avatarState: false,
       searchValue: "",
+    });
+
+    let avatar = reactive({
+      avatarState: false,
       percentage: 0,
       avatarOri: "margin-top: 9px;z-index:999",
       avatarUse: "margin-top: 9px;z-index:999",
@@ -163,9 +203,18 @@ export default {
         "width:200px;height:30px;position: relative;right: 60px;text-align: center;background-color:#d1d2d3",
       xp: 10000,
       circleUrl:
-        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      avatarOver() {
+        avatar.avatarState = true;
+        avatar.avatarUse = avatar.avatarCss;
+      },
+      avatarLeave() {
+        avatar.avatarState = false;
+        avatar.avatarUse = avatar.avatarOri;
+      },
     });
 
+    let refAvatar = toRefs(avatar);
     // 生命函数
     onMounted(() => {
       getPercentage();
@@ -174,46 +223,37 @@ export default {
 
     // 方法
     function getPercentage() {
-      let percentage = Math.round((headmenu.xp / 10000) * 100);
+      let xp=avatar.xp
+      let percentage = Math.round((xp / 10000) * 100);
       let level = "";
       let levelCss = "";
-      if (headmenu.xp <= 500) {
+      if (xp <= 500) {
         level = "Lv1";
         levelCss = "font-size:13px;color: #a6a9ad;font-weight: bold;";
-      } else if (headmenu.xp > 500 && headmenu.xp <= 2000) {
+      } else if (xp > 500 && xp <= 2000) {
         level = "Lv2";
         levelCss = "font-size:13px;color: #66b1ff;font-weight: bold;";
-      } else if (headmenu.xp > 2000 && headmenu.xp <= 3500) {
+      } else if (xp > 2000 && xp <= 3500) {
         level = "Lv3";
         levelCss = "font-size:13px;color: #85ce61;font-weight: bold;";
-      } else if (headmenu.xp > 3500 && headmenu.xp <= 5500) {
+      } else if (xp > 3500 && xp <= 5500) {
         level = "Lv4";
         levelCss = "font-size:13px;color:orange;font-weight: bold;";
-      } else if (headmenu.xp > 5500 && headmenu.xp <= 8000) {
+      } else if (xp > 5500 && xp <= 8000) {
         level = "Lv5";
         levelCss = "font-size:13px;color:#F56C6C;font-weight: bold;";
-      } else if (headmenu.xp > 8000 && headmenu.xp < 10000) {
+      } else if (xp > 8000 && xp < 10000) {
         level = "Lv6";
         levelCss = "font-size:13px;color:red;font-weight: bold;";
-      } else if (headmenu.xp == 10000) {
+      } else if (xp == 10000) {
         level = "Max";
         levelCss = "font-size:13px;color:#E6A23C;font-weight: bold;";
       }
-      return (
-        (headmenu.percentage = percentage),
-        (headmenu.level = level),
-        (headmenu.levelCss = levelCss)
-      );
+      return (avatar.percentage = percentage), (avatar.level = level), (avatar.levelCss = levelCss);
     }
 
-    function avatarMove() {
-      return (
-        (headmenu.avatarState = true), (headmenu.avatarUse = "margin-top: 15px")
-      );
-    }
-
-    return { headmenu };
-  }
+    return { headmenu, ...refAvatar };
+  },
 };
 </script>
 
@@ -226,7 +266,7 @@ export default {
   background-color: var(--el-fill-color-blank);
   width: 400px;
   height: 45px;
-  
+  margin-top: 3px;
 }
 .avatarInfo {
   z-index: 998;
