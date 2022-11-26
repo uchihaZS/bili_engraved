@@ -180,7 +180,7 @@
         <!-- 动态悬浮信息 -->
         <div
           class="dynamic"
-          v-show="(dynamicState = true)"
+          v-show="dynamicState"
           @mouseover="(dynamicState = true), (funType = 0)"
           @mouseleave="dynamicState = false"
         >
