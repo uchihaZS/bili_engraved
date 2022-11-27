@@ -1061,7 +1061,6 @@ export default {
     // 历史
     let history = reactive({
       hisState: false,
-      hisType: 0,
       hisFunType: 0,
 
       hisOver() {
@@ -1184,6 +1183,7 @@ export default {
 .dyvideo::-webkit-scrollbar {
   display: none;
 }
+
 .dyanime {
   overflow-y: auto;
   display: flex;
@@ -1196,6 +1196,7 @@ export default {
 .dyanime::-webkit-scrollbar {
   display: none;
 }
+
 .dycol {
   overflow-y: auto;
   display: flex;
@@ -1208,6 +1209,7 @@ export default {
 .dycol::-webkit-scrollbar {
   display: none;
 }
+
 .dylive {
   overflow-y: auto;
   display: flex;
@@ -1220,6 +1222,7 @@ export default {
 .dylive::-webkit-scrollbar {
   display: none;
 }
+
 .subscribe {
   width: 340px;
   height: 520px;
@@ -1230,6 +1233,7 @@ export default {
   border: 1px solid #e5eaf3;
   padding: 5px 10px;
 }
+
 .subanime {
   overflow-y: auto;
   display: flex;
@@ -1242,6 +1246,7 @@ export default {
 .subanime::-webkit-scrollbar {
   display: none;
 }
+
 .subvideo {
   overflow-y: auto;
   display: flex;
@@ -1254,6 +1259,7 @@ export default {
 .subvideo::-webkit-scrollbar {
   display: none;
 }
+
 .collect {
   width: 340px;
   height: 520px;
@@ -1276,6 +1282,7 @@ export default {
 .colList::-webkit-scrollbar {
   display: none;
 }
+
 .history {
   width: 340px;
   height: 520px;
@@ -1286,15 +1293,15 @@ export default {
   border: 1px solid #e5eaf3;
   padding: 5px 10px;
 }
+
 .hisList {
-  overflow-y: auto;
-  
-  
+  overflow-y: auto; 
   height: 431px;
 }
 .hisList::-webkit-scrollbar {
   display: none;
 }
+
 .example-showcase .el-dropdown-link {
   cursor: pointer;
   color: var(--el-color-primary);
