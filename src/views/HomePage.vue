@@ -646,7 +646,226 @@
           </div>
         </div>
         <!-- 历史悬浮信息 -->
-        <div></div>
+        <div
+          class="history"
+          v-show="hisState"
+          @mouseover="(hisState = true), (hisFunType = 0)"
+          @mouseleave="hisLeave"
+        >
+          <!-- 历史菜单 -->
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              align-content: center;
+
+              align-items: center;
+              margin-top: 10px;
+            "
+          >
+            <input
+              type="text"
+              v-model="colInput"
+              placeholder="请输入关键词"
+              style="
+                height: 25px;
+                margin-left: 5px;
+                border: none;
+                border-bottom: 1px solid #909399;
+                outline: none;
+                font-size: 10px;
+                width: 240px;
+              "
+            />
+            <el-button round size="small" style="margin-left: 15px"
+              >查看更多</el-button
+            >
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              align-content: center;
+              align-items: center;
+              justify-content: space-between;
+            "
+          >
+            <p>过滤：</p>
+            <div>
+              <el-button round size="small">视频</el-button>
+              <el-button round size="small">番剧</el-button>
+              <el-button round size="small">专栏</el-button>
+              <el-button round size="small">直播</el-button>
+            </div>
+          </div>
+          <!-- 历史内容 -->
+          <div class="hisList">
+            <!-- 今天 -->
+            <div>
+              <span>今天</span>
+              <div
+                v-for="i in 3"
+                :key="i"
+                style="
+                  width: 99%;
+                  height: 50px;
+                  border: 1px solid #e5eaf3;
+                  border-radius: 15px;
+                  margin-bottom: 10px;
+                  display: flex;
+                  flex-direction: row;
+                  flex-wrap: nowrap;
+                "
+              >
+                <div
+                  style="
+                    background-color: #909399;
+                    width: 25%;
+                    height: 100%;
+                    border-radius: 15px;
+                  "
+                >
+                  封面{{ i }}
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    margin-left: 10px;
+                    flex-direction: column;
+                    justify-content: space-around;
+                  "
+                >
+                  <h4 style="margin-bottom: -6px; margin-top: 14px">
+                    标题{{ i }}
+                  </h4>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                      justify-content: space-between;
+                    "
+                  >
+                    <p style="margin-right: 142px; font-size: 13px">
+                      作者{{ i }}
+                    </p>
+                    <p style="font-size: 13px">观看时间{{ i }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 昨天 -->
+            <div>
+              <span>昨天</span>
+              <div
+                v-for="i in 3"
+                :key="i"
+                style="
+                  width: 99%;
+                  height: 50px;
+                  border: 1px solid #e5eaf3;
+                  border-radius: 15px;
+                  margin-bottom: 10px;
+                  display: flex;
+                  flex-direction: row;
+                  flex-wrap: nowrap;
+                "
+              >
+                <div
+                  style="
+                    background-color: #909399;
+                    width: 25%;
+                    height: 100%;
+                    border-radius: 15px;
+                  "
+                >
+                  封面{{ i }}
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    margin-left: 10px;
+                    flex-direction: column;
+                    justify-content: space-around;
+                  "
+                >
+                  <h4 style="margin-bottom: -6px; margin-top: 14px">
+                    标题{{ i }}
+                  </h4>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                      justify-content: space-between;
+                    "
+                  >
+                    <p style="margin-right: 142px; font-size: 13px">
+                      作者{{ i }}
+                    </p>
+                    <p style="font-size: 13px">观看时间{{ i }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 本周 -->
+            <div>
+              <span>本周</span>
+              <div
+                v-for="i in 5"
+                :key="i"
+                style="
+                  width: 99%;
+                  height: 50px;
+                  border: 1px solid #e5eaf3;
+                  border-radius: 15px;
+                  margin-bottom: 10px;
+                  display: flex;
+                  flex-direction: row;
+                  flex-wrap: nowrap;
+                "
+              >
+                <div
+                  style="
+                    background-color: #909399;
+                    width: 25%;
+                    height: 100%;
+                    border-radius: 15px;
+                  "
+                >
+                  封面{{ i }}
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    margin-left: 10px;
+                    flex-direction: column;
+                    justify-content: space-around;
+                  "
+                >
+                  <h4 style="margin-bottom: -6px; margin-top: 14px">
+                    标题{{ i }}
+                  </h4>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      align-items: center;
+                      justify-content: space-between;
+                    "
+                  >
+                    <p style="margin-right: 142px; font-size: 13px">
+                      作者{{ i }}
+                    </p>
+                    <p style="font-size: 13px">观看时间{{ i }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </el-header>
       <!-- 主体 -->
       <el-main>Main</el-main>
@@ -846,7 +1065,7 @@ export default {
       hisFunType: 0,
 
       hisOver() {
-        collect.colState = true;
+        collect.colState = false;
         subscribe.subState = false;
         dynamic.dynamicState = false;
         history.hisState = true;
@@ -1055,6 +1274,25 @@ export default {
   height: 471px;
 }
 .colList::-webkit-scrollbar {
+  display: none;
+}
+.history {
+  width: 340px;
+  height: 520px;
+  z-index: 998;
+  position: absolute;
+  left: 1440px;
+  border-radius: 20px;
+  border: 1px solid #e5eaf3;
+  padding: 5px 10px;
+}
+.hisList {
+  overflow-y: auto;
+  
+  
+  height: 431px;
+}
+.hisList::-webkit-scrollbar {
   display: none;
 }
 .example-showcase .el-dropdown-link {
