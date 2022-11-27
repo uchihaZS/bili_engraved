@@ -56,9 +56,15 @@
             @mouseleave="dynamicLeave"
             >动态</el-menu-item
           >
-          <el-menu-item index="4">订阅</el-menu-item>
-          <el-menu-item index="5">收藏</el-menu-item>
-          <el-menu-item index="6">历史</el-menu-item>
+          <el-menu-item index="4" @mouseover="subOver" @mouseleave="subLeave"
+            >订阅</el-menu-item
+          >
+          <el-menu-item index="5" @mouseover="colOver" @mouseleave="colLeave"
+            >收藏</el-menu-item
+          >
+          <el-menu-item index="6" @mouseover="hisOver" @mouseleave="hisLeave"
+            >历史</el-menu-item
+          >
           <div class="flex-grow" />
         </el-menu>
         <!-- 头像悬浮信息 -->
@@ -181,7 +187,7 @@
         <div
           class="dynamic"
           v-show="dynamicState"
-          @mouseover="(dynamicState = true), (funType = 0)"
+          @mouseover="(dynamicState = true), (dyFunType = 0)"
           @mouseleave="dynamicState = false"
         >
           <!-- 动态菜单 -->
@@ -311,7 +317,7 @@
             </div>
           </div>
           <!-- 直播列表 -->
-          <div v-if="dynamicType==3">
+          <div v-if="dynamicType == 3">
             <div class="dylive">
               <div
                 v-for="i in 10"
@@ -325,12 +331,322 @@
                   display: flex;
                 "
               >
-                <el-avatar :size="50" :src="circleUrl" style="margin: 10px 20px 0px 10px;"/>
-                <h3 style="margin-top: 22px;">主播名{{i}}</h3>
+                <el-avatar
+                  :size="50"
+                  :src="circleUrl"
+                  style="margin: 10px 20px 0px 10px"
+                />
+                <h3 style="margin-top: 22px">主播名{{ i }}</h3>
               </div>
             </div>
           </div>
         </div>
+        <!-- 订阅悬浮信息 -->
+        <div
+          class="subscribe"
+          v-show="subState"
+          @mouseover="(subState = true), (subFunType = 0)"
+          @mouseleave="subState = false"
+        >
+          <!-- 订阅菜单 -->
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              align-content: center;
+              justify-content: space-around;
+              align-items: center;
+            "
+          >
+            <div style="width: 100px; display: flex; flex-wrap: nowrap">
+              <el-button
+                text
+                size="small"
+                @click="subAnime"
+                :style="subAnimeCss"
+                >追番</el-button
+              >
+              <el-button
+                text
+                size="small"
+                @click="subVideo"
+                :style="subVideoCss"
+                >追剧</el-button
+              >
+            </div>
+
+            <el-button round style="margin-left: 87px">查看更多</el-button>
+          </div>
+          <!-- 订阅内容 -->
+
+          <!-- 追番列表 -->
+          <div v-if="subType == 0">
+            <div class="subanime">
+              <div
+                v-for="i in 10"
+                :key="i"
+                style="
+                  margin-bottom: 10px;
+                  width: 98%;
+                  border: 1px solid #e5eaf3;
+                  border-radius: 15px;
+                  height: 70px;
+                  display: flex;
+                "
+              >
+                <div
+                  style="
+                    background-color: #909399;
+                    width: 35%;
+                    height: 100%;
+                    border-radius: 15px;
+                  "
+                >
+                  封面{{ i }}
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    margin-left: 5px;
+                  "
+                >
+                  <h4 style="margin-bottom: -15px">番名{{ i }}</h4>
+                  <h5>第{{ i }}话</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 追剧列表 -->
+          <div v-if="subType == 1">
+            <div class="subvideo">
+              <div
+                v-for="i in 10"
+                :key="i"
+                style="
+                  margin-bottom: 10px;
+                  width: 98%;
+                  border: 1px solid #e5eaf3;
+                  border-radius: 15px;
+                  height: 70px;
+                  display: flex;
+                "
+              >
+                <div
+                  style="
+                    background-color: #909399;
+                    width: 35%;
+                    height: 100%;
+                    border-radius: 15px;
+                  "
+                >
+                  封面{{ i }}
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    margin-left: 5px;
+                  "
+                >
+                  <h4 style="margin-bottom: -15px">剧名{{ i }}</h4>
+                  <h5>第{{ i }}话</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 收藏悬浮信息 -->
+        <div
+          class="collect"
+          v-show="colState"
+          @mouseover="(colState = true), (colFunType = 0)"
+          @mouseleave="colLeave"
+        >
+          <!-- 收藏菜单 -->
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              align-content: center;
+
+              align-items: center;
+              margin-top: 10px;
+            "
+          >
+            <el-dropdown
+              type="primary"
+              @command="handleCommand"
+              trigger="click"
+            >
+              <el-button
+                round
+                type="primary"
+                style="min-width: 85px; max-width: 99px"
+              >
+                {{ selectItem }}
+              </el-button>
+
+              <template #dropdown>
+                <el-dropdown-menu
+                  @mouseover="(colState = true), (colFunType = 0)"
+                >
+                  <el-dropdown-item command="默认收藏夹"
+                    >默认收藏夹</el-dropdown-item
+                  >
+                  <el-dropdown-item command="自定义收藏夹1"
+                    >自定义收藏夹 1</el-dropdown-item
+                  >
+                  <el-dropdown-item command="自定义收藏夹2"
+                    >自定义收藏夹 2</el-dropdown-item
+                  >
+                </el-dropdown-menu>
+              </template>
+            </el-dropdown>
+            <input
+              type="text"
+              v-model="colInput"
+              placeholder="请输入关键词"
+              style="
+                height: 25px;
+                margin-left: 5px;
+                border: none;
+                border-bottom: 1px solid #909399;
+                outline: none;
+                font-size: 10px;
+                width: 160px;
+              "
+            />
+            <el-button round size="small" style="margin-left: 15px"
+              >查看更多</el-button
+            >
+          </div>
+          <!-- 收藏内容 -->
+          <!-- 默认收藏夹列表 -->
+          <div v-if="contentType == 0">
+            <div class="colList">
+              <div
+                v-for="i in 10"
+                :key="i"
+                style="
+                  margin-bottom: 10px;
+                  width: 98%;
+                  border: 1px solid #e5eaf3;
+                  border-radius: 15px;
+                  height: 70px;
+                  display: flex;
+                "
+              >
+                <div
+                  style="
+                    background-color: #909399;
+                    width: 35%;
+                    height: 100%;
+                    border-radius: 15px;
+                  "
+                >
+                  封面{{ i }}
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    margin-left: 5px;
+                  "
+                >
+                  <h4 style="margin-bottom: -15px">默认收藏夹-标题{{ i }}</h4>
+                  <h5>默认收藏夹-作者{{ i }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 自定收藏夹1列表 -->
+          <div v-if="contentType == 1">
+            <div class="colList">
+              <div
+                v-for="i in 10"
+                :key="i"
+                style="
+                  margin-bottom: 10px;
+                  width: 98%;
+                  border: 1px solid #e5eaf3;
+                  border-radius: 15px;
+                  height: 70px;
+                  display: flex;
+                "
+              >
+                <div
+                  style="
+                    background-color: #909399;
+                    width: 35%;
+                    height: 100%;
+                    border-radius: 15px;
+                  "
+                >
+                  封面{{ i }}
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    margin-left: 5px;
+                  "
+                >
+                  <h4 style="margin-bottom: -15px">自定收藏夹1-标题{{ i }}</h4>
+                  <h5>自定收藏夹1-作者{{ i }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 自定收藏夹2列表 -->
+          <div v-if="contentType == 2">
+            <div class="colList">
+              <div
+                v-for="i in 10"
+                :key="i"
+                style="
+                  margin-bottom: 10px;
+                  width: 98%;
+                  border: 1px solid #e5eaf3;
+                  border-radius: 15px;
+                  height: 70px;
+                  display: flex;
+                "
+              >
+                <div
+                  style="
+                    background-color: #909399;
+                    width: 35%;
+                    height: 100%;
+                    border-radius: 15px;
+                  "
+                >
+                  封面{{ i }}
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    margin-left: 5px;
+                  "
+                >
+                  <h4 style="margin-bottom: -15px">自定收藏夹2-标题{{ i }}</h4>
+                  <h5>自定收藏夹2-作者{{ i }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 历史悬浮信息 -->
+        <div></div>
       </el-header>
       <!-- 主体 -->
       <el-main>Main</el-main>
@@ -395,7 +711,7 @@ export default {
     let dynamic = reactive({
       dynamicState: false,
       dynamicType: 0,
-      funType: 0,
+      dyFunType: 0,
       dyVideoCss: "width: 0px;font-size:15px",
       dyAnimeCss: "width: 0px;font-size:15px",
       dyColCss: "width: 0px;font-size:15px",
@@ -404,48 +720,153 @@ export default {
       dynamicOver() {
         dynamic.dyVideo();
         dynamic.dynamicState = true;
+        subscribe.subState = false;
+        collect.colState = false;
+        history.hisState = false;
+        // console.log('进入动态标签')
       },
       dynamicLeave() {
-        dynamic.funType = 1;
-        setTimeout(dynamic.dynamicNoDisplay, 1000);
+        dynamic.dyFunType = 1;
+        setTimeout(dynamic.dynamicNoDisplay, 300);
+        // console.log('离开动态标签')
       },
       dynamicNoDisplay() {
-        if (dynamic.funType == 1) {
+        if (dynamic.dyFunType == 1) {
           dynamic.dynamicState = false;
+          // console.log('关闭动态信息')
         }
       },
       dyVideo() {
         dynamic.dynamicType = 0;
         dynamic.dyVideoCss = dynamic.borderColor;
-        dynamic.dyAnimeCss = "";
-        dynamic.dyColCss = "";
-        dynamic.dyLiveCss = "";
+        dynamic.dyAnimeCss = "width: 0px;font-size:15px";
+        dynamic.dyColCss = "width: 0px;font-size:15px";
+        dynamic.dyLiveCss = "width: 0px;font-size:15px";
       },
       dyAnime() {
         dynamic.dynamicType = 1;
         dynamic.dyAnimeCss = dynamic.borderColor;
-        dynamic.dyVideoCss = "";
-        dynamic.dyColCss = "";
-        dynamic.dyLiveCss = "";
+        dynamic.dyVideoCss = "width: 0px;font-size:15px";
+        dynamic.dyColCss = "width: 0px;font-size:15px";
+        dynamic.dyLiveCss = "width: 0px;font-size:15px";
       },
       dyCol() {
         dynamic.dynamicType = 2;
-        dynamic.dyAnimeCss = "";
-        dynamic.dyVideoCss = "";
+        dynamic.dyAnimeCss = "width: 0px;font-size:15px";
+        dynamic.dyVideoCss = "width: 0px;font-size:15px";
         dynamic.dyColCss = dynamic.borderColor;
-        dynamic.dyLiveCss = "";
+        dynamic.dyLiveCss = "width: 0px;font-size:15px";
       },
       dyLive() {
         dynamic.dynamicType = 3;
-        dynamic.dyAnimeCss = "";
-        dynamic.dyVideoCss = "";
-        dynamic.dyColCss = "";
+        dynamic.dyAnimeCss = "width: 0px;font-size:15px";
+        dynamic.dyVideoCss = "width: 0px;font-size:15px";
+        dynamic.dyColCss = "width: 0px;font-size:15px";
         dynamic.dyLiveCss = dynamic.borderColor;
+      },
+    });
+    // 订阅
+    let subscribe = reactive({
+      subState: false,
+      subType: 0,
+      subFunType: 0,
+      subAnimeCss: "width: 0px;font-size:15px",
+      subVideoCss: "width: 0px;font-size:15px",
+      borderColor: "width: 0px;color: #409EFF;font-size:15px",
+      subAnime() {
+        subscribe.subType = 0;
+        subscribe.subVideoCss = "width: 0px;font-size:15px";
+        subscribe.subAnimeCss = subscribe.borderColor;
+      },
+      subVideo() {
+        subscribe.subType = 1;
+        subscribe.subVideoCss = subscribe.borderColor;
+        subscribe.subAnimeCss = "width: 0px;font-size:15px";
+      },
+
+      subOver() {
+        subscribe.subAnime();
+        subscribe.subState = true;
+        dynamic.dynamicState = false;
+        collect.colState = false;
+        history.hisState = false;
+      },
+      subLeave() {
+        subscribe.subFunType = 1;
+        setTimeout(subscribe.subNoDisplay, 300);
+      },
+      subNoDisplay() {
+        if (subscribe.subFunType == 1) {
+          subscribe.subState = false;
+        }
+      },
+    });
+    // 收藏
+    let collect = reactive({
+      colState: false,
+      colType: 0,
+      colFunType: 0,
+      contentType: 0,
+      selectItem: "",
+      handleCommand(command) {
+        if (command == "默认收藏夹") {
+          collect.contentType = 0;
+          collect.selectItem = "默认收藏夹";
+        } else if (command == "自定义收藏夹1") {
+          collect.contentType = 1;
+          collect.selectItem = "自定义收藏夹1";
+        } else if (command == "自定义收藏夹2") {
+          collect.contentType = 2;
+          collect.selectItem = "自定义收藏夹2";
+        }
+        console.log(command);
+      },
+      colOver() {
+        collect.colState = true;
+        subscribe.subState = false;
+        dynamic.dynamicState = false;
+        history.hisState = false;
+        collect.contentType = 0;
+        collect.selectItem = "默认收藏夹";
+      },
+      colLeave() {
+        collect.colFunType = 1;
+        setTimeout(collect.colNoDisplay, 300);
+      },
+      colNoDisplay() {
+        if (collect.colFunType == 1) {
+          collect.colState = false;
+        }
+      },
+    });
+    // 历史
+    let history = reactive({
+      hisState: false,
+      hisType: 0,
+      hisFunType: 0,
+
+      hisOver() {
+        collect.colState = true;
+        subscribe.subState = false;
+        dynamic.dynamicState = false;
+        history.hisState = true;
+      },
+      hisLeave() {
+        history.hisFunType = 1;
+        setTimeout(history.hisNoDisplay, 300);
+      },
+      hisNoDisplay() {
+        if (history.hisFunType == 1) {
+          history.hisState = false;
+        }
       },
     });
 
     let refAvatar = toRefs(avatar);
     let refDynamic = toRefs(dynamic);
+    let refSubscribe = toRefs(subscribe);
+    let refCollect = toRefs(collect);
+    let refHistory = toRefs(history);
     // 生命函数
     onMounted(() => {
       getPercentage();
@@ -487,7 +908,14 @@ export default {
       );
     }
 
-    return { headmenu, ...refAvatar, ...refDynamic };
+    return {
+      headmenu,
+      ...refAvatar,
+      ...refDynamic,
+      ...refSubscribe,
+      ...refCollect,
+      ...refHistory,
+    };
   },
 };
 </script>
@@ -561,7 +989,7 @@ export default {
 .dycol::-webkit-scrollbar {
   display: none;
 }
-.dylive{
+.dylive {
   overflow-y: auto;
   display: flex;
   // flex-direction: column;
@@ -570,7 +998,63 @@ export default {
   margin-top: 10px;
   height: 483px;
 }
-.dylive::-webkit-scrollbar{
+.dylive::-webkit-scrollbar {
+  display: none;
+}
+.subscribe {
+  width: 340px;
+  height: 520px;
+  z-index: 998;
+  position: absolute;
+  left: 1308px;
+  border-radius: 20px;
+  border: 1px solid #e5eaf3;
+  padding: 5px 10px;
+}
+.subanime {
+  overflow-y: auto;
+  display: flex;
+  // flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  height: 483px;
+}
+.subanime::-webkit-scrollbar {
+  display: none;
+}
+.subvideo {
+  overflow-y: auto;
+  display: flex;
+  // flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  height: 483px;
+}
+.subvideo::-webkit-scrollbar {
+  display: none;
+}
+.collect {
+  width: 340px;
+  height: 520px;
+  z-index: 998;
+  position: absolute;
+  left: 1378px;
+  border-radius: 20px;
+  border: 1px solid #e5eaf3;
+  padding: 5px 10px;
+}
+.colList {
+  overflow-y: auto;
+  display: flex;
+  // flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+  height: 471px;
+}
+.colList::-webkit-scrollbar {
   display: none;
 }
 .example-showcase .el-dropdown-link {
