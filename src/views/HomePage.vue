@@ -13,7 +13,12 @@
         >
           <div class="flex-grow" />
           <!-- LOGO -->
-          <el-menu-item index="0">qiliqili</el-menu-item>
+          <el-menu-item
+            index="0"
+            @mouseover="debugOver"
+            @mouseleave="debugLeave"
+            >qiliqili</el-menu-item
+          >
           <div class="flex-grow" />
           <!-- 搜索框 -->
           <el-input
@@ -68,6 +73,40 @@
           >
           <div class="flex-grow" />
         </el-menu>
+        <!-- logo_debug -->
+        <div
+          style="
+            width: 280px;
+            height: 100px;
+            z-index: 997;
+            position: absolute;
+            left: 140px;
+            top: 73px;
+            background-color: white;
+            border-radius: 15px;
+          "
+          v-if="debugState == true"
+          @mouseover="debugFuntype = 0"
+          @mouseleave="debugLeave"
+        >
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              align-items: stretch;
+              justify-content: flex-start;
+              margin-top: 10px;
+            "
+          >
+            用户名:<input type="text" v-model="debugname" />
+            <button @click="namechange">修改</button>
+          </div>
+          <div style="margin-top: 20px; display: flex">
+            经验:<input type="text" v-model="debugxp" />
+            <button @click="xpchange">修改</button>
+          </div>
+        </div>
         <!-- 头像悬浮信息 -->
         <el-card
           v-show="avatarState"
@@ -75,7 +114,7 @@
           @mouseover="(avatarState = true), (avatarUse = avatarCss)"
           @mouseleave="(avatarState = false), (avatarUse = avatarOri)"
         >
-          <h4 style="text-align: center; margin: 0px auto">用户名</h4>
+          <h4 style="text-align: center; margin: 0px auto">{{ avatarName }}</h4>
           <h5 style="text-align: center; margin-top: 0px">普通会员</h5>
           <div>
             <div
@@ -1133,9 +1172,15 @@
                         align-items: center;
                       "
                     >
-                      <span :style="zhuanlan" @mouseover="changeFont1">专栏</span>
-                      <span :style="huodong" @mouseover="changeFont2">活动</span>
-                      <span :style="shequ" @mouseover="changeFont3">社区中心</span>
+                      <span :style="zhuanlan" @mouseover="changeFont1"
+                        >专栏</span
+                      >
+                      <span :style="huodong" @mouseover="changeFont2"
+                        >活动</span
+                      >
+                      <span :style="shequ" @mouseover="changeFont3"
+                        >社区中心</span
+                      >
                     </div>
                     <div
                       style="
@@ -1147,9 +1192,11 @@
                         align-items: center;
                       "
                     >
-                    <el-dropdown style="font-size: 17px;">
-                      <span :style="zhibo" @mouseover="changeFont4">直播</span>
-                      <template #dropdown>
+                      <el-dropdown style="font-size: 17px">
+                        <span :style="zhibo" @mouseover="changeFont4"
+                          >直播</span
+                        >
+                        <template #dropdown>
                           <el-dropdown-menu>
                             <el-dropdown-item>全部</el-dropdown-item>
                             <el-dropdown-item>娱乐</el-dropdown-item>
@@ -1160,17 +1207,84 @@
                         </template>
                       </el-dropdown>
                       <span :style="ketang" @mouseover="changeFont5">课堂</span>
-                      <span :style="xinge" @mouseover="changeFont6">新歌热榜</span>
+                      <span :style="xinge" @mouseover="changeFont6"
+                        >新歌热榜</span
+                      >
                     </div>
                   </div>
                 </div>
               </div>
+              <!-- 推荐视频列表 -->
+              <div style="display: flex">
+                <!-- 轮播图 -->
+                <el-carousel
+                  trigger="click"
+                  height="430px"
+                  style="
+                    width: 570px;
+                    border-radius: 10px;
+                    height: 430px;
+                    margin: 20px 0px 0px 20px;
+                  "
+                >
+                  <el-carousel-item v-for="item in 4" :key="item">
+                    <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+                  </el-carousel-item>
+                </el-carousel>
+                <!-- 视频列表 -->
+                <div
+                  style="
+                    display: flex;
+                    width: 1080px;
+                    height: 500px;
+
+                    margin: 20px 0px 0px 10px;
+                    flex-wrap: wrap;
+                    flex-direction: row;
+                  "
+                >
+                  <div
+                    style="
+                      width: 255px;
+                      height: 235px;
+
+                      margin-left: 10px;
+                      border-radius: 10px;
+                    "
+                    v-for="i in 8"
+                    :key="i"
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 165px;
+                        background-color: rgb(144, 147, 153);
+                        border-radius: 10px;
+                      "
+                    >
+                      图片{{ i }}
+                    </div>
+                    <span>价绍{{ i }}</span>
+                    <p>作者{{ i }}</p>
+                  </div>
+                </div>
+              </div>
             </el-col>
-            <el-col :span="1"
-              ><div
-                style="background-color: #ffffff; width: 100%; height: 100%"
-              ></div
-            ></el-col>
+            <el-col :span="1">
+              <div style="background-color: #ffffff; width: 100%; height: 100%">
+                <el-button
+                  size="large"
+                  style="
+                    position: absolute;
+                    top: 142px;
+                    left: 96%;
+                    width: 45px;
+                    height: 90px;
+                  "
+                  ><span style="writing-mode: tb-rl">换一换</span></el-button
+                >
+              </div></el-col
+            >
           </el-row>
         </div>
       </el-main>
@@ -1181,7 +1295,7 @@
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-import { reactive, onMounted, onUpdated, toRefs } from "vue";
+import { reactive, onMounted, toRefs } from "vue";
 // import { Search } from '@element-plus/icons-vue'
 export default {
   name: "HomePage",
@@ -1191,10 +1305,38 @@ export default {
     let headmenu = reactive({
       searchValue: "",
     });
+    // logo
+    let logo = reactive({
+      debugState: false,
+      debugname: "",
+      debugxp: 0,
+      debugFuntype: 0,
+      debugOver() {
+        logo.debugState = true;
+      },
+      debugLeave() {
+        logo.debugFuntype = 1;
+        setTimeout(logo.debugNoDisplay, 300);
+      },
+      debugNoDisplay() {
+        if (logo.debugFuntype == 1) {
+          logo.debugState = false;
+        }
+      },
+      namechange() {
+        avatar.avatarName = this.debugname;
+      },
+      xpchange() {
+        avatar.xp = this.debugxp;
+        getPercentage();
+        console.log("获取经验值和等级成功");
+      },
+    });
     // 头像
     let avatar = reactive({
       avatarState: false,
       percentage: 0,
+      avatarName: "用户名",
       avatarOri: "margin-top: 9px;z-index:999",
       avatarUse: "margin-top: 9px;z-index:999",
       avatarCss: "position: relative;top:30px;z-index:999",
@@ -1413,62 +1555,64 @@ export default {
         "动物圈",
         "VLOG",
       ],
-      blueFont:'color:#409EFF',
-      zhuanlan:'',
-      huodong:'',
-      shequ:'',
-      zhibo:'',
-      ketang:'',
-      xinge:'',
-      changeFont1(){
-        tag.zhuanlan=tag.blueFont
-        tag.huodong=''
-        tag.shequ=''
-        tag.zhibo=''
-        tag.ketang=''
-        tag.xinge=''
+      blueFont: "color:#409EFF",
+      zhuanlan: "",
+      huodong: "",
+      shequ: "",
+      zhibo: "",
+      ketang: "",
+      xinge: "",
+      changeFont1() {
+        tag.zhuanlan = tag.blueFont;
+        tag.huodong = "";
+        tag.shequ = "";
+        tag.zhibo = "";
+        tag.ketang = "";
+        tag.xinge = "";
       },
-      changeFont2(){
-        tag.zhuanlan=''
-        tag.huodong=tag.blueFont
-        tag.shequ=''
-        tag.zhibo=''
-        tag.ketang=''
-        tag.xinge=''
+      changeFont2() {
+        tag.zhuanlan = "";
+        tag.huodong = tag.blueFont;
+        tag.shequ = "";
+        tag.zhibo = "";
+        tag.ketang = "";
+        tag.xinge = "";
       },
-      changeFont3(){
-        tag.zhuanlan=''
-        tag.huodong=''
-        tag.shequ=tag.blueFont
-        tag.zhibo=''
-        tag.ketang=''
-        tag.xinge=''
+      changeFont3() {
+        tag.zhuanlan = "";
+        tag.huodong = "";
+        tag.shequ = tag.blueFont;
+        tag.zhibo = "";
+        tag.ketang = "";
+        tag.xinge = "";
       },
-      changeFont4(){
-        tag.zhuanlan=''
-        tag.huodong=''
-        tag.shequ=''
-        tag.zhibo=tag.blueFont
-        tag.ketang=''
-        tag.xinge=''
+      changeFont4() {
+        tag.zhuanlan = "";
+        tag.huodong = "";
+        tag.shequ = "";
+        tag.zhibo = tag.blueFont;
+        tag.ketang = "";
+        tag.xinge = "";
       },
-      changeFont5(){
-        tag.zhuanlan=''
-        tag.huodong=''
-        tag.shequ=''
-        tag.zhibo=''
-        tag.ketang=tag.blueFont
-        tag.xinge=''
+      changeFont5() {
+        tag.zhuanlan = "";
+        tag.huodong = "";
+        tag.shequ = "";
+        tag.zhibo = "";
+        tag.ketang = tag.blueFont;
+        tag.xinge = "";
       },
-      changeFont6(){
-        tag.zhuanlan=''
-        tag.huodong=''
-        tag.shequ=''
-        tag.zhibo=''
-        tag.ketang=''
-        tag.xinge=tag.blueFont
-      }
+      changeFont6() {
+        tag.zhuanlan = "";
+        tag.huodong = "";
+        tag.shequ = "";
+        tag.zhibo = "";
+        tag.ketang = "";
+        tag.xinge = tag.blueFont;
+      },
     });
+
+    let refLogo = toRefs(logo);
     let refAvatar = toRefs(avatar);
     let refDynamic = toRefs(dynamic);
     let refSubscribe = toRefs(subscribe);
@@ -1518,6 +1662,7 @@ export default {
 
     return {
       headmenu,
+      ...refLogo,
       ...refAvatar,
       ...refDynamic,
       ...refSubscribe,
@@ -1553,7 +1698,7 @@ export default {
   width: 200px;
   height: 380px;
   position: absolute;
-  left: 1184px;
+  left: 1168px;
   border-radius: 20px;
   top: 65px;
 }
@@ -1739,5 +1884,25 @@ export default {
 }
 .row::-webkit-scrollbar {
   display: none;
+}
+
+.demonstration {
+  color: var(--el-text-color-secondary);
+}
+
+.el-carousel__item h3 {
+  color: #475669;
+  opacity: 0.75;
+  line-height: 150px;
+  margin: 0;
+  text-align: center;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
 }
 </style>
