@@ -929,7 +929,7 @@
                 style="background-color: #ffffff; width: 100%; height: 100%"
               ></div>
             </el-col>
-            <el-col :span="22" style="background-color: #e5eaf3">
+            <el-col :span="22" style="background-color: white">
               <!-- tag列表 -->
               <div style="display: flex">
                 <!-- 左图标 -->
@@ -1307,66 +1307,430 @@
                 </div>
               </div>
               <!-- 番剧 -->
-              <div style="height: 800px; width: 100%">
+              <div
+                style="
+                  height: 800px;
+                  width: 100%;
+                  display: flex;
+                  flex-direction: row;
+                  flex-wrap: nowrap;
+                  justify-content: flex-start;
+                  align-items: baseline;
+                "
+              >
                 <!-- 左边更新表 -->
                 <div
                   style="
-                    width: 75%;
-                    border: 1px solid;
+                    width: 83%;
                     display: flex;
                     align-items: center;
                     flex-wrap: nowrap;
-                    flex-direction: row;
+                    flex-direction: column;
                     justify-content: space-between;
+                    margin-right: 3px;
                   "
                 >
                   <!-- 顶栏 -->
-                  <div style="display: flex">
-                    <h2 style="margin-left: 15px">番剧</h2>
-                    <el-menu
-                      :default-active="0"
-                      style="
-                        width: 640px;
-                        border-radius: 50px;
-                        height: 32px;
-                        margin: 23px 0px 0px 10px;
-                        padding: 0px;
-                        display: flex;
-                        justify-content: space-evenly;
-                        align-items: center;
-                        flex-wrap: nowrap;
-                        flex-direction: row;
-                      "
-                      background-color="#CFD3DC"
-                      active-text-color="white"
-                      mode="horizontal"
-                      @select="animeSelect"
-                      collapse-transition="false"
-                      ellipsis="false"
-                    >
-                      <el-menu-item index="0">最近更新</el-menu-item>
-                      <el-menu-item index="1">周一</el-menu-item>
-                      <el-menu-item index="2">周二</el-menu-item>
-                      <el-menu-item index="3">周三</el-menu-item>
-                      <el-menu-item index="4">周四</el-menu-item>
-                      <el-menu-item index="5">周五</el-menu-item>
-                      <el-menu-item index="6">周六</el-menu-item>
-                      <el-menu-item index="7">周日</el-menu-item>
-                    </el-menu>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      width: 100%;
+                      align-items: center;
+                      flex-wrap: nowrap;
+                    "
+                  >
+                    <div style="display: flex">
+                      <h2 style="margin-left: 15px">番剧</h2>
+                      <el-menu
+                        default-active="0"
+                        style="
+                          width: 640px;
+                          border-radius: 50px;
+                          height: 32px;
+                          margin: 23px 0px 0px 10px;
+                          padding: 0px;
+                          display: flex;
+                          justify-content: space-evenly;
+                          align-items: center;
+                          flex-wrap: nowrap;
+                          flex-direction: row;
+                        "
+                        background-color="#CFD3DC"
+                        active-text-color="#409EFF"
+                        mode="horizontal"
+                        @select="animeSelect"
+                        collapse-transition="false"
+                        ellipsis="false"
+                      >
+                        <el-menu-item index="0" @click="weekday=0">最近更新</el-menu-item>
+                        <el-menu-item index="1" @click="weekday=1">周一</el-menu-item>
+                        <el-menu-item index="2" @click="weekday=2">周二</el-menu-item>
+                        <el-menu-item index="3" @click="weekday=3">周三</el-menu-item>
+                        <el-menu-item index="4" @click="weekday=4">周四</el-menu-item>
+                        <el-menu-item index="5" @click="weekday=5">周五</el-menu-item>
+                        <el-menu-item index="6" @click="weekday=6">周六</el-menu-item>
+                        <el-menu-item index="7" @click="weekday=7">周日</el-menu-item>
+                      </el-menu>
+                    </div>
+                    <div style="margin-left: 450px">
+                      <el-button size="large">新番时间表</el-button>
+                      <el-button size="large">查看更多</el-button>
+                    </div>
                   </div>
-                  <div style="margin-left: 315px;">
-                    <el-button size="large">新番时间表</el-button>
-                    <el-button size="large">查看更多</el-button>
-                  </div>
+
                   <!-- 番剧列表 -->
-                  <div></div>
+                  <div
+                  v-if="weekday==0"
+                    style="
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      padding-left: 12px;
+                      flex-flow: row wrap;
+                      justify-content: flex-start;
+                      flex-wrap: wrap;
+                      flex-direction: row;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 19%;
+                        height: 260px;
+                        margin-left: 10px;
+                        margin-top:5px
+                        border-radius: 10px;
+                      "
+                      v-for="i in 10"
+                      :key="i"
+                    >
+                      <div
+                        style="
+                          width: 100%;
+                          height: 165px;
+                          background-color: rgb(144, 147, 153);
+                          border-radius: 10px;
+                        "
+                      >
+                        图片{{ i }}
+                      </div>
+                      <span>番剧名{{ i }}</span>
+                      <p>更新到第几集</p>
+                    </div>
+                  </div>
+                  <!-- 周一 -->
+                  <div
+                  v-if="weekday==1"
+                    style="
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      padding-left: 12px;
+                      flex-flow: row wrap;
+                      justify-content: flex-start;
+                      flex-wrap: wrap;
+                      flex-direction: row;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 19%;
+                        height: 260px;
+                        margin-left: 10px;
+                        margin-top:5px
+                        border-radius: 10px;
+                      "
+                      v-for="i in 1"
+                      :key="i"
+                    >
+                      <div
+                        style="
+                          width: 100%;
+                          height: 165px;
+                          background-color: rgb(144, 147, 153);
+                          border-radius: 10px;
+                        "
+                      >
+                        周一的图片{{ i }}
+                      </div>
+                      <span>周一的番剧名{{ i }}</span>
+                      <p>更新到第几集</p>
+                    </div>
+                  </div>
+                  <!-- 周二 -->
+                  <div
+                  v-if="weekday==2"
+                    style="
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      padding-left: 12px;
+                      flex-flow: row wrap;
+                      justify-content: flex-start;
+                      flex-wrap: wrap;
+                      flex-direction: row;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 19%;
+                        height: 260px;
+                        margin-left: 10px;
+                        margin-top:5px
+                        border-radius: 10px;
+                      "
+                      v-for="i in 2"
+                      :key="i"
+                    >
+                      <div
+                        style="
+                          width: 100%;
+                          height: 165px;
+                          background-color: rgb(144, 147, 153);
+                          border-radius: 10px;
+                        "
+                      >
+                        周二的图片{{ i }}
+                      </div>
+                      <span>周二的番剧名{{ i }}</span>
+                      <p>更新到第几集</p>
+                    </div>
+                  </div>
+                  <!-- 周三 -->
+                  <div
+                  v-if="weekday==3"
+                    style="
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      padding-left: 12px;
+                      flex-flow: row wrap;
+                      justify-content: flex-start;
+                      flex-wrap: wrap;
+                      flex-direction: row;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 19%;
+                        height: 260px;
+                        margin-left: 10px;
+                        margin-top:5px
+                        border-radius: 10px;
+                      "
+                      v-for="i in 3"
+                      :key="i"
+                    >
+                      <div
+                        style="
+                          width: 100%;
+                          height: 165px;
+                          background-color: rgb(144, 147, 153);
+                          border-radius: 10px;
+                        "
+                      >
+                        周三的图片{{ i }}
+                      </div>
+                      <span>周三的番剧名{{ i }}</span>
+                      <p>更新到第几集</p>
+                    </div>
+                  </div>
+                  <!-- 周四 -->
+                  <div
+                  v-if="weekday==4"
+                    style="
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      padding-left: 12px;
+                      flex-flow: row wrap;
+                      justify-content: flex-start;
+                      flex-wrap: wrap;
+                      flex-direction: row;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 19%;
+                        height: 260px;
+                        margin-left: 10px;
+                        margin-top:5px
+                        border-radius: 10px;
+                      "
+                      v-for="i in 4"
+                      :key="i"
+                    >
+                      <div
+                        style="
+                          width: 100%;
+                          height: 165px;
+                          background-color: rgb(144, 147, 153);
+                          border-radius: 10px;
+                        "
+                      >
+                        周四的图片{{ i }}
+                      </div>
+                      <span>周四的番剧名{{ i }}</span>
+                      <p>更新到第几集</p>
+                    </div>
+                  </div>
+                  <!-- 周五 -->
+                  <div
+                  v-if="weekday==5"
+                    style="
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      padding-left: 12px;
+                      flex-flow: row wrap;
+                      justify-content: flex-start;
+                      flex-wrap: wrap;
+                      flex-direction: row;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 19%;
+                        height: 260px;
+                        margin-left: 10px;
+                        margin-top:5px
+                        border-radius: 10px;
+                      "
+                      v-for="i in 5"
+                      :key="i"
+                    >
+                      <div
+                        style="
+                          width: 100%;
+                          height: 165px;
+                          background-color: rgb(144, 147, 153);
+                          border-radius: 10px;
+                        "
+                      >
+                        周五的图片{{ i }}
+                      </div>
+                      <span>周五的番剧名{{ i }}</span>
+                      <p>更新到第几集</p>
+                    </div>
+                  </div>
+                  <!-- 周六 -->
+                  <div
+                  v-if="weekday==6"
+                    style="
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      padding-left: 12px;
+                      flex-flow: row wrap;
+                      justify-content: flex-start;
+                      flex-wrap: wrap;
+                      flex-direction: row;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 19%;
+                        height: 260px;
+                        margin-left: 10px;
+                        margin-top:5px
+                        border-radius: 10px;
+                      "
+                      v-for="i in 8"
+                      :key="i"
+                    >
+                      <div
+                        style="
+                          width: 100%;
+                          height: 165px;
+                          background-color: rgb(144, 147, 153);
+                          border-radius: 10px;
+                        "
+                      >
+                        周六的图片{{ i }}
+                      </div>
+                      <span>周六的番剧名{{ i }}</span>
+                      <p>更新到第几集</p>
+                    </div>
+                  </div>
+                  <!-- 周日 -->
+                  <div
+                  v-if="weekday==7"
+                    style="
+                      width: 100%;
+                      height: auto;
+                      display: flex;
+                      padding-left: 12px;
+                      flex-flow: row wrap;
+                      justify-content: flex-start;
+                      flex-wrap: wrap;
+                      flex-direction: row;
+                    "
+                  >
+                    <div
+                      style="
+                        width: 19%;
+                        height: 260px;
+                        margin-left: 10px;
+                        margin-top:5px
+                        border-radius: 10px;
+                      "
+                      v-for="i in 7"
+                      :key="i"
+                    >
+                      <div
+                        style="
+                          width: 100%;
+                          height: 165px;
+                          background-color: rgb(144, 147, 153);
+                          border-radius: 10px;
+                        "
+                      >
+                        周日的图片{{ i }}
+                      </div>
+                      <span>周日的番剧名{{ i }}</span>
+                      <p>更新到第几集</p>
+                    </div>
+                  </div>
                 </div>
                 <!-- 右边排行榜 -->
-                <div>
+                <div style="width: 17%; display: flex; flex-direction: column;margin-right: 7px;">
                   <!-- 排行榜顶栏 -->
-                  <div></div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: row;
+                      flex-wrap: nowrap;
+                      justify-content: space-between;
+                      align-items: baseline;
+                    "
+                  >
+                    <h2>排行榜</h2>
+                    <el-button size="large">更多</el-button>
+                  </div>
                   <!-- 排行榜列表 -->
-                  <div></div>
+                  <div
+                    style="
+                      width: 100%;
+                      height: auto;
+                      border: 1px solid #e5eaf3;
+                      border-radius: 10px;
+                    "
+                  >
+                    <el-table
+                      :data="animeRank"
+                      stripe
+                      highlight-current-row="true"
+                      size="large"
+                      style="
+                        width: 100%;
+                        border: 1px solid #e5eaf3;
+                        border-radius: 10px;
+                      "
+                    >
+                      <el-table-column prop="rank" label="排位" width="80" />
+                      <el-table-column prop="name" label="番名" width="200" />
+                    </el-table>
+                  </div>
                 </div>
               </div>
             </el-col>
@@ -1712,13 +2076,45 @@ export default {
       },
     });
 
-    let refLogo = toRefs(logo);
-    let refAvatar = toRefs(avatar);
-    let refDynamic = toRefs(dynamic);
-    let refSubscribe = toRefs(subscribe);
-    let refCollect = toRefs(collect);
-    let refHistory = toRefs(history);
-    let refTag = toRefs(tag);
+    let animeRank = reactive([
+      {
+        rank: 1,
+        name: "鬼灭之刃",
+      },
+      {
+        rank: 2,
+        name: "钢之炼金术师",
+      },
+      {
+        rank: 3,
+        name: "进击的巨人",
+      },
+      {
+        rank: 4,
+        name: "狼与香辛料",
+      },
+      {
+        rank: 5,
+        name: "赛马娘",
+      },
+      {
+        rank: 6,
+        name: "偶像大师",
+      },
+      {
+        rank: 7,
+        name: "火影忍者疾风传",
+      },
+      {
+        rank: 8,
+        name: "家庭教师reborn",
+      },
+    ]);
+
+    let animeTimeList=reactive({
+      weekday:'0'
+    })
+
     // 生命函数
     onMounted(() => {
       getPercentage();
@@ -1762,13 +2158,15 @@ export default {
 
     return {
       headmenu,
-      ...refLogo,
-      ...refAvatar,
-      ...refDynamic,
-      ...refSubscribe,
-      ...refCollect,
-      ...refHistory,
-      ...refTag,
+      ...toRefs(logo),
+      ...toRefs(avatar),
+      ...toRefs(dynamic),
+      ...toRefs(subscribe),
+      ...toRefs(collect),
+      ...toRefs(history),
+      ...toRefs(tag),
+      animeRank,
+      ...toRefs(animeTimeList)
     };
   },
 };
@@ -1966,7 +2364,7 @@ export default {
   height: auto;
   overflow-y: auto;
   justify-content: center;
-  border: 1px solid rgb(219, 219, 0);
+  // border: 1px solid rgb(219, 219, 0);
   background-color: #ffffff;
 }
 .el-main::-webkit-scrollbar {
@@ -1978,7 +2376,7 @@ export default {
   width: 100%;
   display: flex;
   overflow-y: auto;
-  border: 1px solid rgb(153, 8, 32);
+  // border: 1px solid rgb(153, 8, 32);
   justify-content: center;
   flex-wrap: nowrap;
   flex-direction: row;
