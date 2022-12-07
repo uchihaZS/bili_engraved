@@ -1269,6 +1269,106 @@
                   </div>
                 </div>
               </div>
+              <!-- 赛事 -->
+              <div style="margin-top: -10px; width: 100%; height: auto">
+                <h2 style="margin-left: 15px">赛事</h2>
+                <div
+                  style="
+                    display: flex;
+                    width: 100%;
+                    height: 300px;
+                    flex-wrap: nowrap;
+                    flex-direction: row;
+                  "
+                >
+                  <div
+                    style="
+                      width: 16%;
+                      height: 235px;
+                      margin-left: 10px;
+                      border-radius: 10px;
+                    "
+                    v-for="i in 6"
+                    :key="i"
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 165px;
+                        background-color: rgb(144, 147, 153);
+                        border-radius: 10px;
+                      "
+                    >
+                      图片{{ i }}
+                    </div>
+                    <span>价绍{{ i }}</span>
+                    <p>作者{{ i }}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- 番剧 -->
+              <div style="height: 800px; width: 100%">
+                <!-- 左边更新表 -->
+                <div
+                  style="
+                    width: 75%;
+                    border: 1px solid;
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                    flex-direction: row;
+                    justify-content: space-between;
+                  "
+                >
+                  <!-- 顶栏 -->
+                  <div style="display: flex">
+                    <h2 style="margin-left: 15px">番剧</h2>
+                    <el-menu
+                      :default-active="0"
+                      style="
+                        width: 640px;
+                        border-radius: 50px;
+                        height: 32px;
+                        margin: 23px 0px 0px 10px;
+                        padding: 0px;
+                        display: flex;
+                        justify-content: space-evenly;
+                        align-items: center;
+                        flex-wrap: nowrap;
+                        flex-direction: row;
+                      "
+                      background-color="#CFD3DC"
+                      active-text-color="white"
+                      mode="horizontal"
+                      @select="animeSelect"
+                      collapse-transition="false"
+                      ellipsis="false"
+                    >
+                      <el-menu-item index="0">最近更新</el-menu-item>
+                      <el-menu-item index="1">周一</el-menu-item>
+                      <el-menu-item index="2">周二</el-menu-item>
+                      <el-menu-item index="3">周三</el-menu-item>
+                      <el-menu-item index="4">周四</el-menu-item>
+                      <el-menu-item index="5">周五</el-menu-item>
+                      <el-menu-item index="6">周六</el-menu-item>
+                      <el-menu-item index="7">周日</el-menu-item>
+                    </el-menu>
+                  </div>
+                  <div style="margin-left: 315px;">
+                    <el-button size="large">新番时间表</el-button>
+                    <el-button size="large">查看更多</el-button>
+                  </div>
+                  <!-- 番剧列表 -->
+                  <div></div>
+                </div>
+                <!-- 右边排行榜 -->
+                <div>
+                  <!-- 排行榜顶栏 -->
+                  <div></div>
+                  <!-- 排行榜列表 -->
+                  <div></div>
+                </div>
+              </div>
             </el-col>
             <el-col :span="1">
               <div style="background-color: #ffffff; width: 100%; height: 100%">
@@ -1863,6 +1963,7 @@ export default {
 }
 .el-main {
   display: flex;
+  height: auto;
   overflow-y: auto;
   justify-content: center;
   border: 1px solid rgb(219, 219, 0);
@@ -1873,7 +1974,7 @@ export default {
 }
 .row {
   margin-top: 188px;
-  height: 100vh;
+  height: auto;
   width: 100%;
   display: flex;
   overflow-y: auto;
