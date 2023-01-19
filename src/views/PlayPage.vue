@@ -19,8 +19,8 @@
                 <!-- 左边 -->
                 <div style="display: flex; flex-direction: column; width: auto">
                   <!-- 标题栏 -->
-                  <h1>标题</h1>
-                  <div style="color: #9499a0">
+                  <h1 style="margin-top: 0px">标题</h1>
+                  <div style="color: #9499a0; margin-bottom: 30px">
                     <span>播放 {{ playback }}</span>
                     <span style="margin-left: 10px">弹幕 {{ danmu }}</span>
                     <span style="margin-left: 10px">时间 {{ times }}</span>
@@ -49,7 +49,7 @@
                           justify-content: flex-start;
                         "
                       >
-                        <span style="margin-left: 10px"
+                        <span style="margin-left: 10px; width: 300px"
                           >114人正在观看，已装填514条弹幕</span
                         >
                         <span>
@@ -66,7 +66,7 @@
                       </div>
                     </el-card>
                   </div>
-
+                  <!-- 一键三连 -->
                   <div
                     style="
                       width: 100%;
@@ -77,27 +77,257 @@
                       display: flex;
                       flex-direction: row;
                       flex-wrap: nowrap;
-                      justify-content: flex-start;
+                      justify-content: space-between;
                     "
                   >
-                    <el-button type="primary" text bg size="large"
-                      >点赞 5432</el-button
-                    >
-                    <el-button type="primary" text bg size="large"
-                      >投币 5463</el-button
-                    >
-                    <el-button type="primary" text bg size="large"
-                      >收藏 285</el-button
-                    >
-                    <el-button type="primary" text bg size="large"
-                      >分享 876</el-button
+                    <div>
+                      <el-button type="primary" text bg size="large"
+                        >点赞 5432</el-button
+                      >
+                      <el-button type="primary" text bg size="large"
+                        >投币 5463</el-button
+                      >
+                      <el-button type="primary" text bg size="large"
+                        >收藏 285</el-button
+                      >
+                      <el-button type="primary" text bg size="large"
+                        >分享 876</el-button
+                      >
+                    </div>
+                    <el-button type="danger" text bg size="large"
+                      >稿件投诉</el-button
                     >
                   </div>
                   <el-divider />
+                  <!-- 视频简介 -->
+                  <div>
+                    <!-- 文字描述 -->
+                    <div>
+                      <p>
+                        月族各位兄弟姐妹的点滴支持，我们制作组一一尽记心上。
+                      </p>
+                      <p>《残響散歌》真.完整粤语版，无限升级，终极呈现！</p>
+                      <p>
+                        这一场华丽的声画盛宴，全为了答谢大家一直以来的支持。
+                      </p>
+                      <p>你们喜欢，就是我们最大的创作动力。</p>
+                    </div>
+                    <!-- tag -->
+                    <div style="display">
+                      <el-button
+                        type="info"
+                        size="default"
+                        round
+                        color="#CFD3DC"
+                        >残響散歌</el-button
+                      >
+                      <el-button
+                        type="info"
+                        color="#CFD3DC"
+                        size="default"
+                        round
+                        style="margin-left: 10px"
+                        >Aimer</el-button
+                      >
+                      <el-button
+                        type="info"
+                        color="#CFD3DC"
+                        size="default"
+                        round
+                        style="margin-left: 10px"
+                        >粤语</el-button
+                      >
+                      <el-button
+                        color="#CFD3DC"
+                        type="info"
+                        size="default"
+                        round
+                        style="margin-left: 10px"
+                        >鬼灭之刃</el-button
+                      >
+                      <el-button
+                        color="#CFD3DC"
+                        type="info"
+                        size="default"
+                        round
+                        style="margin-left: 10px"
+                        >翻唱</el-button
+                      >
+                      <el-button
+                        color="#CFD3DC"
+                        type="info"
+                        size="default"
+                        round
+                        style="margin-left: 10px"
+                        >音乐</el-button
+                      >
+                    </div>
+                  </div>
+                  <el-divider />
+                  <!-- 评论区 -->
+                  <div style="height: auto; width: 100%">
+                    <div style="display: flex">
+                      <span>
+                        <h3>评论 114</h3>
+                      </span>
+                      <span
+                        style="
+                          display: flex;
+                          font-size: 20px;
+                          align-items: center;
+                          justify-content: flex-start;
+                          flex-wrap: nowrap;
+                          flex-direction: row;
+                        "
+                      >
+                        <el-button
+                          type="primary"
+                          size="large"
+                          text
+                          style="font-size: 20px"
+                          >最热</el-button
+                        >
+                        <p>|</p>
+                        <el-button
+                          type="primary"
+                          size="large"
+                          text
+                          style="font-size: 20px"
+                          >最新</el-button
+                        >
+                      </span>
+                    </div>
+                    <!-- 发评论 -->
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: nowrap;
+                        align-items: center;
+                      "
+                    >
+                      <el-avatar size="large" :src="circleUrl" />
+                      <input
+                        type="text"
+                        placeholder="发一条友善的评论"
+                        v-model="pinglun"
+                        style="
+                          height: 50px;
+                          width: 1010px;
+                          margin-left: 20px;
+                          border-radius: 10px;
+                          border: 1px solid #c9ccd0;
+                        "
+                      />
+                      <el-button
+                        @click="sendPinglun"
+                        type="primary"
+                        size="large"
+                        color=" #66b1ff"
+                        style="
+                          height: 50px;
+                          width: 60px;
+                          margin-left: 10px;
+                          color: white;
+                          font-size: 18px;
+                        "
+                        >发布</el-button
+                      >
+                    </div>
+                    <!-- 评论内容 -->
+                    <div style="width: 100%; height: auto; margin-top: 30px">
+                      <div
+                        v-for="(item, index) in commentData"
+                        :key="index"
+                        style="display: flex; flex-direction: column"
+                      >
+                        <!-- 头像和用户名 -->
+                        <div
+                          style="
+                            display: flex;
+                            flex-direction: row;
+                            align-items: flex-end;
+                            flex-wrap: nowrap;
+                            justify-content: flex-start;
+                          "
+                        >
+                          <el-avatar :size="50" :src="circleUrl" />
+                          <p style="margin-left: 15px; font-size: 18px">
+                            {{ item.username }}
+                          </p>
+                        </div>
+                        <!-- 内容 -->
+                        <div
+                          style="
+                            display: flex;
+                            flex-direction: column;
+                            margin-left: 50px;
+                          "
+                        >
+                          <p style="font-size:20px">{{ item.content }}</p>
+                          <!-- 时间和点赞 -->
+                          <div style="display: flex; flex-direction: row">
+                            <p>时间:{{ item.time }}</p>
+                            <p style="margin-left: 10px">
+                              点赞:{{ item.goods }}
+                            </p>
+                          </div>
+                          <!-- 他人回复 -->
+                          <div v-if="item.answer != null">
+                            <div
+                              v-for="i in item.answer"
+                              :key="i"
+                              style="display: flex; flex-direction: column;line-height: 0px;"
+                            >
+                              <!-- 回复的头像和用户名 -->
+                              <div
+                                style="
+                                  display: flex;
+                                  flex-direction: row;
+                                  align-items: center;
+                                "
+                              >
+                                <el-avatar :size="35" :src="circleUrl" />
+                                <p style="margin-left: 15px; font-size: 15px">
+                                  {{ i.username }}
+                                </p>
+                                <!-- 回复内容 -->
+                                <p style="margin-left: 15px; font-size: 18px">
+                                  {{ i.content }}
+                                </p>
+                              </div>
+
+                              <div
+                                style="
+                                  display: flex;
+                                  flex-direction: column;
+                                  margin-left: 50px;
+                                "
+                              >
+                                <!-- 回复时间和点赞 -->
+                                <div style="display: flex; flex-direction: row">
+                                  <p>时间:{{ i.time }}</p>
+                                  <p style="margin-left: 10px">
+                                    点赞:{{ i.goods }}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <el-divider />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <!-- 右边-->
                 <div
-                  style="margin-left: 30px; background-color: red; width: 100%"
+                  style="
+                    position: relative;
+                    left: 30px;
+                    background-color: red;
+                    width: 100%;
+                  "
                 >
                   <!-- 头像信息 -->
                   <div style="display: flex; width: 100%">
@@ -110,11 +340,87 @@
                         margin-top: -10px;
                       "
                     >
-                      <p style="font-size: 20px; font-weight: bold">用户名</p>
+                      <p style="font-size: 20px; font-weight: bold">作者名</p>
                       <p>介绍.................</p>
                       <el-button type="primary" style="width: 70%"
-                        >+关注 {{ fans }}</el-button
+                        >+关注 2887</el-button
                       >
+                    </div>
+                  </div>
+                  <!-- 弹幕列表 -->
+                  <div
+                    style="
+                      width: 100%;
+                      margin-top: 10px;
+                      max-height: 720px;
+                      min-height: 40px;
+                    "
+                  >
+                    <el-button
+                      type="info"
+                      @click="changeList"
+                      size="large"
+                      color="#CFD3DC"
+                      style="width: 100%"
+                      >弹幕列表</el-button
+                    >
+                    <!-- 列表 -->
+                    <div v-show="danmuList == 1" style="width: auto">
+                      <el-table
+                        :data="DanmuData"
+                        style="width: 100%"
+                        max-height="680px"
+                      >
+                        <el-table-column
+                          prop="content"
+                          label="内容"
+                          width="180"
+                        />
+                        <el-table-column prop="time" label="时间" width="180" />
+                      </el-table>
+                    </div>
+                  </div>
+                  <!-- 推荐视频列表 -->
+                  <div
+                    style="
+                      width: 100%;
+                      display: flex;
+                      flex-direction: column;
+                      margin-top: 10px;
+                    "
+                  >
+                    <div
+                      v-for="(item, index) in videoData"
+                      :key="index"
+                      style="
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: nowrap;
+                        justify-content: flex-start;
+                        align-items: flex-end;
+                        margin-top: 10px;
+                      "
+                    >
+                      <!-- 封面 -->
+                      <div
+                        style="
+                          background-color: #909399;
+                          width: 45%;
+                          height: 100px;
+                          border-radius: 15px;
+                        "
+                      >
+                        封面
+                      </div>
+                      <!-- 推荐文字 -->
+                      <div style="margin-left: 10px">
+                        <p>标题{{ item.name }}</p>
+                        <p>作者{{ item.author }}</p>
+                        <span>播放量{{ item.plays }}</span>
+                        <span style="margin-left: 10px"
+                          >弹幕{{ item.danmus }}</span
+                        >
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -134,26 +440,214 @@
 </template>
 
 <script>
-import { reactive, toRefs } from "@vue/reactivity";
+import { reactive, toRefs, watch } from "vue";
 import HeaderNav from "../components/HeaderNav.vue";
 import MainFramework from "../components/MainFramework.vue";
+import { ElMessage } from "element-plus";
 export default {
   components: { HeaderNav, MainFramework },
   setup() {
+    // 标题栏
     let titlebar = reactive({
       playback: 114514,
       danmu: 1919,
       times: "114-5-14  19:19:08",
     });
-
+    // 头像
     let avatar = reactive({
       squareUrl:
         "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
     });
+    // 弹幕
+    let danmu = reactive({
+      // 弹幕数据
+      DanmuData: [
+        { content: "aaa", time: "02-28 16:48" },
+        { content: "bbb", time: "02-18 16:48" },
+        { content: "cc", time: "12-28 16:48" },
+        { content: "ddd", time: "05-28 16:48" },
+        { content: "ee", time: "01-28 16:48" },
+        { content: "aaffa", time: "08-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+        { content: "agggggaa", time: "09-28 16:48" },
+      ],
+      state: false,
+      danmuList: 2,
+      changeList() {
+        danmu.danmuList = danmu.state == false ? "1" : "2";
+        danmu.state = !danmu.state;
+      },
+    });
+    //推荐视频列表
+    let video = reactive({
+      // 推荐视频数据
+      videoData: [
+        {
+          name: "a",
+          author: "aa",
+          plays: 1,
+          danmus: 1,
+        },
+        {
+          name: "b",
+          author: "bb",
+          plays: 2,
+          danmus: 2,
+        },
+        {
+          name: "c",
+          author: "cc",
+          plays: 3,
+          danmus: 3,
+        },
+        {
+          name: "d",
+          author: "dd",
+          plays: 4,
+          danmus: 4,
+        },
+        {
+          name: "e",
+          author: "ee",
+          plays: 5,
+          danmus: 5,
+        },
+        {
+          name: "f",
+          author: "ff",
+          plays: 6,
+          danmus: 6,
+        },
+        {
+          name: "g",
+          author: "gg",
+          plays: 7,
+          danmus: 7,
+        },
+      ],
+    });
+    // 评论区
+    let comment = reactive({
+      circleUrl:
+        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
+      pinglun: "",
+      // 添加评论
+      sendPinglun() {
+        let addCom = {
+          username: "tester",
+          time: "xxxx-xx-xx 4:04:00",
+          goods: "xxx",
+        };
+        addCom.content = comment.pinglun;
+        comment.commentData.push(addCom);
+      },
+
+      commentData: [
+        {
+          username: "一",
+          content: "123456789",
+          time: "20xx-12-11 20:08",
+          goods: 514,
+          answer: [
+            {
+              username: "哈哈",
+              content: "b回复a",
+              time: "20xx-10-01 10:48",
+              goods: 114,
+            },
+            {
+              username: "老六",
+              content: "z回复a",
+              time: "20xx-10-01 10:48",
+              goods: 10,
+            },
+          ],
+        },
+        {
+          username: "二",
+          content: "qwer",
+          time: "20xx-04-01 17:08",
+          goods: 1919,
+          answer: [
+            {
+              username: "嘿嘿",
+              content: "ggg回复c",
+              time: "20xx-10-01 10:48",
+              goods: 4,
+            },
+          ],
+        },
+        {
+          username: "三",
+          content: "123456789",
+          time: "20xx-05-21 10:38",
+          goods: 810,
+        },
+      ],
+      pinglunSuccess() {
+        ElMessage({
+          message: "评论成功.",
+          type: "success",
+        });
+        comment.pinglun = "";
+      },
+      pinglunError() {
+        ElMessage({
+          message: "评论失败.",
+          type: "error",
+        });
+      },
+    });
+    // 监听评论是否增加
+    watch(
+      () => [...comment.commentData],
+      (now, old) => {
+        if (now != old) {
+          comment.pinglunSuccess();
+        } else if (now == old) {
+          comment.pinglunError();
+        }
+      }
+    );
 
     return {
       ...toRefs(titlebar),
       ...toRefs(avatar),
+      ...toRefs(danmu),
+      ...toRefs(video),
+      ...toRefs(comment),
     };
   },
 };
@@ -188,8 +682,8 @@ export default {
 
 .input-with-select {
   background-color: var(--el-fill-color-blank);
-  width: 936px;
+  width: 690px;
   height: 45px;
-  margin-left: 20px;
+  margin-left: 156px;
 }
 </style>
