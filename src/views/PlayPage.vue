@@ -31,13 +31,31 @@
                       style="width: 100%; height: auto; padding: 0px"
                       :body-style="{ padding: '0px' }"
                     >
-                      <video
+                    <!-- 播放器 -->
+                      <vue3VideoPlay
                         width="1170px"
                         height="660px"
-                        src="../assets/canxiang.mp4"
-                        controls="controls"
-                        style="width: 1170px; height: 660px"
-                      ></video>
+                        color="#409eff"
+                        :src="realSrc"
+                        autoPlay=true
+                        type="video/mp4"
+                        style="width: 1170px; height: 660px; z-index: 2"
+                      />
+                      <!-- 弹幕功能 -->
+                      <vue-danmaku
+                        v-model:danmus="danmus"
+                        ref="danmakuRef"
+                        fontSize="20px"
+                        speeds="100"
+                        style="
+                          height: 210px;
+                          width: 1163px;
+                          position: absolute;
+                          border: 1px solid yellow;
+                          top: 100px;
+                          z-index: 4;
+                        "
+                      ></vue-danmaku>
                       <div
                         style="
                           width: 1165px;
@@ -50,8 +68,13 @@
                         "
                       >
                         <span style="margin-left: 10px; width: 300px"
-                          >114人正在观看，已装填514条弹幕</span
+                          >114人正在观看，已装填{{ danmus.length }}条弹幕</span
                         >
+                        <span>
+                          <el-button type="primary" @click="showDanmu"
+                            >{{ switchName }}弹幕</el-button
+                          >
+                        </span>
                         <span>
                           <el-input
                             v-model="sendDanmu"
@@ -59,7 +82,9 @@
                             class="input-with-select"
                           >
                             <template #append>
-                              <el-button type="primary">发送</el-button>
+                              <el-button type="primary" @click="send"
+                                >发送</el-button
+                              >
                             </template>
                           </el-input>
                         </span>
@@ -264,7 +289,7 @@
                             margin-left: 50px;
                           "
                         >
-                          <p style="font-size:20px">{{ item.content }}</p>
+                          <p style="font-size: 20px">{{ item.content }}</p>
                           <!-- 时间和点赞 -->
                           <div style="display: flex; flex-direction: row">
                             <p>时间:{{ item.time }}</p>
@@ -277,7 +302,11 @@
                             <div
                               v-for="i in item.answer"
                               :key="i"
-                              style="display: flex; flex-direction: column;line-height: 0px;"
+                              style="
+                                display: flex;
+                                flex-direction: column;
+                                line-height: 0px;
+                              "
                             >
                               <!-- 回复的头像和用户名 -->
                               <div
@@ -367,7 +396,7 @@
                     <!-- 列表 -->
                     <div v-show="danmuList == 1" style="width: auto">
                       <el-table
-                        :data="DanmuData"
+                        :data="danmuData"
                         style="width: 100%"
                         max-height="680px"
                       >
@@ -440,13 +469,19 @@
 </template>
 
 <script>
-import { reactive, toRefs, watch } from "vue";
+import { reactive, toRefs, watch, ref, onMounted } from "vue";
 import HeaderNav from "../components/HeaderNav.vue";
 import MainFramework from "../components/MainFramework.vue";
 import { ElMessage } from "element-plus";
+import vueDanmaku from "vue3-danmaku";
+import { videoPlay } from "vue3-video-play";
+import "vue3-video-play/dist/style.css";
+
 export default {
-  components: { HeaderNav, MainFramework },
+  components: { HeaderNav, MainFramework, vueDanmaku, videoPlay },
   setup() {
+    const danmakuRef = ref(null);
+
     // 标题栏
     let titlebar = reactive({
       playback: 114514,
@@ -461,7 +496,7 @@ export default {
     // 弹幕
     let danmu = reactive({
       // 弹幕数据
-      DanmuData: [
+      danmuData: [
         { content: "aaa", time: "02-28 16:48" },
         { content: "bbb", time: "02-18 16:48" },
         { content: "cc", time: "12-28 16:48" },
@@ -474,42 +509,87 @@ export default {
         { content: "agggggaa", time: "09-28 16:48" },
         { content: "agggggaa", time: "09-28 16:48" },
         { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
       ],
+      // 只有弹幕内容无时间
+      danmus: [],
+      // 发送弹幕的内容
+      sendDanmu: "",
+      switchName: "关闭",
+      // 以下两个是控制弹幕列表显示
       state: false,
-      danmuList: 2,
+      danmuList: 2, //当为1时才显示,默认为关
+      // 以下两个是控制弹幕视频中显示
+      showState: true,
+      isShow: 4, //当为4时才显示,默认为显示
+      // 是否显示弹幕列表
       changeList() {
         danmu.danmuList = danmu.state == false ? "1" : "2";
         danmu.state = !danmu.state;
       },
+      // 初始化弹幕
+      beginDanmu() {
+        let temp = [];
+        for (let a = 0; a <= 100; a++) {
+          // danmu.danmus.push(a);
+          danmu.danmuData.push({content:a,time:'07-09 00:47'})
+        }
+        for (let i = 0; i < danmu.danmuData.length; i++) {
+          temp.push(danmu.danmuData[i].content);
+        }
+        danmu.danmus = temp;
+        // console.log(danmu.danmus)
+        
+      },
+      // 是否显示弹幕
+      showDanmu() {
+        danmu.isShow = danmu.showState == false ? "3" : "4";
+        if (danmu.isShow == "3") {
+          danmakuRef.value.show();
+          danmu.showState = !danmu.showState;
+          danmu.switchName = "关闭";
+          // console.log('显示弹幕')
+        } else if (danmu.isShow == "4") {
+          danmakuRef.value.hide();
+          danmu.showState = !danmu.showState;
+          danmu.switchName = "显示";
+          // console.log('关闭弹幕')
+        }
+      },
+      // 发送弹幕
+      send() {
+        danmakuRef.value.add(danmu.sendDanmu);
+        let x={content:danmu.sendDanmu,time:'xx-xx xx:xx'}
+        danmu.danmuData.push(x)
+        danmu.sendDanmu = "";
+      },
     });
+
+    let option = reactive({
+      //主题色
+      title: "", //视频名称
+      realSrc:
+        "https://prod-streaming-video-msn-com.akamaized.net/fb194c01-2ff6-4b4e-afbd-a00289124c4c/af7a74f5-5cb6-423e-b428-d05c0d36478d.mp4", //视频源
+      muted: false, //静音
+      webFullScreen: false,
+      speedRate: ["0.75", "1.0", "1.25", "1.5", "2.0"], //播放倍速
+      autoPlay: true, //自动播放
+      loop: false, //循环播放
+      mirror: false, //镜像画面
+      ligthOff: false, //关灯模式
+      volume: 0.3, //默认音量大小
+      control: true, //是否显示控制
+      controlBtns: [
+        "audioTrack",
+        "quality",
+        "speedRate",
+        "volume",
+        "setting",
+        "pip",
+        "pageFullScreen",
+        "fullScreen",
+      ], //显示所有按钮,
+    });
+
     //推荐视频列表
     let video = reactive({
       // 推荐视频数据
@@ -642,12 +722,19 @@ export default {
       }
     );
 
+    onMounted(() => {
+      danmu.beginDanmu()
+      console.log("初始化弹幕内容");
+    });
+
     return {
+      danmakuRef,
       ...toRefs(titlebar),
       ...toRefs(avatar),
       ...toRefs(danmu),
       ...toRefs(video),
       ...toRefs(comment),
+      ...toRefs(option),
     };
   },
 };
@@ -684,6 +771,6 @@ export default {
   background-color: var(--el-fill-color-blank);
   width: 690px;
   height: 45px;
-  margin-left: 156px;
+  margin-left: 70px;
 }
 </style>
