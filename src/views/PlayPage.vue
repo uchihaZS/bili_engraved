@@ -31,31 +31,12 @@
                       style="width: 100%; height: auto; padding: 0px"
                       :body-style="{ padding: '0px' }"
                     >
-                    <!-- 播放器 -->
-                      <vue3VideoPlay
-                        width="1170px"
-                        height="660px"
-                        color="#409eff"
-                        :src="realSrc"
-                        autoPlay=true
-                        type="video/mp4"
-                        style="width: 1170px; height: 660px; z-index: 2"
+                      <!-- 播放器 -->
+                      <Artplayer
+                        style="width: 1170px; height: 660px"
+                        :option="player"
                       />
-                      <!-- 弹幕功能 -->
-                      <vue-danmaku
-                        v-model:danmus="danmus"
-                        ref="danmakuRef"
-                        fontSize="20px"
-                        speeds="100"
-                        style="
-                          height: 210px;
-                          width: 1163px;
-                          position: absolute;
-                          border: 1px solid yellow;
-                          top: 100px;
-                          z-index: 4;
-                        "
-                      ></vue-danmaku>
+
                       <div
                         style="
                           width: 1165px;
@@ -68,13 +49,8 @@
                         "
                       >
                         <span style="margin-left: 10px; width: 300px"
-                          >114人正在观看，已装填{{ danmus.length }}条弹幕</span
+                          >114人正在观看，已装填{{ danmuLen }}条弹幕</span
                         >
-                        <span>
-                          <el-button type="primary" @click="showDanmu"
-                            >{{ switchName }}弹幕</el-button
-                          >
-                        </span>
                         <span>
                           <el-input
                             v-model="sendDanmu"
@@ -387,25 +363,26 @@
                   >
                     <el-button
                       type="info"
-                      @click="changeList"
+                      @click="changeBtn"
                       size="large"
                       color="#CFD3DC"
                       style="width: 100%"
                       >弹幕列表</el-button
                     >
                     <!-- 列表 -->
-                    <div v-show="danmuList == 1" style="width: auto">
+                    <div v-show="showList == 1" style="width: auto">
                       <el-table
-                        :data="danmuData"
+                        :data="danmukuLB"
                         style="width: 100%"
                         max-height="680px"
                       >
                         <el-table-column
-                          prop="content"
-                          label="内容"
-                          width="180"
+                          prop="time"
+                          label="发送时间"
+                          width="100"
                         />
-                        <el-table-column prop="time" label="时间" width="180" />
+                        <el-table-column prop="text" label="内容" width="150" />
+                        <el-table-column prop="date" label="日期" width="110" />
                       </el-table>
                     </div>
                   </div>
@@ -419,7 +396,7 @@
                     "
                   >
                     <div
-                      v-for="(item, index) in videoData"
+                      v-for="(item, index) in tuijianData"
                       :key="index"
                       style="
                         display: flex;
@@ -469,19 +446,15 @@
 </template>
 
 <script>
-import { reactive, toRefs, watch, ref, onMounted } from "vue";
+import { reactive, toRefs, watch, onBeforeMount, onMounted } from "vue";
 import HeaderNav from "../components/HeaderNav.vue";
-import MainFramework from "../components/MainFramework.vue";
 import { ElMessage } from "element-plus";
-import vueDanmaku from "vue3-danmaku";
-import { videoPlay } from "vue3-video-play";
-import "vue3-video-play/dist/style.css";
+import Artplayer from "../components/Artplayer.vue";
+import artplayerPluginDanmuku from "artplayer-plugin-danmuku";
 
 export default {
-  components: { HeaderNav, MainFramework, vueDanmaku, videoPlay },
+  components: { HeaderNav, Artplayer },
   setup() {
-    const danmakuRef = ref(null);
-
     // 标题栏
     let titlebar = reactive({
       playback: 114514,
@@ -494,106 +467,170 @@ export default {
         "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
     });
     // 弹幕
-    let danmu = reactive({
-      // 弹幕数据
-      danmuData: [
-        { content: "aaa", time: "02-28 16:48" },
-        { content: "bbb", time: "02-18 16:48" },
-        { content: "cc", time: "12-28 16:48" },
-        { content: "ddd", time: "05-28 16:48" },
-        { content: "ee", time: "01-28 16:48" },
-        { content: "aaffa", time: "08-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-        { content: "agggggaa", time: "09-28 16:48" },
-      ],
-      // 只有弹幕内容无时间
-      danmus: [],
-      // 发送弹幕的内容
-      sendDanmu: "",
-      switchName: "关闭",
+    // let x = reactive({
+    //   player: {
+    //     container: ".artplayer-app",
+    //     url: "/assets/sample/video.mp4",
+    //     plugins: [
+    //       artplayerPluginDanmuku({
+    //         danmuku: "/assets/sample/danmuku.xml",
+    //       }),
+    //     ],
+    //     controls: [
+    //       {
+    //         position: "right",
+    //         html: "发送弹幕",
+    //         click: function () {
+    //           var text = prompt("请输入弹幕文本", "弹幕测试文本");
+    //           if (!text || !text.trim()) return;
+    //           var color =
+    //             "#" + Math.floor(Math.random() * 0xffffff).toString(16);
+    //           var art = new Artplayer(x.player);
+    //           art.plugins.artplayerPluginDanmuku.emit({
+    //             text: text,
+    //             color: color,
+    //             border: true,
+    //           });
+    //         },
+    //       },
+    //     ],
+    //   },
+    // });
+
+    // var art = new Artplayer(x.player);
+    //播放器
+    let videoOption = reactive({
+      // 必须要用player作为对象推送
+      player: {
+        container: "width: 1170px;height: 660px;",
+        url: "/cx.mp4", //视频源https://artplayer.org/assets/sample/video.mp4
+        theme: "#23ade5",
+        autoplay: true,
+        fullscreen: true, //全屏
+        fullscreenWeb: true, //网页全屏
+        lang: "zh-cn",
+        pip: true, //画中画
+        autoSize: true,
+        autoMini: true,
+        isLive: false, //直播模式
+        muted: false, //静音
+        setting: true,
+        loop: false, //循环播放
+        flip: true, //视频镜像
+        playbackRate: true, //倍速
+        aspectRatio: true, //长宽比
+        //时间线点位
+        highlight: [
+          {
+            time: 22,
+            text: "开头logo",
+          },
+          {
+            time: 43,
+            text: "千倍奉还",
+          },
+          {
+            time: 50,
+            text: "第一段高潮",
+          },
+          {
+            time: 89,
+            text: "第二段主歌",
+          },
+          {
+            time: 133,
+            text: "副歌",
+          },
+          {
+            time: 172,
+            text: "结束",
+          },
+        ],
+        //hover缩略图
+        thumbnails: {
+          url: "/cxthum.png",
+          number: 160, // 数量
+          width: 160, // 宽度
+          column: 10,
+        },
+        // 弹幕数组(视频用)
+        danmukuList: [
+          // {
+          //   text: "111", // 弹幕文本
+          //   time: 1, // 发送时间，单位秒
+          //   color: "#fff", // 弹幕局部颜色
+          //   border: false, // 是否显示描边
+          //   mode: 0, // 弹幕模式: 0表示滚动, 1静止
+          // },
+        ],
+        // 插件
+        plugins: [
+          // 弹幕库
+          artplayerPluginDanmuku({
+            // 弹幕数组
+            danmuku: () => videoOption.player.danmukuList,
+            speed: 7, // 弹幕持续时间，单位秒，范围在[1 ~ 10]
+            opacity: 1, // 弹幕透明度，范围在[0 ~ 1]
+            fontSize: 25, // 字体大小，支持数字和百分比
+            color: "#FFFFFF", // 默认字体颜色
+            mode: 0, // 默认模式，0-滚动，1-静止
+            margin: [10, "25%"], // 弹幕上下边距，支持数字和百分比
+            antiOverlap: true, // 是否防重叠
+            useWorker: true, // 是否使用 web worker
+            synchronousPlayback: false, // 是否同步到播放速度
+            lockTime: 5, // 输入框锁定时间，单位秒，范围在[1 ~ 60]
+            maxLength: 100, // 输入框最大可输入的字数，范围在[0 ~ 500]
+            minWidth: 200, // 输入框最小宽度，范围在[0 ~ 500]，填 0 则为无限制
+            maxWidth: 400, // 输入框最大宽度，范围在[0 ~ Infinity]，填 0 则为 100% 宽度
+            theme: "dark",
+          }),
+        ],
+        // 发送弹幕
+        controls: [
+          {
+            position: "right",
+            html: "发送弹幕",
+            click: function () {
+              var text = prompt("请输入弹幕文本", "弹幕测试文本");
+              if (!text || !text.trim()) return;
+              var color =
+                "#" + Math.floor(Math.random() * 0xffffff).toString(16);
+              // var art = new Artplayer(videoOption.player);
+              videoOption.player.plugins.artplayerPluginDanmuku.emit({
+                text: text,
+                color: color,
+                border: true,
+              });
+              videoOption.player.danmukuList.push({
+                text: text,
+                color: color,
+                time:'test',
+                mode:0,
+                border: false,
+              })
+            },
+          },
+        ],
+      },
+    });
+
+    let danmuLiebiao = reactive({
+      // 弹幕数组(列表用)
+      danmukuLB: [],
       // 以下两个是控制弹幕列表显示
       state: false,
-      danmuList: 2, //当为1时才显示,默认为关
-      // 以下两个是控制弹幕视频中显示
-      showState: true,
-      isShow: 4, //当为4时才显示,默认为显示
+      showList: 2, //当为1时才显示,默认为关
       // 是否显示弹幕列表
-      changeList() {
-        danmu.danmuList = danmu.state == false ? "1" : "2";
-        danmu.state = !danmu.state;
-      },
-      // 初始化弹幕
-      beginDanmu() {
-        let temp = [];
-        for (let a = 0; a <= 100; a++) {
-          // danmu.danmus.push(a);
-          danmu.danmuData.push({content:a,time:'07-09 00:47'})
-        }
-        for (let i = 0; i < danmu.danmuData.length; i++) {
-          temp.push(danmu.danmuData[i].content);
-        }
-        danmu.danmus = temp;
-        // console.log(danmu.danmus)
-        
-      },
-      // 是否显示弹幕
-      showDanmu() {
-        danmu.isShow = danmu.showState == false ? "3" : "4";
-        if (danmu.isShow == "3") {
-          danmakuRef.value.show();
-          danmu.showState = !danmu.showState;
-          danmu.switchName = "关闭";
-          // console.log('显示弹幕')
-        } else if (danmu.isShow == "4") {
-          danmakuRef.value.hide();
-          danmu.showState = !danmu.showState;
-          danmu.switchName = "显示";
-          // console.log('关闭弹幕')
-        }
-      },
-      // 发送弹幕
-      send() {
-        danmakuRef.value.add(danmu.sendDanmu);
-        let x={content:danmu.sendDanmu,time:'xx-xx xx:xx'}
-        danmu.danmuData.push(x)
-        danmu.sendDanmu = "";
+      changeBtn() {
+        danmuLiebiao.showList = danmuLiebiao.state == false ? "1" : "2";
+        danmuLiebiao.state = !danmuLiebiao.state;
+        console.log("aaa");
       },
     });
-
-    let option = reactive({
-      //主题色
-      title: "", //视频名称
-      realSrc:
-        "https://prod-streaming-video-msn-com.akamaized.net/fb194c01-2ff6-4b4e-afbd-a00289124c4c/af7a74f5-5cb6-423e-b428-d05c0d36478d.mp4", //视频源
-      muted: false, //静音
-      webFullScreen: false,
-      speedRate: ["0.75", "1.0", "1.25", "1.5", "2.0"], //播放倍速
-      autoPlay: true, //自动播放
-      loop: false, //循环播放
-      mirror: false, //镜像画面
-      ligthOff: false, //关灯模式
-      volume: 0.3, //默认音量大小
-      control: true, //是否显示控制
-      controlBtns: [
-        "audioTrack",
-        "quality",
-        "speedRate",
-        "volume",
-        "setting",
-        "pip",
-        "pageFullScreen",
-        "fullScreen",
-      ], //显示所有按钮,
-    });
-
     //推荐视频列表
-    let video = reactive({
+    let tuijian = reactive({
       // 推荐视频数据
-      videoData: [
+      tuijianData: [
         {
           name: "a",
           author: "aa",
@@ -647,6 +684,7 @@ export default {
       sendPinglun() {
         let addCom = {
           username: "tester",
+          content:'',
           time: "xxxx-xx-xx 4:04:00",
           goods: "xxx",
         };
@@ -722,19 +760,77 @@ export default {
       }
     );
 
-    onMounted(() => {
-      danmu.beginDanmu()
+    watch(
+      () => [...videoOption.player.danmukuList],
+      (now, old) => {
+        if (now != old) {
+          videoOption.player.danmukuList=now
+          console.log('弹幕总数改变')
+        } else if (now == old) {
+          return
+        }
+      }
+    );
+
+    function randomColor() {
+      var color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += ((Math.random() * 16) | 0).toString(16);
+      }
+      return color;
+    }
+
+    function beginDanmu() {
+      let danmukuLength = 0;
+      let modee = 0;
+      let timee = 0;
+      let rgb = "";
+      let num = "";
+      for (let i = 1; i <= 514; i++) {
+        modee = Math.round(Math.random()); //0 to 1
+        timee = Math.floor(Math.random() * 189) + 1; //1 to 189
+        rgb = randomColor();
+        num = i.toString();
+        let temp = {
+          text: num,
+          mode: modee,
+          time: timee,
+          color: rgb,
+          border: false,
+          date: "01-01 20:23",
+        };
+        videoOption.player.danmukuList.push(temp);
+        danmuLiebiao.danmukuLB.push(temp);
+        danmukuLength = videoOption.player.danmukuList.length;
+      }
+
+      // console.log(videoOption.player.danmukuList);
+      // console.log(danmukuLength);
       console.log("初始化弹幕内容");
+      return danmukuLength;
+    }
+    let danmuLen = beginDanmu();
+
+    function saveList() {
+      danmuLiebiao.danmukuLB = videoOption.player.danmukuList;
+    }
+
+    onBeforeMount(() => {
+      beginDanmu();
+    });
+
+    onMounted(() => {
+      saveList();
     });
 
     return {
-      danmakuRef,
+      danmuLen,
       ...toRefs(titlebar),
       ...toRefs(avatar),
-      ...toRefs(danmu),
-      ...toRefs(video),
+      ...toRefs(videoOption),
+      ...toRefs(danmuLiebiao),
+      ...toRefs(tuijian),
       ...toRefs(comment),
-      ...toRefs(option),
     };
   },
 };
@@ -771,6 +867,11 @@ export default {
   background-color: var(--el-fill-color-blank);
   width: 690px;
   height: 45px;
-  margin-left: 70px;
+  margin-left: 160px;
+}
+
+.artplayer-app {
+  width: 1170px;
+  height: 660px;
 }
 </style>
