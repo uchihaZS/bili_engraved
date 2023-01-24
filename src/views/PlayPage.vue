@@ -17,7 +17,7 @@
                 <!-- 左边 -->
                 <div style="display: flex; flex-direction: column; width: auto">
                   <!-- 标题栏 -->
-                  <h1 style="margin-top: 0px">标题</h1>
+                  <h1 style="margin-top: 0px">{{vname}}</h1>
                   <div style="color: #9499a0; margin-bottom: 30px">
                     <span>播放 {{ playback }}</span>
                     <span style="margin-left: 10px">弹幕 {{ danmu }}</span>
@@ -332,7 +332,7 @@
                         margin-top: -10px;
                       "
                     >
-                      <p style="font-size: 20px; font-weight: bold">作者名</p>
+                      <p style="font-size: 20px; font-weight: bold">{{author}}</p>
                       <p>介绍.................</p>
                       <el-button type="primary" style="width: 70%"
                         >+关注 2887</el-button
@@ -429,7 +429,8 @@
 </template>
 
 <script>
-import { reactive, toRefs, watch } from "vue";
+import { onMounted, reactive, toRefs, watch,ref } from "vue";
+import { useStore } from 'vuex'
 import HeaderNav from "../components/HeaderNav.vue";
 import { ElMessage } from "element-plus";
 import Artplayer from "../components/Artplayer.vue";
@@ -565,6 +566,7 @@ export default {
     },
   },
   setup() {
+    
     // 标题栏
     let titlebar = reactive({
       playback: 114514,
@@ -576,7 +578,9 @@ export default {
       squareUrl:
         "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
     });
-
+    const store = useStore()
+    const vname = ref(store.state.vname)
+    const author = ref(store.state.author)
     //暂用
     let danmuLiebiao = reactive({
       // 弹幕数组(列表用)
@@ -727,7 +731,7 @@ export default {
     return {
       ...toRefs(titlebar),
       ...toRefs(avatar),
-
+      vname,author,
       ...toRefs(danmuLiebiao),
       ...toRefs(tuijian),
       ...toRefs(comment),

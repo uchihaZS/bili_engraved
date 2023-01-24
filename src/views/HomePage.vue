@@ -1255,19 +1255,15 @@
                   >
                     <div
                       v-if="item.poster != ''"
-                      style="
-                        width: 100%;
-                        height: 165px;
-
-                        border-radius: 10px;
-                      "
-                    >
-                      <el-image
-                        style="width: 100%; height: 100%; border-radius: 10px"
-                        :src="item.poster"
-                        fit="contain"
-                      />
-                    </div>
+                      @click="goToPage(item.link, item.vname, item.author)"
+                      :style="[
+                        { width: '100%' },
+                        { height: '165px' },
+                        { backgroundImage: `url(${item.poster})` },
+                        { borderRadius: '10px' },
+                        { backgroundSize: 'contain' },
+                      ]"
+                    ></div>
                     <div
                       v-else-if="item.poster == ''"
                       style="
@@ -1807,6 +1803,8 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 import { reactive, onMounted, toRefs } from "vue";
+import { useStore } from "vuex";
+import {useRouter,useRoute} from "vue-router"
 // import { Search } from '@element-plus/icons-vue'
 export default {
   name: "HomePage",
@@ -2038,12 +2036,22 @@ export default {
       },
     });
 
+    const router=useRouter()
+    const route=useRoute()
+    const store = useStore();
+    const goToPage = (link, vname, author) => {
+      store.dispatch("updateVname", vname);
+      store.dispatch("updateAuthor", author);
+      router.push({ path: link });
+      console.log(link)
+    };
     let videoList = reactive({
       vList: [
         {
           vname: "鬼灭之刃游郭篇《残響散歌》真.完整粤语版",
           poster: "/fm.jpg",
           author: "不是词神",
+          link: "/playpage",
         },
         {
           vname: "推荐视频2",
@@ -2250,6 +2258,7 @@ export default {
 
     return {
       headmenu,
+      goToPage,
       ...toRefs(videoList),
       ...toRefs(logo),
       ...toRefs(avatar),
