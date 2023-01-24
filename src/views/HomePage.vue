@@ -1247,25 +1247,49 @@
                     style="
                       width: 255px;
                       height: 235px;
-
                       margin-left: 10px;
                       border-radius: 10px;
                     "
-                    v-for="i in 8"
-                    :key="i"
+                    v-for="(item, index) in vList"
+                    :key="index"
                   >
                     <div
+                      v-if="item.poster != ''"
+                      style="
+                        width: 100%;
+                        height: 165px;
+
+                        border-radius: 10px;
+                      "
+                    >
+                      <el-image
+                        style="width: 100%; height: 100%; border-radius: 10px"
+                        :src="item.poster"
+                        fit="contain"
+                      />
+                    </div>
+                    <div
+                      v-else-if="item.poster == ''"
                       style="
                         width: 100%;
                         height: 165px;
                         background-color: rgb(144, 147, 153);
                         border-radius: 10px;
                       "
+                    ></div>
+
+                    <span
+                      style="
+                        width: 255px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        display: block;
+                        white-space: nowrap;
+                      "
                     >
-                      图片{{ i }}
-                    </div>
-                    <span>价绍{{ i }}</span>
-                    <p>作者{{ i }}</p>
+                      {{ item.vname }}</span
+                    >
+                    <p>{{ item.author }}</p>
                   </div>
                 </div>
               </div>
@@ -1363,14 +1387,30 @@
                         collapse-transition="false"
                         ellipsis="false"
                       >
-                        <el-menu-item index="0" @click="weekday=0">最近更新</el-menu-item>
-                        <el-menu-item index="1" @click="weekday=1">周一</el-menu-item>
-                        <el-menu-item index="2" @click="weekday=2">周二</el-menu-item>
-                        <el-menu-item index="3" @click="weekday=3">周三</el-menu-item>
-                        <el-menu-item index="4" @click="weekday=4">周四</el-menu-item>
-                        <el-menu-item index="5" @click="weekday=5">周五</el-menu-item>
-                        <el-menu-item index="6" @click="weekday=6">周六</el-menu-item>
-                        <el-menu-item index="7" @click="weekday=7">周日</el-menu-item>
+                        <el-menu-item index="0" @click="weekday = 0"
+                          >最近更新</el-menu-item
+                        >
+                        <el-menu-item index="1" @click="weekday = 1"
+                          >周一</el-menu-item
+                        >
+                        <el-menu-item index="2" @click="weekday = 2"
+                          >周二</el-menu-item
+                        >
+                        <el-menu-item index="3" @click="weekday = 3"
+                          >周三</el-menu-item
+                        >
+                        <el-menu-item index="4" @click="weekday = 4"
+                          >周四</el-menu-item
+                        >
+                        <el-menu-item index="5" @click="weekday = 5"
+                          >周五</el-menu-item
+                        >
+                        <el-menu-item index="6" @click="weekday = 6"
+                          >周六</el-menu-item
+                        >
+                        <el-menu-item index="7" @click="weekday = 7"
+                          >周日</el-menu-item
+                        >
                       </el-menu>
                     </div>
                     <div style="margin-left: 450px">
@@ -1381,7 +1421,7 @@
 
                   <!-- 番剧列表 -->
                   <div
-                  v-if="weekday==0"
+                    v-if="weekday == 0"
                     style="
                       width: 100%;
                       height: auto;
@@ -1420,7 +1460,7 @@
                   </div>
                   <!-- 周一 -->
                   <div
-                  v-if="weekday==1"
+                    v-if="weekday == 1"
                     style="
                       width: 100%;
                       height: auto;
@@ -1459,7 +1499,7 @@
                   </div>
                   <!-- 周二 -->
                   <div
-                  v-if="weekday==2"
+                    v-if="weekday == 2"
                     style="
                       width: 100%;
                       height: auto;
@@ -1498,7 +1538,7 @@
                   </div>
                   <!-- 周三 -->
                   <div
-                  v-if="weekday==3"
+                    v-if="weekday == 3"
                     style="
                       width: 100%;
                       height: auto;
@@ -1537,7 +1577,7 @@
                   </div>
                   <!-- 周四 -->
                   <div
-                  v-if="weekday==4"
+                    v-if="weekday == 4"
                     style="
                       width: 100%;
                       height: auto;
@@ -1576,7 +1616,7 @@
                   </div>
                   <!-- 周五 -->
                   <div
-                  v-if="weekday==5"
+                    v-if="weekday == 5"
                     style="
                       width: 100%;
                       height: auto;
@@ -1615,7 +1655,7 @@
                   </div>
                   <!-- 周六 -->
                   <div
-                  v-if="weekday==6"
+                    v-if="weekday == 6"
                     style="
                       width: 100%;
                       height: auto;
@@ -1654,7 +1694,7 @@
                   </div>
                   <!-- 周日 -->
                   <div
-                  v-if="weekday==7"
+                    v-if="weekday == 7"
                     style="
                       width: 100%;
                       height: auto;
@@ -1693,7 +1733,14 @@
                   </div>
                 </div>
                 <!-- 右边排行榜 -->
-                <div style="width: 17%; display: flex; flex-direction: column;margin-right: 7px;">
+                <div
+                  style="
+                    width: 17%;
+                    display: flex;
+                    flex-direction: column;
+                    margin-right: 7px;
+                  "
+                >
                   <!-- 排行榜顶栏 -->
                   <div
                     style="
@@ -1991,6 +2038,51 @@ export default {
       },
     });
 
+    let videoList = reactive({
+      vList: [
+        {
+          vname: "鬼灭之刃游郭篇《残響散歌》真.完整粤语版",
+          poster: "/fm.jpg",
+          author: "不是词神",
+        },
+        {
+          vname: "推荐视频2",
+          poster: "",
+          author: "作者2",
+        },
+        {
+          vname: "推荐视频3",
+          poster: "",
+          author: "作者3",
+        },
+        {
+          vname: "推荐视频4",
+          poster: "",
+          author: "作者4",
+        },
+        {
+          vname: "推荐视频5",
+          poster: "",
+          author: "作者5",
+        },
+        {
+          vname: "推荐视频6",
+          poster: "",
+          author: "作者6",
+        },
+        {
+          vname: "推荐视频7",
+          poster: "",
+          author: "作者7",
+        },
+        {
+          vname: "推荐视频8",
+          poster: "",
+          author: "作者8",
+        },
+      ],
+    });
+
     let tag = reactive({
       tagItem1: [
         "番剧",
@@ -2111,9 +2203,9 @@ export default {
       },
     ]);
 
-    let animeTimeList=reactive({
-      weekday:'0'
-    })
+    let animeTimeList = reactive({
+      weekday: "0",
+    });
 
     // 生命函数
     onMounted(() => {
@@ -2158,6 +2250,7 @@ export default {
 
     return {
       headmenu,
+      ...toRefs(videoList),
       ...toRefs(logo),
       ...toRefs(avatar),
       ...toRefs(dynamic),
@@ -2166,7 +2259,7 @@ export default {
       ...toRefs(history),
       ...toRefs(tag),
       animeRank,
-      ...toRefs(animeTimeList)
+      ...toRefs(animeTimeList),
     };
   },
 };

@@ -9,9 +9,7 @@
         <div class="row">
           <el-row style="width: 100%">
             <el-col :span="2">
-              <div
-                style="background-color: green; width: 100%; height: 100%"
-              ></div>
+              <div class="LeftAndRight"></div>
             </el-col>
             <!-- 中心内容 -->
             <el-col :span="20" style="background-color: white">
@@ -32,10 +30,12 @@
                       :body-style="{ padding: '0px' }"
                     >
                       <!-- 播放器 -->
-                      <Artplayer
-                        style="width: 1170px; height: 660px"
-                        :option="player"
-                      />
+                      <div class="artplayer-app">
+                        <Artplayer
+                          style="width: 1170px; height: 660px"
+                          :option="option"
+                        />
+                      </div>
 
                       <div
                         style="
@@ -49,21 +49,8 @@
                         "
                       >
                         <span style="margin-left: 10px; width: 300px"
-                          >114人正在观看，已装填{{ danmuLen }}条弹幕</span
+                          >114人正在观看，已装填{{ danmukuLength }}条弹幕</span
                         >
-                        <span>
-                          <el-input
-                            v-model="sendDanmu"
-                            placeholder="发个友善的弹幕见证当下"
-                            class="input-with-select"
-                          >
-                            <template #append>
-                              <el-button type="primary" @click="send"
-                                >发送</el-button
-                              >
-                            </template>
-                          </el-input>
-                        </span>
                       </div>
                     </el-card>
                   </div>
@@ -330,7 +317,7 @@
                   style="
                     position: relative;
                     left: 30px;
-                    background-color: red;
+                    background-color: white;
                     width: 100%;
                   "
                 >
@@ -372,7 +359,7 @@
                     <!-- 列表 -->
                     <div v-show="showList == 1" style="width: auto">
                       <el-table
-                        :data="danmukuLB"
+                        :data="danmukuList"
                         style="width: 100%"
                         max-height="680px"
                       >
@@ -433,11 +420,7 @@
               </div>
             </el-col>
 
-            <el-col :span="2">
-              <div
-                style="background-color: green; width: 100%; height: 100%"
-              ></div
-            ></el-col>
+            <el-col :span="2"> <div class="LeftAndRight"></div></el-col>
           </el-row>
         </div>
       </el-main>
@@ -446,80 +429,38 @@
 </template>
 
 <script>
-import { reactive, toRefs, watch, onBeforeMount, onMounted } from "vue";
+import { reactive, toRefs, watch } from "vue";
 import HeaderNav from "../components/HeaderNav.vue";
 import { ElMessage } from "element-plus";
 import Artplayer from "../components/Artplayer.vue";
 import artplayerPluginDanmuku from "artplayer-plugin-danmuku";
-
 export default {
   components: { HeaderNav, Artplayer },
-  setup() {
-    // 标题栏
-    let titlebar = reactive({
-      playback: 114514,
-      danmu: 1919,
-      times: "114-5-14  19:19:08",
-    });
-    // 头像
-    let avatar = reactive({
-      squareUrl:
-        "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
-    });
-    // 弹幕
-    // let x = reactive({
-    //   player: {
-    //     container: ".artplayer-app",
-    //     url: "/assets/sample/video.mp4",
-    //     plugins: [
-    //       artplayerPluginDanmuku({
-    //         danmuku: "/assets/sample/danmuku.xml",
-    //       }),
-    //     ],
-    //     controls: [
-    //       {
-    //         position: "right",
-    //         html: "发送弹幕",
-    //         click: function () {
-    //           var text = prompt("请输入弹幕文本", "弹幕测试文本");
-    //           if (!text || !text.trim()) return;
-    //           var color =
-    //             "#" + Math.floor(Math.random() * 0xffffff).toString(16);
-    //           var art = new Artplayer(x.player);
-    //           art.plugins.artplayerPluginDanmuku.emit({
-    //             text: text,
-    //             color: color,
-    //             border: true,
-    //           });
-    //         },
-    //       },
-    //     ],
-    //   },
-    // });
-
-    // var art = new Artplayer(x.player);
-    //播放器
-    let videoOption = reactive({
-      // 必须要用player作为对象推送
-      player: {
-        container: "width: 1170px;height: 660px;",
-        url: "/cx.mp4", //视频源https://artplayer.org/assets/sample/video.mp4
-        theme: "#23ade5",
-        autoplay: true,
-        fullscreen: true, //全屏
-        fullscreenWeb: true, //网页全屏
-        lang: "zh-cn",
-        pip: true, //画中画
+  data() {
+    let danmukuList = [
+      // {
+      //   text: "111", // 弹幕文本
+      //   time: 1, // 发送时间，单位秒
+      //   color: "#fff", // 弹幕局部颜色
+      //   border: false, // 是否显示描边
+      //   mode: 0, // 弹幕模式: 0表示滚动, 1静止
+      //   date: "xx-xx xx:xx", //日期
+      // },
+    ];
+    return {
+      option: {
+        container: ".artplayer-app",
+        url: "/cx.mp4",
         autoSize: true,
-        autoMini: true,
-        isLive: false, //直播模式
-        muted: false, //静音
+        poster:'/fm.jpg',
+        fullscreen: true,
+        fullscreenWeb: true,
+        flip: true,
+        playbackRate: true,
+        aspectRatio: true,
         setting: true,
-        loop: false, //循环播放
-        flip: true, //视频镜像
-        playbackRate: true, //倍速
-        aspectRatio: true, //长宽比
-        //时间线点位
+        // 弹幕数组
+        danmukuList: danmukuList,
         highlight: [
           {
             time: 22,
@@ -553,23 +494,12 @@ export default {
           width: 160, // 宽度
           column: 10,
         },
-        // 弹幕数组(视频用)
-        danmukuList: [
-          // {
-          //   text: "111", // 弹幕文本
-          //   time: 1, // 发送时间，单位秒
-          //   color: "#fff", // 弹幕局部颜色
-          //   border: false, // 是否显示描边
-          //   mode: 0, // 弹幕模式: 0表示滚动, 1静止
-          // },
-        ],
         // 插件
         plugins: [
           // 弹幕库
           artplayerPluginDanmuku({
-            // 弹幕数组
-            danmuku: () => videoOption.player.danmukuList,
-            speed: 7, // 弹幕持续时间，单位秒，范围在[1 ~ 10]
+            danmuku: () => this.danmukuList,
+            speed: 5, // 弹幕持续时间，单位秒，范围在[1 ~ 10]
             opacity: 1, // 弹幕透明度，范围在[0 ~ 1]
             fontSize: 25, // 字体大小，支持数字和百分比
             color: "#FFFFFF", // 默认字体颜色
@@ -578,42 +508,76 @@ export default {
             antiOverlap: true, // 是否防重叠
             useWorker: true, // 是否使用 web worker
             synchronousPlayback: false, // 是否同步到播放速度
+            filter: (danmu) => danmu.text.length < 50, // 弹幕过滤函数，返回 true 则可以发送
             lockTime: 5, // 输入框锁定时间，单位秒，范围在[1 ~ 60]
             maxLength: 100, // 输入框最大可输入的字数，范围在[0 ~ 500]
             minWidth: 200, // 输入框最小宽度，范围在[0 ~ 500]，填 0 则为无限制
             maxWidth: 400, // 输入框最大宽度，范围在[0 ~ Infinity]，填 0 则为 100% 宽度
-            theme: "dark",
+            theme: "dark", // 输入框自定义挂载时的主题色，默认为 dark，可以选填亮色 light
+            beforeEmit: (danmu) => !!danmu.text.trim(), // 发送弹幕前的自定义校验，返回 true 则可以发送
           }),
         ],
-        // 发送弹幕
-        controls: [
-          {
-            position: "right",
-            html: "发送弹幕",
-            click: function () {
-              var text = prompt("请输入弹幕文本", "弹幕测试文本");
-              if (!text || !text.trim()) return;
-              var color =
-                "#" + Math.floor(Math.random() * 0xffffff).toString(16);
-              // var art = new Artplayer(videoOption.player);
-              videoOption.player.plugins.artplayerPluginDanmuku.emit({
-                text: text,
-                color: color,
-                border: true,
-              });
-              videoOption.player.danmukuList.push({
-                text: text,
-                color: color,
-                time:'test',
-                mode:0,
-                border: false,
-              })
-            },
-          },
-        ],
       },
+      danmukuLength: 0,
+    };
+  },
+  beforeMount() {
+    this.beginDanmu();
+    // console.log("beforeMount", this.danmukuList);
+    // console.log("beforeMount", this.danmukuLength);
+  },
+  methods: {
+    randomColor() {
+      var color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += ((Math.random() * 16) | 0).toString(16);
+      }
+      return color;
+    },
+
+    beginDanmu() {
+      let danmukuLeng = 0;
+      let danmulist = [];
+      let modee = 0;
+      let timee = 0;
+      let rgb = "";
+      let num = "";
+      let temp = {};
+      for (let i = 0; i < 514; i++) {
+        modee = Math.round(Math.random()); //0 to 1
+        timee = Math.floor(Math.random() * 189) + 1; //1 to 189
+        rgb = this.randomColor();
+        num = i.toString();
+        temp = {
+          text: num,
+          mode: modee,
+          time: timee,
+          color: rgb,
+          border: false,
+          date: "01-01 20:23",
+        };
+        danmulist.push(temp);
+      }
+      danmukuLeng = danmulist.length;
+      this.danmukuList = danmulist;
+      this.danmukuLength = danmukuLeng;
+      console.log("初始化弹幕内容", this.danmukuLength);
+    },
+  },
+  setup() {
+    // 标题栏
+    let titlebar = reactive({
+      playback: 114514,
+      danmu: 1919,
+      times: "114-5-14  19:19:08",
+    });
+    // 头像
+    let avatar = reactive({
+      squareUrl:
+        "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
     });
 
+    //暂用
     let danmuLiebiao = reactive({
       // 弹幕数组(列表用)
       danmukuLB: [],
@@ -684,7 +648,7 @@ export default {
       sendPinglun() {
         let addCom = {
           username: "tester",
-          content:'',
+          content: "",
           time: "xxxx-xx-xx 4:04:00",
           goods: "xxx",
         };
@@ -760,74 +724,10 @@ export default {
       }
     );
 
-    watch(
-      () => [...videoOption.player.danmukuList],
-      (now, old) => {
-        if (now != old) {
-          videoOption.player.danmukuList=now
-          console.log('弹幕总数改变')
-        } else if (now == old) {
-          return
-        }
-      }
-    );
-
-    function randomColor() {
-      var color = "#";
-      for (let i = 0; i < 6; i++) {
-        color += ((Math.random() * 16) | 0).toString(16);
-      }
-      return color;
-    }
-
-    function beginDanmu() {
-      let danmukuLength = 0;
-      let modee = 0;
-      let timee = 0;
-      let rgb = "";
-      let num = "";
-      for (let i = 1; i <= 514; i++) {
-        modee = Math.round(Math.random()); //0 to 1
-        timee = Math.floor(Math.random() * 189) + 1; //1 to 189
-        rgb = randomColor();
-        num = i.toString();
-        let temp = {
-          text: num,
-          mode: modee,
-          time: timee,
-          color: rgb,
-          border: false,
-          date: "01-01 20:23",
-        };
-        videoOption.player.danmukuList.push(temp);
-        danmuLiebiao.danmukuLB.push(temp);
-        danmukuLength = videoOption.player.danmukuList.length;
-      }
-
-      // console.log(videoOption.player.danmukuList);
-      // console.log(danmukuLength);
-      console.log("初始化弹幕内容");
-      return danmukuLength;
-    }
-    let danmuLen = beginDanmu();
-
-    function saveList() {
-      danmuLiebiao.danmukuLB = videoOption.player.danmukuList;
-    }
-
-    onBeforeMount(() => {
-      beginDanmu();
-    });
-
-    onMounted(() => {
-      saveList();
-    });
-
     return {
-      danmuLen,
       ...toRefs(titlebar),
       ...toRefs(avatar),
-      ...toRefs(videoOption),
+
       ...toRefs(danmuLiebiao),
       ...toRefs(tuijian),
       ...toRefs(comment),
@@ -847,6 +747,11 @@ export default {
 }
 .el-main::-webkit-scrollbar {
   display: none;
+}
+.LeftAndRight {
+  background-color: white;
+  width: 100%;
+  height: 100%;
 }
 .row {
   // margin-top: 188px;
