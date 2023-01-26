@@ -1,11 +1,14 @@
 <template>
   <div class="row">
     <el-row style="width: 100%">
+      <!-- 左边空白 -->
       <el-col :span="1">
         <div style="background-color: green; width: 100%; height: 100%"></div>
       </el-col>
+      <!-- 中间主要内容 -->
       <el-col :span="22" style="background-color: white"> </el-col>
       <el-col :span="1">
+        <!-- 右边空白 -->
         <div style="background-color: green; width: 100%; height: 100%"></div
       ></el-col>
     </el-row>

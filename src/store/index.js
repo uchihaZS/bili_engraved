@@ -3,7 +3,8 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     vname: '',
-    author: ''
+    author: '',
+    searchValue:'',
   },
   mutations: {
     setVname(state, vname) {
@@ -12,6 +13,9 @@ export default createStore({
     setAuthor(state, author) {
       state.author = author;
     },
+    setSearchValue(state,searchValue){
+      state.searchValue=searchValue
+    }
   },
   actions: {
     updateVname({ commit }, vname) {
@@ -20,5 +24,8 @@ export default createStore({
     updateAuthor({ commit }, author) {
       commit('setAuthor', author);
     },
+    updateSearchValue({commit},searchValue){
+      commit('setSearchValue',searchValue)
+    }
   },
 })

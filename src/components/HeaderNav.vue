@@ -17,12 +17,12 @@
       <div class="flex-grow" />
       <!-- 搜索框 -->
       <el-input
-        v-model="headmenu.searchValue"
+        v-model="searchValue"
         placeholder="请输入关键词"
         class="input-with-select"
       >
         <template #append>
-          <el-button>搜索</el-button>
+          <el-button @click="goToSearchPage">搜索</el-button>
         </template>
       </el-input>
       <div class="flex-grow" />
@@ -100,7 +100,7 @@
     </div>
     <!-- 头像悬浮信息 -->
     <el-card
-      v-show="avatarState==true"
+      v-show="avatarState == true"
       class="avatarInfo"
       @mouseover="(avatarState = true), (avatarUse = avatarCss)"
       @mouseleave="(avatarState = false), (avatarUse = avatarOri)"
@@ -867,12 +867,20 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
+import { useStore } from "vuex";
+import { useRouter, useRoute } from "vue-router";
 export default {
   name: "HeaderNav",
   setup() {
+    const router = useRouter();
+    const store = useStore();
     // 菜单栏
     let headmenu = reactive({
       searchValue: "",
+      goToSearchPage(searchValue) {
+        store.dispatch("updateSearchValue", searchValue);
+        router.push({ path: "/searchpage" });
+      },
     });
     // logo
     let logo = reactive({
@@ -1138,7 +1146,7 @@ export default {
     }
 
     return {
-      headmenu,
+      ...toRefs(headmenu),
       ...toRefs(logo),
       ...toRefs(avatar),
       ...toRefs(dynamic),

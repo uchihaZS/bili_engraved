@@ -17,7 +17,7 @@
                 <!-- 左边 -->
                 <div style="display: flex; flex-direction: column; width: auto">
                   <!-- 标题栏 -->
-                  <h1 style="margin-top: 0px">{{vname}}</h1>
+                  <h1 style="margin-top: 0px">{{ vname }}</h1>
                   <div style="color: #9499a0; margin-bottom: 30px">
                     <span>播放 {{ playback }}</span>
                     <span style="margin-left: 10px">弹幕 {{ danmu }}</span>
@@ -332,7 +332,9 @@
                         margin-top: -10px;
                       "
                     >
-                      <p style="font-size: 20px; font-weight: bold">{{author}}</p>
+                      <p style="font-size: 20px; font-weight: bold">
+                        {{ author }}
+                      </p>
                       <p>介绍.................</p>
                       <el-button type="primary" style="width: 70%"
                         >+关注 2887</el-button
@@ -420,7 +422,26 @@
               </div>
             </el-col>
 
-            <el-col :span="2"> <div class="LeftAndRight"></div></el-col>
+            <el-col :span="2">
+              <div class="LeftAndRight">
+                <el-backtop :right="100" :bottom="300" :visibility-height="700" style="width:40px;height:40px;border-raduis:50px">
+                  <div
+                    style="
+                      height: 100%;
+                      width: 100%;
+                      background-color: var(--el-bg-color-overlay);
+                      box-shadow: var(--el-box-shadow-lighter);
+                      text-align: center;
+                      line-height: 20px;
+                      color: #1989fa;
+                      font-size:16px
+                    "
+                  >
+                    回到顶部
+                  </div>
+                </el-backtop>
+              </div></el-col
+            >
           </el-row>
         </div>
       </el-main>
@@ -429,8 +450,8 @@
 </template>
 
 <script>
-import { onMounted, reactive, toRefs, watch,ref } from "vue";
-import { useStore } from 'vuex'
+import { onMounted, reactive, toRefs, watch, ref } from "vue";
+import { useStore } from "vuex";
 import HeaderNav from "../components/HeaderNav.vue";
 import { ElMessage } from "element-plus";
 import Artplayer from "../components/Artplayer.vue";
@@ -452,14 +473,21 @@ export default {
       option: {
         container: ".artplayer-app",
         url: "/cx.mp4",
+        theme: "#23ade5",
+        autoplay: true,
+        fullscreen: true, //全屏
+        fullscreenWeb: true, //网页全屏
+        lang: "zh-cn",
+        pip: true, //画中画
         autoSize: true,
-        poster:'/fm.jpg',
-        fullscreen: true,
-        fullscreenWeb: true,
-        flip: true,
-        playbackRate: true,
-        aspectRatio: true,
+        autoMini: true,
+        isLive: false, //直播模式
+        muted: false, //静音
         setting: true,
+        loop: false, //循环播放
+        flip: true, //视频镜像
+        playbackRate: true, //倍速
+        aspectRatio: true, //长宽比
         // 弹幕数组
         danmukuList: danmukuList,
         highlight: [
@@ -566,7 +594,6 @@ export default {
     },
   },
   setup() {
-    
     // 标题栏
     let titlebar = reactive({
       playback: 114514,
@@ -578,10 +605,10 @@ export default {
       squareUrl:
         "https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png",
     });
-    const store = useStore()
-    const vname = ref(store.state.vname)
-    const author = ref(store.state.author)
-    //暂用
+    const store = useStore();
+    const vname = ref(store.state.vname);
+    const author = ref(store.state.author);
+    //右侧弹幕列表
     let danmuLiebiao = reactive({
       // 弹幕数组(列表用)
       danmukuLB: [],
@@ -731,7 +758,8 @@ export default {
     return {
       ...toRefs(titlebar),
       ...toRefs(avatar),
-      vname,author,
+      vname,
+      author,
       ...toRefs(danmuLiebiao),
       ...toRefs(tuijian),
       ...toRefs(comment),

@@ -22,12 +22,12 @@
           <div class="flex-grow" />
           <!-- 搜索框 -->
           <el-input
-            v-model="headmenu.searchValue"
+            v-model="searchValue"
             placeholder="请输入关键词"
             class="input-with-select"
           >
             <template #append>
-              <el-button>搜索</el-button>
+              <el-button @click="goToSearchPage">搜索</el-button>
             </template>
           </el-input>
           <div class="flex-grow" />
@@ -1790,6 +1790,27 @@
                   "
                   ><span style="writing-mode: tb-rl">换一换</span></el-button
                 >
+                <el-backtop
+                  :right="50"
+                  :bottom="100"
+                  :visibility-height="400"
+                  style="width: 40px; height: 40px"
+                >
+                  <div
+                    style="
+                      height: 100%;
+                      width: 100%;
+                      background-color: var(--el-bg-color-overlay);
+                      box-shadow: var(--el-box-shadow-lighter);
+                      text-align: center;
+                      line-height: 20px;
+                      color: #1989fa;
+                      font-size: 16px;
+                    "
+                  >
+                    回到顶部
+                  </div>
+                </el-backtop>
               </div></el-col
             >
           </el-row>
@@ -1804,7 +1825,7 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 import { reactive, onMounted, toRefs } from "vue";
 import { useStore } from "vuex";
-import {useRouter,useRoute} from "vue-router"
+import { useRouter, useRoute } from "vue-router";
 // import { Search } from '@element-plus/icons-vue'
 export default {
   name: "HomePage",
@@ -1813,6 +1834,10 @@ export default {
     // 菜单栏
     let headmenu = reactive({
       searchValue: "",
+      goToSearchPage(searchValue) {
+        store.dispatch("updateSearchValue", searchValue);
+        router.push({ path: "/searchpage" });
+      },
     });
     // logo
     let logo = reactive({
@@ -2035,16 +2060,16 @@ export default {
         }
       },
     });
-
-    const router=useRouter()
-    const route=useRoute()
+    // 跳转和vuex
+    const router = useRouter();
     const store = useStore();
     const goToPage = (link, vname, author) => {
       store.dispatch("updateVname", vname);
       store.dispatch("updateAuthor", author);
       router.push({ path: link });
-      console.log(link)
+      // console.log(link);
     };
+    // 推荐视频列表
     let videoList = reactive({
       vList: [
         {
@@ -2257,7 +2282,7 @@ export default {
     }
 
     return {
-      headmenu,
+      ...toRefs(headmenu),
       goToPage,
       ...toRefs(videoList),
       ...toRefs(logo),
