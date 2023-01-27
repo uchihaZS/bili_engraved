@@ -11,7 +11,7 @@
     >
       <div class="flex-grow" />
       <!-- LOGO -->
-      <el-menu-item index="0" @mouseover="debugOver" @mouseleave="debugLeave"
+      <el-menu-item index="0" @mouseover="debugOver" @mouseleave="debugLeave" @click="toHome"
         >qiliqili</el-menu-item
       >
       <div class="flex-grow" />
@@ -908,6 +908,9 @@ export default {
         getPercentage();
         console.log("获取经验值和等级成功");
       },
+      toHome(){
+        router.push({ path: "/" });
+      }
     });
     // 头像
     let avatar = reactive({

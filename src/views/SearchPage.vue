@@ -170,8 +170,8 @@
                       "
                     >
                       <div
-                        v-for="i in 36"
-                        :key="i"
+                        v-for="(i, index) in videoData"
+                        :key="index"
                         style="width: 16%; height: 15%; margin-bottom: 35px"
                       >
                         <div
@@ -185,15 +185,22 @@
                           封面
                         </div>
                         <div style="line-height: 0px">
-                          <p style="font-size: 16px">作品名{{ i }}</p>
+                          <p style="font-size: 16px">{{ i.artname }}</p>
                           <div style="display: flex">
-                            <p style="font-size: 14px">作者名{{ i }}</p>
+                            <p style="font-size: 14px">{{ i.artist }}</p>
                             <p style="margin-left: 10px; font-size: 14px">
                               发布时间
                             </p>
                           </div>
                         </div>
                       </div>
+                      <el-pagination
+                        background
+                        :current-page="1"
+                        :page-size="36"
+                        layout="prev, pager, next"
+                        :total="36"
+                      />
                     </div>
                   </el-tab-pane>
 
@@ -324,6 +331,62 @@
                         </div>
                       </el-collapse-item>
                     </el-collapse>
+                    <div
+                      style="
+                        width: 100%;
+                        height: auto;
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        align-items: center;
+                        justify-content: space-around;
+                        margin-top: 10px;
+                      "
+                    >
+                      <div
+                        v-for="i in 60"
+                        :key="i"
+                        style="
+                          width: 33%;
+                          height: 15%;
+                          margin-bottom: 35px;
+                          display: flex;
+                          flex-direction: row;
+                          flex-wrap: nowrap;
+                          justify-content: flex-start;
+                          align-items: stretch;
+                        "
+                      >
+                        <div
+                          style="
+                            width: 97px;
+                            height: 100px;
+                            background-color: #636466;
+                            border-radius: 50px;
+                          "
+                        >
+                          头像
+                        </div>
+                        <div style="line-height: 0px; margin-left: 10px;width: 80%;">
+                          <p style="font-size: 16px">作者名{{ i }}</p>
+                          <div style="display: flex;width:100%">
+                            <p>粉丝数</p>
+                            <p style="margin-left:10px">视频数</p>
+                            <p style="margin-left:10px">简介</p>
+                          </div>
+                          <el-button type="primary" size="large"
+                            >关注</el-button
+                          >
+                        </div>
+                      </div>
+                      <el-pagination
+                        background
+                        :current-page="1"
+                        :page-size="36"
+                        layout="prev, pager, next"
+                        :total="36"
+                      />
+                    </div>
                   </el-tab-pane>
                 </el-tabs>
               </div>
@@ -342,7 +405,7 @@
 </template>
 
 <script>
-import { onMounted, reactive, toRefs, watch, ref } from "vue";
+import { onMounted, reactive, toRefs, computed, ref } from "vue";
 import { useStore } from "vuex";
 import HeaderNav from "@/components/HeaderNav.vue";
 export default {
@@ -350,8 +413,59 @@ export default {
   setup() {
     const store = useStore();
     const searchValue = ref(store.state.searchValue);
+    let video = reactive({
+      videoData: [],
+      newArry: [],
+      total: 0,
+      videoLength: 0,
+      //刷新页面后每一页有36条数据
+      pagesize: 36,
+      //刷新页面后当前页为第一页
+      currentPage: 1,
+      //   初始化数据
+      addData() {
+        let tempobj = {};
+        let temp = [];
+        let name = "作品名";
+        let author = "作者名";
+        for (let i = 1; i <= 36; i++) {
+          tempobj = { artname: name + i, artist: author + i };
+          temp.push(tempobj);
+        }
+        video.videoData = temp;
+        video.videoLength = temp.length;
+        console.log(video.videoData);
+        // console.log("长度" + videoLength);
+      },
 
+      //   handleSizeChange(size) {
+      //     //修改每一页的数据量
+      //     video.pagesize = size;
+      //     video.getResultsData()
+      //   },
+      //   handleCurrentChange(page) {
+      //     //修改当前页
+      //     video.currentPage = page;
+      //     video.getResultsData()
+      //   },
+      //   getResultsData() {
+      //     let list = video.videoData;
+      //     //渲染的数据newArry赋值
+      //     video.newArry = list.filter(
+      //       (item, index) =>
+      //         index < that.currentPage * that.pagesize &&
+      //         index >= that.pagesize * (that.currentPage - 1)
+      //     ); //根据页数显示相应的内容
+      //     video.total = list.length;
+      //     console.log(video.newArry)
+      //   },
+    });
+
+    onMounted(() => {
+      video.addData();
+    });
     return {
+      ...toRefs(video),
       searchValue,
     };
   },
