@@ -33,7 +33,7 @@
                       <div class="artplayer-app">
                         <Artplayer
                           style="width: 1170px; height: 660px"
-                          :option="option"
+                          :option="art"
                         />
                       </div>
 
@@ -424,7 +424,12 @@
 
             <el-col :span="2">
               <div class="LeftAndRight">
-                <el-backtop :right="100" :bottom="300" :visibility-height="700" style="width:40px;height:40px;border-raduis:50px">
+                <el-backtop
+                  :right="100"
+                  :bottom="300"
+                  :visibility-height="700"
+                  style="width: 40px; height: 40px; border-raduis: 50px"
+                >
                   <div
                     style="
                       height: 100%;
@@ -434,7 +439,7 @@
                       text-align: center;
                       line-height: 20px;
                       color: #1989fa;
-                      font-size:16px
+                      font-size: 16px;
                     "
                   >
                     回到顶部
@@ -455,22 +460,13 @@ import { useStore } from "vuex";
 import HeaderNav from "../components/HeaderNav.vue";
 import { ElMessage } from "element-plus";
 import Artplayer from "../components/Artplayer.vue";
+// import Artplayer from "artplayer";
 import artplayerPluginDanmuku from "artplayer-plugin-danmuku";
 export default {
   components: { HeaderNav, Artplayer },
   data() {
-    let danmukuList = [
-      // {
-      //   text: "111", // 弹幕文本
-      //   time: 1, // 发送时间，单位秒
-      //   color: "#fff", // 弹幕局部颜色
-      //   border: false, // 是否显示描边
-      //   mode: 0, // 弹幕模式: 0表示滚动, 1静止
-      //   date: "xx-xx xx:xx", //日期
-      // },
-    ];
     return {
-      option: {
+      art: {
         container: ".artplayer-app",
         url: "/cx.mp4",
         theme: "#23ade5",
@@ -488,8 +484,7 @@ export default {
         flip: true, //视频镜像
         playbackRate: true, //倍速
         aspectRatio: true, //长宽比
-        // 弹幕数组
-        danmukuList: danmukuList,
+        // 高光点位
         highlight: [
           {
             time: 22,
@@ -523,6 +518,9 @@ export default {
           width: 160, // 宽度
           column: 10,
         },
+        currentTime: null,
+        // 弹幕数组
+        danmukuList: this.danmukuList,
         // 插件
         plugins: [
           // 弹幕库
@@ -543,17 +541,39 @@ export default {
             minWidth: 200, // 输入框最小宽度，范围在[0 ~ 500]，填 0 则为无限制
             maxWidth: 400, // 输入框最大宽度，范围在[0 ~ Infinity]，填 0 则为 100% 宽度
             theme: "dark", // 输入框自定义挂载时的主题色，默认为 dark，可以选填亮色 light
-            beforeEmit: (danmu) => !!danmu.text.trim(), // 发送弹幕前的自定义校验，返回 true 则可以发送
+            beforeEmit: (danmu) => {
+              let temp = danmu;
+              this.getCurrentTime();
+              console.log(temp);
+            }, // 发送弹幕前的自定义校验，返回 true 则可以发送
           }),
         ],
       },
+      danmukuList: [
+        // {
+        //   text: "111", // 弹幕文本
+        //   time: 1, // 发送时间，单位秒
+        //   color: "#fff", // 弹幕局部颜色
+        //   border: false, // 是否显示描边
+        //   mode: 0, // 弹幕模式: 0表示滚动, 1静止
+        //   date: "xx-xx xx:xx", //日期
+        // },
+      ],
       danmukuLength: 0,
+      timer: 0,
     };
   },
   beforeMount() {
     this.beginDanmu();
     // console.log("beforeMount", this.danmukuList);
     // console.log("beforeMount", this.danmukuLength);
+  },
+  mounted() {
+    // this.timer = 0;
+    // let stop
+    // stop=setInterval(() => {
+    //   this.timer++;
+    // }, 1000);
   },
   methods: {
     randomColor() {
@@ -563,7 +583,6 @@ export default {
       }
       return color;
     },
-
     beginDanmu() {
       let danmukuLeng = 0;
       let danmulist = [];
@@ -590,7 +609,11 @@ export default {
       danmukuLeng = danmulist.length;
       this.danmukuList = danmulist;
       this.danmukuLength = danmukuLeng;
+      this.art.currentTime = 4;
       console.log("初始化弹幕内容", this.danmukuLength);
+    },
+    getCurrentTime() {
+      console.log(this.timer);
     },
   },
   setup() {
