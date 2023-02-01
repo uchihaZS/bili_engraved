@@ -4,10 +4,10 @@
 
 <script>
 import Artplayer from "artplayer";
-
 export default {
   data() {
     return {
+      currentTime: 0,
       instance: null,
     };
   },
@@ -15,6 +15,13 @@ export default {
     option: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    takeCurrentTime() {
+      let currentTime = parseInt(this.instance.currentTime);
+      this.currentTime = currentTime;
+      this.$emit("ctime", this.currentTime);
     },
   },
   mounted() {

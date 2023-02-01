@@ -32,6 +32,8 @@
                       <!-- 播放器 -->
                       <div class="artplayer-app">
                         <Artplayer
+                          ref="ap"
+                          @ctime="getCtime"
                           style="width: 1170px; height: 660px"
                           :option="art"
                         />
@@ -455,7 +457,7 @@
 </template>
 
 <script>
-import { onMounted, reactive, toRefs, watch, ref } from "vue";
+import { reactive, toRefs, watch, ref } from "vue";
 import { useStore } from "vuex";
 import HeaderNav from "../components/HeaderNav.vue";
 import { ElMessage } from "element-plus";
@@ -464,158 +466,6 @@ import Artplayer from "../components/Artplayer.vue";
 import artplayerPluginDanmuku from "artplayer-plugin-danmuku";
 export default {
   components: { HeaderNav, Artplayer },
-  data() {
-    return {
-      art: {
-        container: ".artplayer-app",
-        url: "/cx.mp4",
-        theme: "#23ade5",
-        autoplay: true,
-        fullscreen: true, //全屏
-        fullscreenWeb: true, //网页全屏
-        lang: "zh-cn",
-        pip: true, //画中画
-        autoSize: true,
-        autoMini: true,
-        isLive: false, //直播模式
-        muted: false, //静音
-        setting: true,
-        loop: false, //循环播放
-        flip: true, //视频镜像
-        playbackRate: true, //倍速
-        aspectRatio: true, //长宽比
-        // 高光点位
-        highlight: [
-          {
-            time: 22,
-            text: "开头logo",
-          },
-          {
-            time: 43,
-            text: "千倍奉还",
-          },
-          {
-            time: 50,
-            text: "第一段高潮",
-          },
-          {
-            time: 89,
-            text: "第二段主歌",
-          },
-          {
-            time: 133,
-            text: "副歌",
-          },
-          {
-            time: 172,
-            text: "结束",
-          },
-        ],
-        //hover缩略图
-        thumbnails: {
-          url: "/cxthum.png",
-          number: 160, // 数量
-          width: 160, // 宽度
-          column: 10,
-        },
-        currentTime: null,
-        // 弹幕数组
-        danmukuList: this.danmukuList,
-        // 插件
-        plugins: [
-          // 弹幕库
-          artplayerPluginDanmuku({
-            danmuku: () => this.danmukuList,
-            speed: 5, // 弹幕持续时间，单位秒，范围在[1 ~ 10]
-            opacity: 1, // 弹幕透明度，范围在[0 ~ 1]
-            fontSize: 25, // 字体大小，支持数字和百分比
-            color: "#FFFFFF", // 默认字体颜色
-            mode: 0, // 默认模式，0-滚动，1-静止
-            margin: [10, "25%"], // 弹幕上下边距，支持数字和百分比
-            antiOverlap: true, // 是否防重叠
-            useWorker: true, // 是否使用 web worker
-            synchronousPlayback: false, // 是否同步到播放速度
-            filter: (danmu) => danmu.text.length < 50, // 弹幕过滤函数，返回 true 则可以发送
-            lockTime: 5, // 输入框锁定时间，单位秒，范围在[1 ~ 60]
-            maxLength: 100, // 输入框最大可输入的字数，范围在[0 ~ 500]
-            minWidth: 200, // 输入框最小宽度，范围在[0 ~ 500]，填 0 则为无限制
-            maxWidth: 400, // 输入框最大宽度，范围在[0 ~ Infinity]，填 0 则为 100% 宽度
-            theme: "dark", // 输入框自定义挂载时的主题色，默认为 dark，可以选填亮色 light
-            beforeEmit: (danmu) => {
-              let temp = danmu;
-              this.getCurrentTime();
-              console.log(temp);
-            }, // 发送弹幕前的自定义校验，返回 true 则可以发送
-          }),
-        ],
-      },
-      danmukuList: [
-        // {
-        //   text: "111", // 弹幕文本
-        //   time: 1, // 发送时间，单位秒
-        //   color: "#fff", // 弹幕局部颜色
-        //   border: false, // 是否显示描边
-        //   mode: 0, // 弹幕模式: 0表示滚动, 1静止
-        //   date: "xx-xx xx:xx", //日期
-        // },
-      ],
-      danmukuLength: 0,
-      timer: 0,
-    };
-  },
-  beforeMount() {
-    this.beginDanmu();
-    // console.log("beforeMount", this.danmukuList);
-    // console.log("beforeMount", this.danmukuLength);
-  },
-  mounted() {
-    // this.timer = 0;
-    // let stop
-    // stop=setInterval(() => {
-    //   this.timer++;
-    // }, 1000);
-  },
-  methods: {
-    randomColor() {
-      var color = "#";
-      for (let i = 0; i < 6; i++) {
-        color += ((Math.random() * 16) | 0).toString(16);
-      }
-      return color;
-    },
-    beginDanmu() {
-      let danmukuLeng = 0;
-      let danmulist = [];
-      let modee = 0;
-      let timee = 0;
-      let rgb = "";
-      let num = "";
-      let temp = {};
-      for (let i = 0; i < 514; i++) {
-        modee = Math.round(Math.random()); //0 to 1
-        timee = Math.floor(Math.random() * 189) + 1; //1 to 189
-        rgb = this.randomColor();
-        num = i.toString();
-        temp = {
-          text: num,
-          mode: modee,
-          time: timee,
-          color: rgb,
-          border: false,
-          date: "01-01 20:23",
-        };
-        danmulist.push(temp);
-      }
-      danmukuLeng = danmulist.length;
-      this.danmukuList = danmulist;
-      this.danmukuLength = danmukuLeng;
-      this.art.currentTime = 4;
-      console.log("初始化弹幕内容", this.danmukuLength);
-    },
-    getCurrentTime() {
-      console.log(this.timer);
-    },
-  },
   setup() {
     // 标题栏
     let titlebar = reactive({
@@ -783,10 +633,212 @@ export default {
       ...toRefs(avatar),
       vname,
       author,
+      // player,
       ...toRefs(danmuLiebiao),
       ...toRefs(tuijian),
       ...toRefs(comment),
     };
+  },
+
+  data() {
+    return {
+      currentTime: null,
+      danmuCtx: {},
+      art: {
+        container: ".artplayer-app",
+        url: "/cx.mp4",
+        theme: "#23ade5",
+        autoplay: true,
+        fullscreen: true, //全屏
+        fullscreenWeb: true, //网页全屏
+        lang: "zh-cn",
+        pip: true, //画中画
+        autoSize: true,
+        autoMini: true,
+        isLive: false, //直播模式
+        muted: false, //静音
+        setting: true,
+        loop: false, //循环播放
+        flip: true, //视频镜像
+        playbackRate: true, //倍速
+        aspectRatio: true, //长宽比
+        // 高光点位
+        highlight: [
+          {
+            time: 22,
+            text: "开头logo",
+          },
+          {
+            time: 43,
+            text: "千倍奉还",
+          },
+          {
+            time: 50,
+            text: "第一段高潮",
+          },
+          {
+            time: 89,
+            text: "第二段主歌",
+          },
+          {
+            time: 133,
+            text: "副歌",
+          },
+          {
+            time: 172,
+            text: "结束",
+          },
+        ],
+        //hover缩略图
+        thumbnails: {
+          url: "/cxthum.png",
+          number: 160, // 数量
+          width: 160, // 宽度
+          column: 10,
+        },
+        // 弹幕数组
+        danmukuList: this.danmukuList,
+        // 插件
+        plugins: [
+          // 弹幕库
+          artplayerPluginDanmuku({
+            danmuku: () => this.danmukuList,
+            speed: 5, // 弹幕持续时间，单位秒，范围在[1 ~ 10]
+            opacity: 1, // 弹幕透明度，范围在[0 ~ 1]
+            fontSize: 25, // 字体大小，支持数字和百分比
+            color: "#FFFFFF", // 默认字体颜色
+            mode: 0, // 默认模式，0-滚动，1-静止
+            margin: [10, "25%"], // 弹幕上下边距，支持数字和百分比
+            antiOverlap: true, // 是否防重叠
+            useWorker: true, // 是否使用 web worker
+            synchronousPlayback: false, // 是否同步到播放速度
+            filter: (danmu) => danmu.text.length < 50, // 弹幕过滤函数，返回 true 则可以发送
+            lockTime: 5, // 输入框锁定时间，单位秒，范围在[1 ~ 60]
+            maxLength: 100, // 输入框最大可输入的字数，范围在[0 ~ 500]
+            minWidth: 200, // 输入框最小宽度，范围在[0 ~ 500]，填 0 则为无限制
+            maxWidth: 400, // 输入框最大宽度，范围在[0 ~ Infinity]，填 0 则为 100% 宽度
+            theme: "dark", // 输入框自定义挂载时的主题色，默认为 dark，可以选填亮色 light
+            beforeEmit: (danmu) => {
+              let temp = danmu;
+              this.danmuCtx = temp;
+              this.sendDanmu();
+              if (this.danmuCtx != {}) return true;
+            }, // 发送弹幕前的自定义校验，返回 true 则可以发送
+          }),
+        ],
+      },
+      danmukuList: [
+        // {
+        //   text: "111", // 弹幕文本
+        //   time: 1, // 发送时间，单位秒
+        //   color: "#fff", // 弹幕局部颜色
+        //   border: false, // 是否显示描边
+        //   mode: 0, // 弹幕模式: 0表示滚动, 1静止
+        //   date: "xx-xx xx:xx", //日期
+        // },
+      ],
+      danmukuLength: 0,
+      timer: 0,
+    };
+  },
+  computed: {
+    //  player(){
+    //     return this.store1.state.art;
+    //   }
+  },
+  watch: {
+    // currentTime: function (newValue) {
+    //   console.log("播放页当前时间" + newValue);
+    // },
+  },
+
+  beforeMount() {
+    this.beginDanmu();
+    // console.log("beforeMount", this.danmukuList);
+    // console.log("beforeMount", this.danmukuLength);
+  },
+  mounted() {},
+  methods: {
+    // 生成随机十六进制颜色
+    randomColor() {
+      var color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += ((Math.random() * 16) | 0).toString(16);
+      }
+      return color;
+    },
+    // 初始化弹幕
+    beginDanmu() {
+      let danmukuLeng = 0;
+      let danmulist = [];
+      let modee = 0;
+      let timee = 0;
+      let rgb = "";
+      let num = "";
+      let temp = {};
+      for (let i = 0; i < 514; i++) {
+        modee = Math.round(Math.random()); //0 to 1
+        timee = Math.floor(Math.random() * 189) + 1; //1 to 189
+        rgb = this.randomColor();
+        num = i.toString();
+        temp = {
+          text: num,
+          mode: modee,
+          time: timee,
+          color: rgb,
+          border: false,
+          date: "01-01 20:23",
+        };
+        danmulist.push(temp);
+      }
+      danmukuLeng = danmulist.length;
+      this.danmukuList = danmulist;
+      this.danmukuLength = danmukuLeng;
+      this.art.currentTime = 4;
+      console.log("初始化弹幕内容", this.danmukuLength);
+    },
+    // 去组件调用组件方法获取视频时间
+    getCurrentTime() {
+      this.$refs.ap.takeCurrentTime();
+    },
+    // 从组件传值当前的视频时间过来并接收
+    getCtime(ct) {
+      this.currentTime = ct;
+      // console.log(this.currentTime)
+    },
+    // 发送弹幕
+    sendDanmu() {
+      this.getCurrentTime();
+      let date = this.getDate();
+      setTimeout(() => {
+        (this.danmuCtx.time = this.currentTime), (this.danmuCtx.date = date);
+        this.danmukuList.push(this.danmuCtx)
+        this.danmukuLength=this.danmukuList.length
+        console.log(this.danmuCtx);
+        console.log(this.danmukuList);
+        console.log(this.danmukuLength);
+      }, 1000);
+    },
+    // 获取日期时间
+    getDate() {
+      let date = new Date();
+      let Y = date.getFullYear() + "-";
+      let M =
+        (date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1) + "-";
+      let D = date.getDate() < 10 ? "0" + date.getDate() : date.getDate() + " ";
+      let text = " ";
+      let hh =
+        date.getHours() < 10
+          ? "0" + date.getHours() + ":"
+          : date.getHours() + ":";
+      let mm =
+        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+      let ss =
+        date.getSeconds() < 10 ? "0" + date.getDate() : date.getSeconds();
+      return M + D + text + hh + mm;
+    },
   },
 };
 </script>
