@@ -1825,7 +1825,7 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 import { reactive, onMounted, toRefs } from "vue";
 import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 // import { Search } from '@element-plus/icons-vue'
 export default {
   name: "HomePage",
@@ -1835,7 +1835,8 @@ export default {
     let headmenu = reactive({
       searchValue: "",
       goToSearchPage(searchValue) {
-        store.dispatch("updateSearchValue", searchValue);
+        store.dispatch("updateSearchValue", headmenu.searchValue);
+        console.log(headmenu.searchValue)
         router.push({ path: "/searchpage" });
       },
     });

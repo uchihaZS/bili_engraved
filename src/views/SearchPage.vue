@@ -405,23 +405,17 @@
 </template>
 
 <script>
-import { onMounted, reactive, toRefs, computed, ref } from "vue";
+import { onMounted, reactive, toRefs, ref } from "vue";
 import { useStore } from "vuex";
 import HeaderNav from "@/components/HeaderNav.vue";
 export default {
   components: { HeaderNav },
   setup() {
     const store = useStore();
-    const searchValue = ref(store.state.searchValue);
+    var searchValue = ref(store.state.searchValue);
     let video = reactive({
-      videoData: [],
-      newArry: [],
-      total: 0,
+      videoData: [],      
       videoLength: 0,
-      //刷新页面后每一页有36条数据
-      pagesize: 36,
-      //刷新页面后当前页为第一页
-      currentPage: 1,
       //   初始化数据
       addData() {
         let tempobj = {};
@@ -434,31 +428,9 @@ export default {
         }
         video.videoData = temp;
         video.videoLength = temp.length;
-        console.log(video.videoData);
+        // console.log(video.videoData);
         // console.log("长度" + videoLength);
       },
-
-      //   handleSizeChange(size) {
-      //     //修改每一页的数据量
-      //     video.pagesize = size;
-      //     video.getResultsData()
-      //   },
-      //   handleCurrentChange(page) {
-      //     //修改当前页
-      //     video.currentPage = page;
-      //     video.getResultsData()
-      //   },
-      //   getResultsData() {
-      //     let list = video.videoData;
-      //     //渲染的数据newArry赋值
-      //     video.newArry = list.filter(
-      //       (item, index) =>
-      //         index < that.currentPage * that.pagesize &&
-      //         index >= that.pagesize * (that.currentPage - 1)
-      //     ); //根据页数显示相应的内容
-      //     video.total = list.length;
-      //     console.log(video.newArry)
-      //   },
     });
 
     onMounted(() => {

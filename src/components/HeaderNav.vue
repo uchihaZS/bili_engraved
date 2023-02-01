@@ -868,7 +868,7 @@
 <script>
 import { reactive, onMounted, toRefs } from "vue";
 import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 export default {
   name: "HeaderNav",
   setup() {
@@ -910,6 +910,7 @@ export default {
       },
       toHome(){
         router.push({ path: "/" });
+        localStorage.clear();
       }
     });
     // 头像
