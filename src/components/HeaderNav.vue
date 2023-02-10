@@ -1143,7 +1143,7 @@ export default {
   width: 200px;
   height: 380px;
   position: absolute;
-  left: 1184px;
+  left: 1168px;
   border-radius: 20px;
   top: 65px;
 }

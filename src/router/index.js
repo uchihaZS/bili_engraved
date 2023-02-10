@@ -2,11 +2,11 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: ()=>import('../views/HomePage.vue')
-  // },
+  {
+    path: '/',
+    name: 'home',
+    component: ()=>import('../views/HomePage.vue')
+  },
   {
     path: '/playpage',
     name: 'playpage',
@@ -18,7 +18,7 @@ const routes = [
     component:()=>import('../views/SearchPage.vue')
   },
   {
-    path:'/',
+    path:'/www',
     name:'personalpage',
     component:()=>import('../views/PersonalPage.vue')
   },
