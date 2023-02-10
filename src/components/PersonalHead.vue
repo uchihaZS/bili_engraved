@@ -56,13 +56,34 @@
         "
       >
         <div style="display: flex">
-          <div class="tag" @click="toPersonMain">主页</div>
-          <div class="tag" @click="toPersonDya">动态</div>
-          <div class="tag" @click="toPersonVid">投稿</div>
-          <div class="tag" @click="toPersonSer">合集与列表</div>
-          <div class="tag" @click="toPersonCol">收藏</div>
-          <div class="tag" @click="toPersonSub">订阅</div>
-          <div class="tag" @click="toPersonOpt">设置</div>
+          <div class="tag">
+            <div @click="toPersonMain">主页</div>
+            <div class="direction"></div>
+          </div>
+          <div class="tag">
+            <div @click="toPersonDya">动态</div>
+            <div class="direction"></div>
+          </div>
+          <div class="tag">
+            <div @click="toPersonVid">投稿</div>
+            <div class="direction"></div>
+          </div>
+          <div class="tag">
+            <div @click="toPersonSer">合集与列表</div>
+            <div class="direction"></div>
+          </div>
+          <div class="tag">
+            <div @click="toPersonCol">收藏</div>
+            <div class="direction"></div>
+          </div>
+          <div class="tag">
+            <div @click="toPersonSub">订阅</div>
+            <div class="direction"></div>
+          </div>
+          <div class="tag">
+            <div @click="toPersonOpt">设置</div>
+            <div class="direction"></div>
+          </div>
         </div>
         <el-input
           v-model="search"
@@ -152,7 +173,7 @@ export default {
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
     });
-    const router=useRouter()
+    const router = useRouter();
     let href = reactive({
       toPersonMain() {
         router.push({ path: "/personalpage" });
@@ -189,13 +210,25 @@ export default {
 <style scoped lang="less">
 .tag {
   font-size: 20px;
-  height: 73px;
+  height: 75px;
   margin-right: 45px;
   align-items: center;
   display: flex;
+  width: auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 .tag:hover {
   color: #409eff;
-  border-bottom: 2px solid #409eff;
+}
+.tag:hover .direction {
+  background-color: #409eff;
+}
+.direction {
+  height: 2px;
+  width: 100%;
+  position: relative;
+  top: 25px;
 }
 </style>
