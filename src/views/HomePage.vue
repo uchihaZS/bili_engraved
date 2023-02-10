@@ -37,7 +37,12 @@
             @mouseover="avatarOver"
             @mouseleave="avatarLeave"
           >
-            <el-avatar :size="40" :src="circleUrl" :style="avatarUse" />
+            <el-avatar
+              :size="40"
+              :src="circleUrl"
+              :style="avatarUse"
+              @click="goToPersonalPage"
+            />
           </el-menu-item>
           <!-- 消息的下拉菜单 -->
           <el-dropdown>
@@ -114,7 +119,12 @@
           @mouseover="(avatarState = true), (avatarUse = avatarCss)"
           @mouseleave="(avatarState = false), (avatarUse = avatarOri)"
         >
-          <h4 style="text-align: center; margin: 0px auto">{{ avatarName }}</h4>
+          <h4
+            style="text-align: center; margin: 0px auto"
+            @click="goToPersonalPage"
+          >
+            {{ avatarName }}
+          </h4>
           <h5 style="text-align: center; margin-top: 0px">普通会员</h5>
           <div>
             <div
@@ -145,27 +155,15 @@
               text-align: center;
             "
           >
-            <span
-              :style="threeOne"
-              @mouseover="threeOne = threeCss"
-              @mouseleave="threeOne = threeOrigin"
-            >
+            <span style="margin-top: -29px" class="avatag">
               <p style="height: 10px; font-size: 15px">47</p>
               <p style="font-size: 13px">关注</p>
             </span>
-            <span
-              :style="threeTwo"
-              @mouseover="threeTwo = threeCss"
-              @mouseleave="threeTwo = threeOrigin"
-            >
+            <span style="margin-top: -29px" class="avatag">
               <p style="height: 10px; font-size: 15px">114514</p>
               <p style="font-size: 13px">粉丝</p>
             </span>
-            <span
-              :style="threeThree"
-              @mouseover="threeThree = threeCss"
-              @mouseleave="threeThree = threeOrigin"
-            >
+            <span style="margin-top: -29px" class="avatag">
               <p style="height: 10px; font-size: 15px">9</p>
               <p style="font-size: 13px">动态</p>
             </span>
@@ -181,37 +179,27 @@
             "
           >
             <li
-              :style="listOne"
-              @mouseover="listOne = listShadow"
-              @mouseleave="listOne = listOri"
+              class="list"
             >
               个人中心
             </li>
             <li
-              :style="listTwo"
-              @mouseover="listTwo = listShadow"
-              @mouseleave="listTwo = listOri"
+              class="list"
             >
               投稿管理
             </li>
             <li
-              :style="listThree"
-              @mouseover="listThree = listShadow"
-              @mouseleave="listThree = listOri"
+              class="list"
             >
               我的钱包
             </li>
             <li
-              :style="listFour"
-              @mouseover="listFour = listShadow"
-              @mouseleave="listFour = listOri"
+              class="list"
             >
               直播中心
             </li>
             <li
-              :style="listFive"
-              @mouseover="listFive = listShadow"
-              @mouseleave="listFive = listOri"
+              class="list"
             >
               商城
             </li>
@@ -1836,7 +1824,7 @@ export default {
       searchValue: "",
       goToSearchPage(searchValue) {
         store.dispatch("updateSearchValue", headmenu.searchValue);
-        console.log(headmenu.searchValue)
+        console.log(headmenu.searchValue);
         router.push({ path: "/searchpage" });
       },
     });
@@ -1877,25 +1865,6 @@ export default {
       avatarCss: "position: relative;top:30px;z-index:999",
       level: "",
       levelCss: "",
-      threeOne: "margin-top: -29px",
-      threeTwo: "margin-top: -29px",
-      threeThree: "margin-top: -29px",
-      threeOrigin: "margin-top: -29px",
-      threeCss: "margin-top: -29px;color: #3375b9",
-      listOne:
-        "width:200px;height:30px;position: relative;right: 60px;text-align: center;",
-      listTwo:
-        "width:200px;height:30px;position: relative;right: 60px;text-align: center;",
-      listThree:
-        "width:200px;height:30px;position: relative;right: 60px;text-align: center;",
-      listFour:
-        "width:200px;height:30px;position: relative;right: 60px;text-align: center;",
-      listFive:
-        "width:200px;height:30px;position: relative;right: 60px;text-align: center;",
-      listOri:
-        "width:200px;height:30px;position: relative;right: 60px;text-align: center;",
-      listShadow:
-        "width:200px;height:30px;position: relative;right: 60px;text-align: center;background-color:#d1d2d3",
       xp: 10000,
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
@@ -1906,6 +1875,9 @@ export default {
       avatarLeave() {
         avatar.avatarState = false;
         avatar.avatarUse = avatar.avatarOri;
+      },
+      goToPersonalPage() {
+        router.push({ path: "/personalpage" });
       },
     });
     // 动态
@@ -2531,5 +2503,19 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+
+.avatag:hover {
+  color: #409eff;
+}
+.list {
+  width: 200px;
+  height: 30px;
+  position: relative;
+  right: 60px;
+  text-align: center; 
+}
+.list:hover{
+background-color: #d1d2d3;
 }
 </style>

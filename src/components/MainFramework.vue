@@ -15,12 +15,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name:'MainFramework',
-  setup() {},
-};
-</script>
+
 
 <style lang="less" scoped>
 
