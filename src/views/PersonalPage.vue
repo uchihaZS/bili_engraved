@@ -123,7 +123,7 @@
                   <div style="display: flex; align-items: center">
                     <p style="font-size: 24px; margin-left: 15px">合集</p>
                     <el-button style="margin-left: 924px">播放全部</el-button>
-                    <el-button @click="toPersonalVid" style="margin-left: 14px"
+                    <el-button @click="toPersonalSer" style="margin-left: 14px"
                       >更多</el-button
                     >
                   </div>
@@ -170,7 +170,7 @@
                 <div>
                   <div style="display: flex; align-items: center">
                     <p style="font-size: 24px; margin-left: 15px">TA的收藏夹</p>
-                    <el-button @click="toPersonalVid" style="margin-left: 949px"
+                    <el-button @click="toPersonalCol" style="margin-left: 949px"
                       >更多</el-button
                     >
                   </div>
@@ -207,7 +207,7 @@
                 <div>
                   <div style="display: flex; align-items: center">
                     <p style="font-size: 24px; margin-left: 15px">订阅番剧</p>
-                    <el-button @click="toPersonalVid" style="margin-left: 978px"
+                    <el-button @click="toPersonalSub" style="margin-left: 978px"
                       >更多</el-button
                     >
                   </div>
@@ -423,9 +423,20 @@ export default {
     function toPersonalVid() {
       router.push({ path: "/personalvid" });
     }
-
+    function toPersonalSub() {
+      router.push({ path: "/personalsub" });
+    }
+    function toPersonalSer() {
+      router.push({ path: "/personalser" });
+    }
+    function toPersonalCol() {
+      router.push({ path: "/personalcol" });
+    }
     return {
       toPersonalVid,
+      toPersonalSub,
+      toPersonalSer,
+      toPersonalCol,
     };
   },
 };
