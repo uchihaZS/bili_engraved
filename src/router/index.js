@@ -18,7 +18,7 @@ const routes = [
     component:()=>import('../views/SearchPage.vue')
   },
   {
-    path:'/www',
+    path:'/personalpage',
     name:'personalpage',
     component:()=>import('../views/PersonalPage.vue')
   },

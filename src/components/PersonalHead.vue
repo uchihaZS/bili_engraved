@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="border-radius: 10px">
     <div
       style="
         width: 100%;
@@ -8,14 +8,7 @@
         border-radius: 10px;
       "
     >
-      <div
-        style="
-          background-color: yellow;
-          width: 100%;
-          height: 250px;
-          display: flex;
-        "
-      >
+      <div class="bgImg">
         <div
           style="
             display: flex;
@@ -32,14 +25,15 @@
                   width: auto;
                   font-size: 18px;
                   font-weight: bold;
+                  color:white;
                   margin-top: 0px;
                 "
               >
                 用户名
               </p>
-              <p style="margin-left: 15px; margin-top: 0px">等级</p>
+              <p style="margin-left: 15px; margin-top: 0px;color:red">等级</p>
             </div>
-            <p style="margin-top: -7px">个性签名</p>
+            <p style="margin-top: -7px;color:#d1dbe5;">个性签名</p>
           </div>
         </div>
       </div>
@@ -230,5 +224,13 @@ export default {
   width: 100%;
   position: relative;
   top: 25px;
+}
+.bgImg {
+  background-image: url("../../public/personalBGimg.webp");
+  box-shadow: inset 0px -55px 55px rgba(14, 13, 13, 0.719);
+  background-size: cover;
+  width: 100%;
+  height: 250px;
+  display: flex;
 }
 </style>
