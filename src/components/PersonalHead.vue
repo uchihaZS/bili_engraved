@@ -25,15 +25,15 @@
                   width: auto;
                   font-size: 18px;
                   font-weight: bold;
-                  color:white;
+                  color: white;
                   margin-top: 0px;
                 "
               >
                 用户名
               </p>
-              <p style="margin-left: 15px; margin-top: 0px;color:red">等级</p>
+              <p style="margin-left: 15px; margin-top: 0px; color: red">等级</p>
             </div>
-            <p style="margin-top: -7px;color:#d1dbe5;">个性签名</p>
+            <p style="margin-top: -7px; color: #d1dbe5">个性签名</p>
           </div>
         </div>
       </div>
@@ -47,35 +47,36 @@
           align-items: center;
           justify-content: space-between;
           box-shadow: 0 0 0 1px #eee;
+          background-color: white;
         "
       >
         <div style="display: flex">
-          <div class="tag">
-            <div @click="toPersonMain">主页</div>
+          <div class="tag" @click="toPersonMain">
+            <div>主页</div>
             <div class="direction"></div>
           </div>
-          <div class="tag">
-            <div @click="toPersonDya">动态</div>
+          <div class="tag" @click="toPersonDya">
+            <div>动态</div>
             <div class="direction"></div>
           </div>
-          <div class="tag">
-            <div @click="toPersonVid">投稿</div>
+          <div class="tag" @click="toPersonVid">
+            <div>投稿</div>
             <div class="direction"></div>
           </div>
-          <div class="tag">
-            <div @click="toPersonSer">合集与列表</div>
+          <div class="tag" @click="toPersonSer">
+            <div>合集与列表</div>
             <div class="direction"></div>
           </div>
-          <div class="tag">
-            <div @click="toPersonCol">收藏</div>
+          <div class="tag" @click="toPersonCol">
+            <div>收藏</div>
             <div class="direction"></div>
           </div>
-          <div class="tag">
-            <div @click="toPersonSub">订阅</div>
+          <div class="tag" @click="toPersonSub">
+            <div>订阅</div>
             <div class="direction"></div>
           </div>
-          <div class="tag">
-            <div @click="toPersonOpt">设置</div>
+          <div class="tag" @click="toPersonOpt">
+            <div>设置</div>
             <div class="direction"></div>
           </div>
         </div>
