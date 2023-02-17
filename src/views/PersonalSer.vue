@@ -3,7 +3,7 @@
     <el-header>
       <header-nav></header-nav>
     </el-header>
-    <el-main class="el-main">      
+    <el-main class="el-main">
       <div class="row">
         <el-row style="width: 100%">
           <!-- 左边空白 -->
@@ -13,9 +13,46 @@
             ></div>
           </el-col>
           <!-- 中间主要内容 -->
-          <el-col :span="20" style="background-color: white">
+          <el-col :span="20" style="background-color: #f4f5f7">
             <personal-head></personal-head>
-            <h1>合集</h1>
+            <div
+              style="
+                margin-top: 10px;
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+                background-color: white;
+              "
+            >
+              <div style="position: relative; top: 20px; left: 20px">
+                <p style="font-size: 22px">TA的合集和视频列表</p>
+              </div>
+              <div
+                style="
+                  width: auto;
+                  height: auto;
+                  padding: 0px 10px;
+                  display: flex;
+                  flex-wrap: wrap;
+                  flex-direction: row;
+                  justify-content: space-around;
+                  margin-top:45px;
+                "
+              >
+                <div v-for="i in 18" :key="i" style="width: 15%; height: 300px">
+                  <div
+                    style="
+                      width: 100%;
+                      height: 205px;
+                      background-color: #909399;
+                      border-radius: 10px;
+                    "
+                  ></div>
+                  <p>合集名{{ i }}</p>
+                  <p>时间</p>
+                </div>
+              </div>
+            </div>
           </el-col>
           <el-col :span="2">
             <!-- 右边空白 -->
@@ -30,12 +67,11 @@
 </template>
 
 <script>
-import PersonalHead from '@/components/PersonalHead.vue'
-import HeaderNav from '@/components/HeaderNav.vue'
+import PersonalHead from "@/components/PersonalHead.vue";
+import HeaderNav from "@/components/HeaderNav.vue";
 export default {
-  components: { PersonalHead,HeaderNav },
-    
-}
+  components: { PersonalHead, HeaderNav },
+};
 </script>
 
 <style lang="less" scoped>
