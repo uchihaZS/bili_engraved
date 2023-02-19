@@ -115,12 +115,13 @@
       @mouseleave="(avatarState = false), (avatarUse = avatarOri)"
     >
       <h4
+      class="username"
         style="text-align: center; margin: 0px auto"
         @click="goToPersonalPage"
       >
         {{ avatarName }}
       </h4>
-      <h5 style="text-align: center; margin-top: 0px">普通会员</h5>
+      <h5 style="text-align: center; margin-top: 0px" v-colorBlue>普通会员</h5>
       <div>
         <div
           style="
@@ -1147,7 +1148,9 @@ export default {
   border-radius: 20px;
   top: 65px;
 }
-
+.username:hover{
+  color: #409eff;
+}
 .dynamic {
   width: 340px;
   height: 520px;

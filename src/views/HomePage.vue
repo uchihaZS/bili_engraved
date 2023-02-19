@@ -120,6 +120,7 @@
           @mouseleave="(avatarState = false), (avatarUse = avatarOri)"
         >
           <h4
+            class="username"
             style="text-align: center; margin: 0px auto"
             @click="goToPersonalPage"
           >
@@ -178,31 +179,11 @@
               margin-bottom: 0px;
             "
           >
-            <li
-              class="list"
-            >
-              个人中心
-            </li>
-            <li
-              class="list"
-            >
-              投稿管理
-            </li>
-            <li
-              class="list"
-            >
-              我的钱包
-            </li>
-            <li
-              class="list"
-            >
-              直播中心
-            </li>
-            <li
-              class="list"
-            >
-              商城
-            </li>
+            <li class="list">个人中心</li>
+            <li class="list">投稿管理</li>
+            <li class="list">我的钱包</li>
+            <li class="list">直播中心</li>
+            <li class="list">商城</li>
           </ul>
           <el-button
             type="info"
@@ -2300,7 +2281,9 @@ export default {
   border-radius: 20px;
   top: 65px;
 }
-
+.username:hover {
+  color: #409eff;
+}
 .dynamic {
   width: 340px;
   height: 520px;
@@ -2513,9 +2496,9 @@ export default {
   height: 30px;
   position: relative;
   right: 60px;
-  text-align: center; 
+  text-align: center;
 }
-.list:hover{
-background-color: #d1d2d3;
+.list:hover {
+  background-color: #d1d2d3;
 }
 </style>

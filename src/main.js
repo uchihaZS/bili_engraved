@@ -7,6 +7,16 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 
 
+const app = createApp(App) 
+app.use(store).use(router).use(ElementPlus).use(ElementPlusIconsVue).mount('#app')
 
-
-createApp(App).use(store).use(router).use(ElementPlus).use(ElementPlusIconsVue).mount('#app')
+app.directive('colorBlue',{
+    mounted(el) {
+        el.addEventListener("mouseover", () => {
+          el.style.color = "#409eff";
+        });
+        el.addEventListener("mouseout", () => {
+          el.style.color = "black";
+        });
+      }
+})
