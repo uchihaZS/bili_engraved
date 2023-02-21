@@ -41,7 +41,7 @@
       </el-menu-item>
       <!-- 消息的下拉菜单 -->
       <el-dropdown>
-        <el-menu-item index="2">
+        <el-menu-item index="2" @click="toMessage">
           <span class="el-dropdown-link"> 消息 </span>
         </el-menu-item>
         <template #dropdown>
@@ -60,15 +60,28 @@
         index="3"
         @mouseover="dynamicOver"
         @mouseleave="dynamicLeave"
+        @click="toDya"
         >动态</el-menu-item
       >
-      <el-menu-item index="4" @mouseover="subOver" @mouseleave="subLeave"
+      <el-menu-item
+        index="4"
+        @mouseover="subOver"
+        @mouseleave="subLeave"
+        @click="toPerSub"
         >订阅</el-menu-item
       >
-      <el-menu-item index="5" @mouseover="colOver" @mouseleave="colLeave"
+      <el-menu-item
+        index="5"
+        @mouseover="colOver"
+        @mouseleave="colLeave"
+        @click="toPerCol"
         >收藏</el-menu-item
       >
-      <el-menu-item index="6" @mouseover="hisOver" @mouseleave="hisLeave"
+      <el-menu-item
+        index="6"
+        @mouseover="hisOver"
+        @mouseleave="hisLeave"
+        @click="toHistory"
         >历史</el-menu-item
       >
       <div class="flex-grow" />
@@ -115,7 +128,7 @@
       @mouseleave="(avatarState = false), (avatarUse = avatarOri)"
     >
       <h4
-      class="username"
+        class="username"
         style="text-align: center; margin: 0px auto"
         @click="goToPersonalPage"
       >
@@ -845,7 +858,7 @@ import { useRouter } from "vue-router";
 export default {
   name: "HeaderNav",
   setup() {
-    const router = useRouter();
+    var router = useRouter();
     const store = useStore();
     // 菜单栏
     let headmenu = reactive({
@@ -1065,6 +1078,25 @@ export default {
       },
     });
 
+    // 跳转函数
+    let skipFun = reactive({
+      toMessage() {
+        router.push({ path: "/message" });
+      },
+      toHistory() {
+        router.push({ path: "/history" });
+      },
+      toPerSub() {
+        router.push({ path: "/personalsub" });
+      },
+      toPerCol() {
+        router.push({ path: "/personalcol" });
+      },
+      toDya() {
+        router.push({ path: "/dynamic" });
+      },
+    });
+
     // 生命函数
     onMounted(() => {
       getPercentage();
@@ -1107,6 +1139,7 @@ export default {
     }
 
     return {
+      ...toRefs(skipFun),
       ...toRefs(headmenu),
       ...toRefs(logo),
       ...toRefs(avatar),
@@ -1148,7 +1181,7 @@ export default {
   border-radius: 20px;
   top: 65px;
 }
-.username:hover{
+.username:hover {
   color: #409eff;
 }
 .dynamic {

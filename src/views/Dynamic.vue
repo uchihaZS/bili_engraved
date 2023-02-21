@@ -1,29 +1,40 @@
 <template>
   <el-container>
-    <el-header></el-header>
-    <el-main
-      ><div class="row">
+    <el-header>
+      <header-nav></header-nav>
+    </el-header>
+    <el-main class="el-main">
+      <div class="row">
         <el-row style="width: 100%">
           <!-- 左边空白 -->
-          <el-col :span="2">
+          <el-col :span="1">
             <div
               style="background-color: #f4f5f7; width: 100%; height: 100%"
             ></div>
           </el-col>
           <!-- 中间主要内容 -->
-          <el-col :span="20" style="background-color: white"> </el-col>
-          <el-col :span="2">
+          <el-col :span="22" style="background-color: white"
+            ><h1>动态页</h1></el-col
+          >
+          <el-col :span="1">
             <!-- 右边空白 -->
             <div
               style="background-color: #f4f5f7; width: 100%; height: 100%"
             ></div
           ></el-col>
-        </el-row></div
-    ></el-main>
+        </el-row>
+      </div>
+    </el-main>
   </el-container>
 </template>
 
-
+<script>
+import HeaderNav from "@/components/HeaderNav.vue";
+export default {
+  components: { HeaderNav },
+  setup() {},
+};
+</script>
 
 <style lang="less" scoped>
 .row {

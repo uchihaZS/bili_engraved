@@ -52,6 +52,21 @@ const routes = [
     name:'personalvid',
     component:()=>import('../views/PersonalVid.vue')
   },
+  {
+    path:'/message',
+    name:'message',
+    component:()=>import('../views/Message.vue')
+  },
+  {
+    path:'/history',
+    name:'history',
+    component:()=>import('../views/History.vue')
+  },
+  {
+    path:'/dynamic',
+    name:'dynamic',
+    component:()=>import('../views/Dynamic.vue')
+  },
 ]
 
 const router = createRouter({

@@ -46,7 +46,7 @@
           </el-menu-item>
           <!-- 消息的下拉菜单 -->
           <el-dropdown>
-            <el-menu-item index="2">
+            <el-menu-item index="2" @click="toMessage">
               <span class="el-dropdown-link"> 消息 </span>
             </el-menu-item>
             <template #dropdown>
@@ -65,15 +65,28 @@
             index="3"
             @mouseover="dynamicOver"
             @mouseleave="dynamicLeave"
+            @click="toDya"
             >动态</el-menu-item
           >
-          <el-menu-item index="4" @mouseover="subOver" @mouseleave="subLeave"
+          <el-menu-item
+            index="4"
+            @mouseover="subOver"
+            @mouseleave="subLeave"
+            @click="toPerSub"
             >订阅</el-menu-item
           >
-          <el-menu-item index="5" @mouseover="colOver" @mouseleave="colLeave"
+          <el-menu-item
+            index="5"
+            @mouseover="colOver"
+            @mouseleave="colLeave"
+            @click="toPerCol"
             >收藏</el-menu-item
           >
-          <el-menu-item index="6" @mouseover="hisOver" @mouseleave="hisLeave"
+          <el-menu-item
+            index="6"
+            @mouseover="hisOver"
+            @mouseleave="hisLeave"
+            @click="toHistory"
             >历史</el-menu-item
           >
           <div class="flex-grow" />
@@ -126,7 +139,7 @@
           >
             {{ avatarName }}
           </h4>
-          <h5 style="text-align: center; margin-top: 0px">普通会员</h5>
+          <h5 style="text-align: center; margin-top: 0px" v-colorBlue>普通会员</h5>
           <div>
             <div
               style="
@@ -2015,7 +2028,7 @@ export default {
       },
     });
     // 跳转和vuex
-    const router = useRouter();
+    var router = useRouter();
     const store = useStore();
     const goToPage = (link, vname, author) => {
       store.dispatch("updateVname", vname);
@@ -2194,6 +2207,25 @@ export default {
       weekday: "0",
     });
 
+    // 跳转函数
+    let skipFun = reactive({
+      toMessage() {
+        router.push({ path: "/message" });
+      },
+      toHistory() {
+        router.push({ path: "/history" });
+      },
+      toPerSub() {
+        router.push({ path: "/personalsub" });
+      },
+      toPerCol() {
+        router.push({ path: "/personalcol" });
+      },
+      toDya() {
+        router.push({ path: "/dynamic" });
+      },
+    });
+
     // 生命函数
     onMounted(() => {
       getPercentage();
@@ -2238,6 +2270,7 @@ export default {
     return {
       ...toRefs(headmenu),
       goToPage,
+      ...toRefs(skipFun),
       ...toRefs(videoList),
       ...toRefs(logo),
       ...toRefs(avatar),
