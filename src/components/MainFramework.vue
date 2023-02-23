@@ -27,7 +27,7 @@
 
 <style lang="less" scoped>
 .row {
-  margin-top: 188px;
+  margin-top: 0px;
   height: auto;
   width: 100%;
   display: flex;
