@@ -35,7 +35,7 @@
                   <ul
                     style="
                       line-height: 45px;
-
+                      color: #6b757b;
                       font-size: 18px;
                       margin: 0px;
                       padding: 0px;
@@ -57,6 +57,7 @@
                     font-size: 18px;
                     font-weight: 600;
                     margin-top: 15px;
+                    color: #6b757b;
                   "
                   class="asideOpt"
                   @click="MsgOpt"

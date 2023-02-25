@@ -35,7 +35,7 @@
                   <ul
                     style="
                       line-height: 45px;
-
+                      color: #6b757b;
                       font-size: 18px;
                       margin: 0px;
                       padding: 0px;
@@ -49,7 +49,9 @@
                     <li @click="myMsg" tabindex="4">我的信息</li>
                   </ul>
                 </div>
-                <p class="asideOpt" @click="MsgOpt" :style="onestyle">消息设置</p>
+                <p class="asideOpt" @click="MsgOpt" :style="onestyle">
+                  消息设置
+                </p>
               </el-aside>
               <!-- 右栏 -->
               <el-main>
@@ -57,7 +59,7 @@
                   style="
                     background-color: rgba(255, 255, 255, 0.5);
                     width: 100%;
-                    height: auto;
+                    height: 900px;
                   "
                 >
                   <!-- 头部栏 -->
@@ -76,14 +78,194 @@
                       rightNav
                     }}</span>
                   </div>
+                  <!-- 第一个 -->
                   <div
                     style="
                       width: 98%;
-                      height: 900px;
+                      height: 130px;
                       background-color: white;
                       margin: 10px;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: flex-start;
+                      border-radius: 5px;
                     "
-                  ></div>
+                  >
+                    <div style="display: flex; margin-left: 50px">
+                      <span>消息提醒</span>
+                      <span style="color: #909399; margin-left: 10px"
+                        >（关闭后，消息将不再进行提醒）</span
+                      >
+                    </div>
+
+                    <div style="margin-left: 50px; margin-top: 15px">
+                      <el-radio-group v-model="remindAA">
+                        <el-radio label="1" size="large" border>开启</el-radio>
+                        <el-radio label="2" size="large" border>关闭</el-radio>
+                      </el-radio-group>
+                    </div>
+                  </div>
+                  <!-- 第二个 -->
+                  <div
+                    style="
+                      width: 98%;
+                      height: 130px;
+                      background-color: white;
+                      margin: 10px;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: flex-start;
+                      border-radius: 5px;
+                    "
+                  >
+                    <div style="display: flex; margin-left: 50px">
+                      <span>私信智能拦截</span>
+                      <span style="color: #909399; margin-left: 10px"
+                        >（开启后，将自动拦截疑似骚扰和不良的会话）</span
+                      >
+                    </div>
+
+                    <div style="margin-left: 50px; margin-top: 15px">
+                      <el-radio-group v-model="remindBB">
+                        <el-radio label="1" size="large" border>开启</el-radio>
+                        <el-radio label="2" size="large" border>关闭</el-radio>
+                      </el-radio-group>
+                    </div>
+                  </div>
+                  <!-- 三四五 -->
+                  <div
+                    style="
+                      width: 98%;
+                      height: 390px;
+                      background-color: white;
+                      margin: 10px;
+
+                      border-radius: 5px;
+                    "
+                  >
+                    <!-- 第三个 -->
+                    <div
+                      style="
+                        width: 100%;
+                        height: 130px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        border-bottom: 1px solid var(--el-border-color);
+                      "
+                    >
+                      <div style="display: flex; margin-left: 50px">
+                        <span>回复我的消息提醒</span>
+                        <span style="color: #909399; margin-left: 10px"
+                          >（接受谁的评论消息提醒）</span
+                        >
+                      </div>
+
+                      <div style="margin-left: 50px; margin-top: 15px">
+                        <el-radio-group v-model="remindCC">
+                          <el-radio label="1" size="large" border
+                            >所有人</el-radio
+                          >
+                          <el-radio label="2" size="large" border
+                            >关注的人</el-radio
+                          >
+                          <el-radio label="3" size="large" border
+                            >不接受所有消息提醒</el-radio
+                          >
+                        </el-radio-group>
+                      </div>
+                    </div>
+                    <!-- 第四个 -->
+                    <div
+                      style="
+                        width: 100%;
+                        height: 130px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        border-bottom: 1px solid var(--el-border-color);
+                      "
+                    >
+                      <div style="display: flex; margin-left: 50px">
+                        <span>@我的消息提醒</span>
+                        <span style="color: #909399; margin-left: 10px"
+                          >（接受谁的@消息提醒）</span
+                        >
+                      </div>
+
+                      <div style="margin-left: 50px; margin-top: 15px">
+                        <el-radio-group v-model="remindDD">
+                          <el-radio label="1" size="large" border
+                            >所有人</el-radio
+                          >
+                          <el-radio label="2" size="large" border
+                            >关注的人</el-radio
+                          >
+                          <el-radio label="3" size="large" border
+                            >不接受所有消息提醒</el-radio
+                          >
+                        </el-radio-group>
+                      </div>
+                    </div>
+                    <!-- 第五个 -->
+                    <div
+                      style="
+                        width: 100%;
+                        height: 130px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                      "
+                    >
+                      <div style="display: flex; margin-left: 50px">
+                        <span>收到的赞消息提醒</span>
+                      </div>
+
+                      <div style="margin-left: 50px; margin-top: 15px">
+                        <el-radio-group v-model="remindEE">
+                          <el-radio label="1" size="large" border
+                            >开启</el-radio
+                          >
+                          <el-radio label="2" size="large" border
+                            >关闭</el-radio
+                          >
+                        </el-radio-group>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 第六个 -->
+                  <div
+                    style="
+                      width: 98%;
+                      height: 130px;
+                      background-color: white;
+                      margin: 10px;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      align-items: flex-start;
+                      border-radius: 5px;
+                    "
+                  >
+                    <div style="display: flex; margin-left: 50px">
+                      <span>收起未关注人消息</span>
+                      <span style="color: #909399; margin-left: 10px"
+                        >（开启后，未关注人消息将被折叠起来）</span
+                      >
+                    </div>
+
+                    <div style="margin-left: 50px; margin-top: 15px">
+                      <el-radio-group v-model="remindFF">
+                        <el-radio label="1" size="large" border>开启</el-radio>
+                        <el-radio label="2" size="large" border>关闭</el-radio>
+                      </el-radio-group>
+                    </div>
+                  </div>
                 </div>
               </el-main>
             </el-container>
@@ -102,31 +284,40 @@
 import HeaderNav from "@/components/HeaderNav.vue";
 import { reactive, toRefs } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
-import router from '@/router';
+import router from "@/router";
 export default {
   components: { HeaderNav },
   setup() {
     let leftUL = reactive({
       rightNav: "消息设置",
       onestyle: "color:#409eff",
-     
+
       answerMe() {
-        router.push({path:'/answerme'})
+        router.push({ path: "/answerme" });
       },
       goods() {
-        router.push({path:'/msggoods'})
+        router.push({ path: "/msggoods" });
       },
       sysMsg() {
-        router.push({path:'/sysmsg'})
+        router.push({ path: "/sysmsg" });
       },
       myMsg() {
-        router.push({path:'/mymsg'})
+        router.push({ path: "/mymsg" });
       },
-      
+
       MsgOpt() {
         leftUL.rightNav = "消息设置";
         leftUL.onestyle = "color:#409eff";
       },
+    });
+
+    let option = reactive({
+      remindAA: "1",
+      remindBB: "1",
+      remindCC: "1",
+      remindDD: "1",
+      remindEE: "1",
+      remindFF: "2",
     });
 
     onMounted(() => {
@@ -135,6 +326,7 @@ export default {
 
     return {
       ...toRefs(leftUL),
+      ...toRefs(option),
     };
   },
 };
@@ -185,5 +377,6 @@ li:focus {
   font-size: 18px;
   font-weight: 600;
   margin-top: 15px;
+  color: #6b757b;
 }
 </style>

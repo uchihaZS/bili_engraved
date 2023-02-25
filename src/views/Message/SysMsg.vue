@@ -35,7 +35,7 @@
                   <ul
                     style="
                       line-height: 45px;
-
+                      color: #6b757b;
                       font-size: 18px;
                       margin: 0px;
                       padding: 0px;
@@ -57,6 +57,7 @@
                     font-size: 18px;
                     font-weight: 600;
                     margin-top: 15px;
+                    color: #6b757b;
                   "
                   class="asideOpt"
                   @click="MsgOpt"
@@ -89,14 +90,33 @@
                       rightNav
                     }}</span>
                   </div>
+                  <!-- 列表 -->
                   <div
                     style="
                       width: 98%;
-                      height: 900px;
-                      background-color: white;
                       margin: 10px;
+                      height: 125px;
+                      background-color: white;
+                      border-radius: 10px;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: center;
+                      box-shadow: var(--el-box-shadow-lighter);
                     "
-                  ></div>
+                    v-for="i in 10" :key="i"
+                  >
+                    <div style="display: flex; margin-left: 50px;align-items: center;">
+                      <span style="font-weight: 600">主题名</span>
+                      <span style="margin-left: 15px; color: #cfd3dc"
+                        >20XX年XX月XX日 XX:XX</span
+                      >
+                    </div>
+                    <div style="margin-left: 50px;">
+                      <p>
+                        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx(简介)
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </el-main>
             </el-container>

@@ -35,7 +35,7 @@
                   <ul
                     style="
                       line-height: 45px;
-
+                      color: #6b757b;
                       font-size: 18px;
                       margin: 0px;
                       padding: 0px;
@@ -57,6 +57,7 @@
                     font-size: 18px;
                     font-weight: 600;
                     margin-top: 15px;
+                    color: #6b757b;
                   "
                   class="asideOpt"
                   @click="MsgOpt"
@@ -89,14 +90,70 @@
                       rightNav
                     }}</span>
                   </div>
+                  <!-- 列表 -->
                   <div
                     style="
                       width: 98%;
-                      height: 900px;
+                      height: auto;
                       background-color: white;
                       margin: 10px;
+                      border-radius: 5px;
                     "
-                  ></div>
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        height: 150px;
+                        border-bottom: 1px solid #cfd3dc;
+                        margin-top: 15px;
+                        display: flex;
+                        align-items: center;
+                      "
+                      v-for="i in 10"
+                      :key="i"
+                    >
+                      <!-- 头像 -->
+                      <div style="margin: 10px 0px 0px 20px">
+                        <el-avatar :size="40" :src="circleUrl"></el-avatar>
+                        <el-avatar
+                          :size="40"
+                          :src="circleUrl"
+                          style="
+                            z-index: 5;
+                            position: relative;
+                            position: relative;
+                            top: -20px;
+                            left: -30px;
+                          "
+                        ></el-avatar>
+                      </div>
+                      <!-- 中间回复内容 -->
+                      <div style="margin-left: 15px">
+                        <div>
+                          <span>用户名1,用户名2</span>
+                          <span style="margin-left: 15px"
+                            >等总计XX人赞了我的评论</span
+                          >
+                        </div>
+
+                        <div style="margin-top: 20px">
+                          <span class="midcontent">20XX年XX月XX日 XX:XX</span>
+                        </div>
+                      </div>
+                      <!-- 右边回复来源 -->
+                      <div style="width: 100px; margin-left: 805px">
+                        <p
+                          style="
+                            width: 100px;
+                            color: #a6a9ad;
+                            margin-top: -15px;
+                          "
+                        >
+                          引用的回复来源
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </el-main>
             </el-container>
@@ -115,7 +172,7 @@
 import HeaderNav from "@/components/HeaderNav.vue";
 import { reactive, toRefs } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
-import router from '@/router';
+import router from "@/router";
 export default {
   components: { HeaderNav },
   setup() {
@@ -146,6 +203,8 @@ export default {
 
     return {
       ...toRefs(leftUL),
+      circleUrl:
+        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
     };
   },
 };
@@ -196,5 +255,10 @@ li:focus {
   font-size: 18px;
   font-weight: 600;
   margin-top: 15px;
+}
+
+.midcontent {
+  font-size: 14px;
+  color: #cfd3dc;
 }
 </style>

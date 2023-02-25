@@ -35,7 +35,7 @@
                   <ul
                     style="
                       line-height: 45px;
-
+                      color: #6b757b;
                       font-size: 18px;
                       margin: 0px;
                       padding: 0px;
@@ -43,12 +43,12 @@
                       text-indent: 0px;
                     "
                   >
-                    <li @click="answerMe" tabindex="1" >
-                      回复我的
+                    <li @click="answerMe" tabindex="1">回复我的</li>
+                    <li @click="goods" tabindex="2">收到的赞</li>
+                    <li @click="sysMsg" tabindex="3">系统通知</li>
+                    <li @click="myMsg" tabindex="4" :style="onestyle">
+                      我的信息
                     </li>
-                    <li @click="goods" tabindex="2" >收到的赞</li>
-                    <li @click="sysMsg" tabindex="3" >系统通知</li>
-                    <li @click="myMsg" tabindex="4" :style="onestyle">我的信息</li>
                   </ul>
                 </div>
                 <p
@@ -57,8 +57,10 @@
                     font-size: 18px;
                     font-weight: 600;
                     margin-top: 15px;
+                    color: #6b757b;
                   "
-                  class="asideOpt" @click="MsgOpt"
+                  class="asideOpt"
+                  @click="MsgOpt"
                 >
                   消息设置
                 </p>
@@ -114,29 +116,29 @@
 import HeaderNav from "@/components/HeaderNav.vue";
 import { reactive, toRefs } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
-import router from '@/router';
+import router from "@/router";
 export default {
   components: { HeaderNav },
   setup() {
     let leftUL = reactive({
       rightNav: "我的信息",
       onestyle: "color:#409eff",
-      
+
       answerMe() {
-        router.push({path:'/answerme'})
+        router.push({ path: "/answerme" });
       },
       goods() {
-        router.push({path:'/msggoods'})
+        router.push({ path: "/msggoods" });
       },
       sysMsg() {
-        router.push({path:'/sysmsg'})
+        router.push({ path: "/sysmsg" });
       },
       myMsg() {
         leftUL.rightNav = "我的信息";
         leftUL.onestyle = "color:#409eff";
       },
       MsgOpt() {
-        router.push({path:'/msgopt'})
+        router.push({ path: "/msgopt" });
       },
     });
 
