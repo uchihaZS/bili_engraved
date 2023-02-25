@@ -384,7 +384,7 @@
 </template>
 
 <script>
-import PersonalHead from "@/components/PersonalHead.vue";
+import PersonalHead from "@/components/PersonCom/PersonalHead.vue";
 import HeaderNav from "@/components/HeaderNav.vue";
 import { reactive, toRefs } from "@vue/reactivity";
 import { Operation } from "@element-plus/icons-vue";

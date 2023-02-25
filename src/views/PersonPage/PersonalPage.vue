@@ -413,7 +413,7 @@
 </template>
 
 <script>
-import PersonalHead from "@/components/PersonalHead.vue";
+import PersonalHead from "@/components/PersonCom/PersonalHead.vue";
 import HeaderNav from "@/components/HeaderNav.vue";
 import { useRouter } from "vue-router";
 export default {

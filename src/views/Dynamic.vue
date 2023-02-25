@@ -474,7 +474,14 @@ export default {
   justify-content: center;
   --el-main-padding: 0px;
   background-image: url("../../public/DyaBG.png");
-  background-size: contain;
+  background-position-x: center;
+  background-position-y: top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
 }
 .el-main::-webkit-scrollbar {
   display: none;

@@ -61,8 +61,8 @@
 </template>
 
 <script>
-import PersonalHead from "@/components/PersonalHead.vue";
-import PerContext from "@/components/PerContext.vue"
+import PersonalHead from "@/components/PersonCom/PersonalHead.vue";
+import PerContext from "@/components/PersonCom/PerContext.vue"
 import HeaderNav from "@/components/HeaderNav.vue";
 export default {
   components: { PersonalHead, HeaderNav,PerContext },

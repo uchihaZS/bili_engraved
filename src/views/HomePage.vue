@@ -46,18 +46,18 @@
           </el-menu-item>
           <!-- 消息的下拉菜单 -->
           <el-dropdown>
-            <el-menu-item index="2" @click="toMessage">
+            <el-menu-item index="2" @click="toAnswerMe">
               <span class="el-dropdown-link"> 消息 </span>
             </el-menu-item>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>回复我的</el-dropdown-item>
-                <el-dropdown-item>@我的</el-dropdown-item>
-                <el-dropdown-item>收到的赞</el-dropdown-item>
-                <el-dropdown-item>系统通知</el-dropdown-item>
-                <el-dropdown-item>我的消息</el-dropdown-item>
-                <el-dropdown-item>私信存档</el-dropdown-item>
-                <el-dropdown-item>消息设置</el-dropdown-item>
+                <el-dropdown-item @click="toAnswerMe"
+                  >回复我的</el-dropdown-item
+                >
+                <el-dropdown-item @click="toGoods">收到的赞</el-dropdown-item>
+                <el-dropdown-item @click="toSysMsg">系统通知</el-dropdown-item>
+                <el-dropdown-item @click="toMyMsg">我的消息</el-dropdown-item>
+                <el-dropdown-item @click="toMsgOpt">消息设置</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -139,7 +139,7 @@
           >
             {{ avatarName }}
           </h4>
-          <h5 style="text-align: center; margin-top: 0px" v-colorBlue>普通会员</h5>
+          <h5 style="text-align: center; margin-top: 0px">普通会员</h5>
           <div>
             <div
               style="
@@ -2223,6 +2223,21 @@ export default {
       },
       toDya() {
         router.push({ path: "/dynamic" });
+      },
+      toAnswerMe() {
+        router.push({ path: "/answerme" });
+      },
+      toGoods() {
+        router.push({ path: "/msggoods" });
+      },
+      toMyMsg() {
+        router.push({ path: "/mymsg" });
+      },
+      toSysMsg() {
+        router.push({ path: "/sysmsg" });
+      },
+      toMsgOpt() {
+        router.push({ path: "/msgopt" });
       },
     });
 

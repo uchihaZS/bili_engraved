@@ -10,7 +10,7 @@ import 'element-plus/dist/index.css'
 const app = createApp(App) 
 app.use(store).use(router).use(ElementPlus).use(ElementPlusIconsVue).mount('#app')
 
-app.directive('colorBlue',{
+app.directive('hoverBlue',{
     mounted(el) {
         el.addEventListener("mouseover", () => {
           el.style.color = "#409eff";

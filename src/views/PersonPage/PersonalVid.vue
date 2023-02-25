@@ -24,19 +24,24 @@
                   background-color: #ffffff;
                 "
               >
-                <div class="asideSel" tabindex="1" @click="tab = 1">
+                <div
+                  class="asideSel"
+                  tabindex="1"
+                  @click="video"
+                  :style="onestyle"
+                >
                   <p>视频</p>
                   <p>数量</p>
                 </div>
-                <div class="asideSel" tabindex="2" @click="tab = 2">
+                <div class="asideSel" tabindex="2" @click="music">
                   <p>音频</p>
                   <p>数量</p>
                 </div>
-                <div class="asideSel" tabindex="3" @click="tab = 3">
+                <div class="asideSel" tabindex="3" @click="column">
                   <p>专栏</p>
                   <p>数量</p>
                 </div>
-                <div class="asideSel" tabindex="4" @click="tab = 4">
+                <div class="asideSel" tabindex="4" @click="photo">
                   <p>相册</p>
                   <p>数量</p>
                 </div>
@@ -63,13 +68,14 @@
 </template>
 
 <script>
-import PersonalHead from "@/components/PersonalHead.vue";
+import PersonalHead from "@/components/PersonCom/PersonalHead.vue";
 import HeaderNav from "@/components/HeaderNav.vue";
-import PerVideo from "@/components/PerVideo.vue";
-import PerMusic from "@/components/PerMusic.vue";
-import PerColumn from "@/components/PerColumn.vue";
-import PerPhoto from "@/components/PerPhoto.vue";
-import { ref, toRef } from "@vue/reactivity";
+import PerVideo from "@/components/PersonCom/PerVideo.vue";
+import PerMusic from "@/components/PersonCom/PerMusic.vue";
+import PerColumn from "@/components/PersonCom/PerColumn.vue";
+import PerPhoto from "@/components/PersonCom/PerPhoto.vue";
+import { reactive, toRefs } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
 
 export default {
   components: {
@@ -81,10 +87,55 @@ export default {
     PerPhoto,
   },
   setup() {
-    let tab = ref(1);
-
+    onMounted(() => {
+      aside.video();
+    });
+    let aside = reactive({
+      tab: 1,
+      onestyle: [
+        { display: "flex" },
+        { padding: "0px 5px" },
+        { alignItems: "center" },
+        { justifyContent: "space-between" },
+        { height: "50px" },
+      ],
+      video() {
+        aside.tab = 1;
+        aside.onestyle.push({ backgroundColor: "#409eff" }, { color: "white" });
+      },
+      music() {
+        aside.tab = 2;
+        aside.onestyle = [
+          { display: "flex" },
+          { padding: "0px 5px" },
+          { alignItems: "center" },
+          { justifyContent: "space-between" },
+          { height: "50px" },
+        ];
+      },
+      column() {
+        aside.tab = 3;
+        aside.onestyle = [
+          { display: "flex" },
+          { padding: "0px 5px" },
+          { alignItems: "center" },
+          { justifyContent: "space-between" },
+          { height: "50px" },
+        ];
+      },
+      photo() {
+        aside.tab = 4;
+        aside.onestyle = [
+          { display: "flex" },
+          { padding: "0px 5px" },
+          { alignItems: "center" },
+          { justifyContent: "space-between" },
+          { height: "50px" },
+        ];
+      },
+    });
     return {
-      tab,
+      ...toRefs(aside),
     };
   },
 };

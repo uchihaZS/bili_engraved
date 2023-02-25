@@ -7,14 +7,14 @@
       <div class="row">
         <el-row style="width: 100%">
           <!-- 左边空白 -->
-          <el-col :span="1">
+          <el-col :span="2">
             <div
               style="background-color: #f4f5f7; width: 100%; height: 100%"
             ></div>
           </el-col>
           <!-- 中间主要内容 -->
-          <el-col :span="22" style="background-color: white"> <h1>历史页</h1></el-col>
-          <el-col :span="1">
+          <el-col :span="20" style="background-color: white"> <h1>历史页</h1></el-col>
+          <el-col :span="2">
             <!-- 右边空白 -->
             <div
               style="background-color: #f4f5f7; width: 100%; height: 100%"
