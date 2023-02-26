@@ -226,7 +226,7 @@ export default {
   overflow-y: auto;
   justify-content: center;
   --el-main-padding: 0px;
-  background-image: url("../../../public/infocenterbg.jpg");
+  background-image: url("C:\fake-bilibli\public\infocenterbg.jpg");
   background-position-x: center;
   background-position-y: top;
   background-size: cover;

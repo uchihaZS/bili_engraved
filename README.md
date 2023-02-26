@@ -1,16 +1,17 @@
-# bilibili
+# fake bilibili
+remember 在js里引用静态资源用相对路径publicPath的值加名字，在css里引用要写绝对路径
 
-## Project setup
+## 下载依赖
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 本地编译
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 打包部署
 ```
 npm run build
 ```

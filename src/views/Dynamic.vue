@@ -473,7 +473,7 @@ export default {
   overflow-y: auto;
   justify-content: center;
   --el-main-padding: 0px;
-  background-image: url("../../public/DyaBG.png");
+  background-image: url("C:\fake-bilibli\public\DyaBG.png");
   background-position-x: center;
   background-position-y: top;
   background-size: cover;
@@ -491,7 +491,7 @@ export default {
   width: 100%;
   margin: 0px 0px;
   height: 66px;
-  background-image: url("../../public/smallPBG.webp");
+  background-image: url("C:\fake-bilibli\public\smallPBG.webp");
   background-size: cover;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;

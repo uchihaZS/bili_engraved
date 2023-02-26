@@ -646,7 +646,7 @@ export default {
       danmuCtx: {},
       art: {
         container: ".artplayer-app",
-        url: "/cx.mp4",
+        url: "./cx.mp4",
         theme: "#23ade5",
         autoplay: true,
         fullscreen: true, //全屏
@@ -691,7 +691,7 @@ export default {
         ],
         //hover缩略图
         thumbnails: {
-          url: "/cxthum.png",
+          url: "./cxthum.png",
           number: 160, // 数量
           width: 160, // 宽度
           column: 10,

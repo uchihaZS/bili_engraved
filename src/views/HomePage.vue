@@ -2041,7 +2041,7 @@ export default {
       vList: [
         {
           vname: "鬼灭之刃游郭篇《残響散歌》真.完整粤语版",
-          poster: "/fm.jpg",
+          poster: "./fm.jpg",
           author: "不是词神",
           link: "/playpage",
         },
