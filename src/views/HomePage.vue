@@ -1,893 +1,8 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header class="el-header">
-        <!-- 顶栏菜单 -->
-        <el-menu
-          :default-active="activeIndex"
-          class="el-menu-demo"
-          mode="horizontal"
-          :ellipsis="false"
-          @select="handleSelect"
-          style="width: 100vw; position: absolute; right: 0px"
-        >
-          <div class="flex-grow" />
-          <!-- LOGO -->
-          <el-menu-item
-            index="0"
-            @mouseover="debugOver"
-            @mouseleave="debugLeave"
-            >qiliqili</el-menu-item
-          >
-          <div class="flex-grow" />
-          <!-- 搜索框 -->
-          <el-input
-            v-model="searchValue"
-            placeholder="请输入关键词"
-            class="input-with-select"
-          >
-            <template #append>
-              <el-button @click="goToSearchPage">搜索</el-button>
-            </template>
-          </el-input>
-          <div class="flex-grow" />
-          <!-- 头像 -->
-          <el-menu-item
-            index="1"
-            @mouseover="avatarOver"
-            @mouseleave="avatarLeave"
-          >
-            <el-avatar
-              :size="40"
-              :src="circleUrl"
-              :style="avatarUse"
-              @click="goToPersonalPage"
-            />
-          </el-menu-item>
-          <!-- 消息的下拉菜单 -->
-          <el-dropdown>
-            <el-menu-item index="2" @click="toAnswerMe">
-              <span class="el-dropdown-link"> 消息 </span>
-            </el-menu-item>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item @click="toAnswerMe"
-                  >回复我的</el-dropdown-item
-                >
-                <el-dropdown-item @click="toGoods">收到的赞</el-dropdown-item>
-                <el-dropdown-item @click="toSysMsg">系统通知</el-dropdown-item>
-                <el-dropdown-item @click="toMyMsg">我的消息</el-dropdown-item>
-                <el-dropdown-item @click="toMsgOpt">消息设置</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-          <el-menu-item
-            index="3"
-            @mouseover="dynamicOver"
-            @mouseleave="dynamicLeave"
-            @click="toDya"
-            >动态</el-menu-item
-          >
-          <el-menu-item
-            index="4"
-            @mouseover="subOver"
-            @mouseleave="subLeave"
-            @click="toPerSub"
-            >订阅</el-menu-item
-          >
-          <el-menu-item
-            index="5"
-            @mouseover="colOver"
-            @mouseleave="colLeave"
-            @click="toPerCol"
-            >收藏</el-menu-item
-          >
-          <el-menu-item
-            index="6"
-            @mouseover="hisOver"
-            @mouseleave="hisLeave"
-            @click="toHistory"
-            >历史</el-menu-item
-          >
-          <div class="flex-grow" />
-        </el-menu>
-        <!-- logo_debug -->
-        <div
-          style="
-            width: 280px;
-            height: 100px;
-            z-index: 997;
-            position: absolute;
-            left: 140px;
-            top: 73px;
-            background-color: white;
-            border-radius: 15px;
-          "
-          v-if="debugState == true"
-          @mouseover="debugFuntype = 0"
-          @mouseleave="debugLeave"
-        >
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              flex-wrap: nowrap;
-              align-items: stretch;
-              justify-content: flex-start;
-              margin-top: 10px;
-            "
-          >
-            用户名:<input type="text" v-model="debugname" />
-            <button @click="namechange">修改</button>
-          </div>
-          <div style="margin-top: 20px; display: flex">
-            经验:<input type="text" v-model="debugxp" />
-            <button @click="xpchange">修改</button>
-          </div>
-        </div>
-        <!-- 头像悬浮信息 -->
-        <el-card
-          v-show="avatarState"
-          class="avatarInfo"
-          @mouseover="(avatarState = true), (avatarUse = avatarCss)"
-          @mouseleave="(avatarState = false), (avatarUse = avatarOri)"
-        >
-          <h4
-            class="username"
-            style="text-align: center; margin: 0px auto"
-            @click="goToPersonalPage"
-          >
-            {{ avatarName }}
-          </h4>
-          <h5 style="text-align: center; margin-top: 0px">普通会员</h5>
-          <div>
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                margin: -20px 0px 0px 0px;
-                padding: 0px 0px;
-                line-height: 11px;
-              "
-            >
-              <p :style="levelCss">{{ level }}</p>
-              <p style="font-size: 11px; margin-top: 15px">{{ xp }}/10000</p>
-            </div>
-            <el-progress
-              :percentage="percentage"
-              text-inside="true"
-              style="margin-top: -8px"
-            />
-          </div>
-          <el-divider />
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              width: auto;
-              height: 16px;
-              text-align: center;
-            "
-          >
-            <span style="margin-top: -29px" class="avatag">
-              <p style="height: 10px; font-size: 15px">47</p>
-              <p style="font-size: 13px">关注</p>
-            </span>
-            <span style="margin-top: -29px" class="avatag">
-              <p style="height: 10px; font-size: 15px">114514</p>
-              <p style="font-size: 13px">粉丝</p>
-            </span>
-            <span style="margin-top: -29px" class="avatag">
-              <p style="height: 10px; font-size: 15px">9</p>
-              <p style="font-size: 13px">动态</p>
-            </span>
-          </div>
-          <el-divider />
-
-          <ul
-            style="
-              list-style: none;
-              width: 200px;
-              margin-top: -20px;
-              margin-bottom: 0px;
-            "
-          >
-            <li class="list">个人中心</li>
-            <li class="list">投稿管理</li>
-            <li class="list">我的钱包</li>
-            <li class="list">直播中心</li>
-            <li class="list">商城</li>
-          </ul>
-          <el-button
-            type="info"
-            plain
-            style="width: 100%; margin: 0px 0px 10px 0px"
-            >退出登录</el-button
-          >
-        </el-card>
-        <!-- 动态悬浮信息 -->
-        <div
-          class="dynamic"
-          v-show="dynamicState"
-          @mouseover="(dynamicState = true), (dyFunType = 0)"
-          @mouseleave="dynamicState = false"
-        >
-          <!-- 动态菜单 -->
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              flex-wrap: nowrap;
-              align-content: center;
-              justify-content: space-around;
-              align-items: center;
-            "
-          >
-            <div style="width: 100px; display: flex; flex-wrap: nowrap">
-              <el-button text size="small" @click="dyVideo" :style="dyVideoCss"
-                >视频</el-button
-              >
-              <el-button text size="small" @click="dyAnime" :style="dyAnimeCss"
-                >番剧</el-button
-              >
-              <el-button text size="small" @click="dyCol" :style="dyColCss"
-                >专栏</el-button
-              >
-              <el-button text size="small" @click="dyLive" :style="dyLiveCss"
-                >直播</el-button
-              >
-            </div>
-
-            <el-button round style="margin-left: 87px">全部动态</el-button>
-          </div>
-          <!-- 动态内容 -->
-          <!-- 视频列表 -->
-          <div v-if="dynamicType == 0">
-            <div class="dyvideo">
-              <div v-for="i in 10" :key="i" style="margin-bottom: 10px">
-                <el-card
-                  class="box-card"
-                  style="width: 145px; height: 150px; border-radius: 15px"
-                  body-style="padding:0px"
-                >
-                  <div
-                    style="background-color: #909399; width: 100%; height: 85px"
-                  >
-                    封面{{ i }}
-                  </div>
-                  <h5 style="margin: 5px 0px 3px 11px">视频{{ i }}的介绍</h5>
-                  <el-button round size="small" style="margin: 13px 0px 0px 5px"
-                    >视频{{ i }}的作者</el-button
-                  >
-                </el-card>
-              </div>
-            </div>
-          </div>
-          <!-- 番剧列表 -->
-          <div v-if="dynamicType == 1">
-            <div class="dyanime">
-              <div
-                v-for="i in 10"
-                :key="i"
-                style="
-                  margin-bottom: 10px;
-                  width: 98%;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 15px;
-                  height: 70px;
-                  display: flex;
-                "
-              >
-                <div
-                  style="
-                    background-color: #909399;
-                    width: 35%;
-                    height: 100%;
-                    border-radius: 15px;
-                  "
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    margin-left: 5px;
-                  "
-                >
-                  <h4 style="margin-bottom: -15px">集名{{ i }}</h4>
-                  <h5>番名{{ i }}</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 专栏列表 -->
-          <div v-if="dynamicType == 2">
-            <div class="dycol">
-              <el-card
-                :body-style="{ padding: '0px', width: '100%', height: '100%' }"
-                v-for="i in 10"
-                :key="i"
-                style="
-                  border-radius: 15px;
-                  margin-bottom: 15px;
-                  width: 90%;
-                  height: 180px;
-                "
-              >
-                <div
-                  style="background-color: #909399; width: 100%; height: 60%"
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    align-content: center;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                  "
-                >
-                  <h4 style="margin-bottom: -16px; margin-top: 3px">
-                    标题{{ i }}
-                  </h4>
-                  <p>介绍{{ i }}</p>
-                </div>
-              </el-card>
-            </div>
-          </div>
-          <!-- 直播列表 -->
-          <div v-if="dynamicType == 3">
-            <div class="dylive">
-              <div
-                v-for="i in 10"
-                :key="i"
-                style="
-                  margin-bottom: 10px;
-                  width: 98%;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 50px;
-                  height: 70px;
-                  display: flex;
-                "
-              >
-                <el-avatar
-                  :size="50"
-                  :src="circleUrl"
-                  style="margin: 10px 20px 0px 10px"
-                />
-                <h3 style="margin-top: 22px">主播名{{ i }}</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 订阅悬浮信息 -->
-        <div
-          class="subscribe"
-          v-show="subState"
-          @mouseover="(subState = true), (subFunType = 0)"
-          @mouseleave="subState = false"
-        >
-          <!-- 订阅菜单 -->
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              flex-wrap: nowrap;
-              align-content: center;
-              justify-content: space-around;
-              align-items: center;
-            "
-          >
-            <div style="width: 100px; display: flex; flex-wrap: nowrap">
-              <el-button
-                text
-                size="small"
-                @click="subAnime"
-                :style="subAnimeCss"
-                >追番</el-button
-              >
-              <el-button
-                text
-                size="small"
-                @click="subVideo"
-                :style="subVideoCss"
-                >追剧</el-button
-              >
-            </div>
-
-            <el-button round style="margin-left: 87px">查看更多</el-button>
-          </div>
-          <!-- 订阅内容 -->
-
-          <!-- 追番列表 -->
-          <div v-if="subType == 0">
-            <div class="subanime">
-              <div
-                v-for="i in 10"
-                :key="i"
-                style="
-                  margin-bottom: 10px;
-                  width: 98%;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 15px;
-                  height: 70px;
-                  display: flex;
-                "
-              >
-                <div
-                  style="
-                    background-color: #909399;
-                    width: 35%;
-                    height: 100%;
-                    border-radius: 15px;
-                  "
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    margin-left: 5px;
-                  "
-                >
-                  <h4 style="margin-bottom: -15px">番名{{ i }}</h4>
-                  <h5>第{{ i }}话</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 追剧列表 -->
-          <div v-if="subType == 1">
-            <div class="subvideo">
-              <div
-                v-for="i in 10"
-                :key="i"
-                style="
-                  margin-bottom: 10px;
-                  width: 98%;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 15px;
-                  height: 70px;
-                  display: flex;
-                "
-              >
-                <div
-                  style="
-                    background-color: #909399;
-                    width: 35%;
-                    height: 100%;
-                    border-radius: 15px;
-                  "
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    margin-left: 5px;
-                  "
-                >
-                  <h4 style="margin-bottom: -15px">剧名{{ i }}</h4>
-                  <h5>第{{ i }}话</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 收藏悬浮信息 -->
-        <div
-          class="collect"
-          v-show="colState"
-          @mouseover="(colState = true), (colFunType = 0)"
-          @mouseleave="colLeave"
-        >
-          <!-- 收藏菜单 -->
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              flex-wrap: nowrap;
-              align-content: center;
-
-              align-items: center;
-              margin-top: 10px;
-            "
-          >
-            <el-dropdown
-              type="primary"
-              @command="handleCommand"
-              trigger="click"
-            >
-              <el-button
-                round
-                type="primary"
-                style="min-width: 85px; max-width: 99px"
-              >
-                {{ selectItem }}
-              </el-button>
-
-              <template #dropdown>
-                <el-dropdown-menu
-                  @mouseover="(colState = true), (colFunType = 0)"
-                >
-                  <el-dropdown-item command="默认收藏夹"
-                    >默认收藏夹</el-dropdown-item
-                  >
-                  <el-dropdown-item command="自定义收藏夹1"
-                    >自定义收藏夹 1</el-dropdown-item
-                  >
-                  <el-dropdown-item command="自定义收藏夹2"
-                    >自定义收藏夹 2</el-dropdown-item
-                  >
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-            <input
-              type="text"
-              v-model="colInput"
-              placeholder="请输入关键词"
-              style="
-                height: 25px;
-                margin-left: 5px;
-                border: none;
-                border-bottom: 1px solid #909399;
-                outline: none;
-                font-size: 10px;
-                width: 160px;
-              "
-            />
-            <el-button round size="small" style="margin-left: 15px"
-              >查看更多</el-button
-            >
-          </div>
-          <!-- 收藏内容 -->
-          <!-- 默认收藏夹列表 -->
-          <div v-if="contentType == 0">
-            <div class="colList">
-              <div
-                v-for="i in 10"
-                :key="i"
-                style="
-                  margin-bottom: 10px;
-                  width: 98%;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 15px;
-                  height: 70px;
-                  display: flex;
-                "
-              >
-                <div
-                  style="
-                    background-color: #909399;
-                    width: 35%;
-                    height: 100%;
-                    border-radius: 15px;
-                  "
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    margin-left: 5px;
-                  "
-                >
-                  <h4 style="margin-bottom: -15px">默认收藏夹-标题{{ i }}</h4>
-                  <h5>默认收藏夹-作者{{ i }}</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 自定收藏夹1列表 -->
-          <div v-if="contentType == 1">
-            <div class="colList">
-              <div
-                v-for="i in 10"
-                :key="i"
-                style="
-                  margin-bottom: 10px;
-                  width: 98%;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 15px;
-                  height: 70px;
-                  display: flex;
-                "
-              >
-                <div
-                  style="
-                    background-color: #909399;
-                    width: 35%;
-                    height: 100%;
-                    border-radius: 15px;
-                  "
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    margin-left: 5px;
-                  "
-                >
-                  <h4 style="margin-bottom: -15px">自定收藏夹1-标题{{ i }}</h4>
-                  <h5>自定收藏夹1-作者{{ i }}</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 自定收藏夹2列表 -->
-          <div v-if="contentType == 2">
-            <div class="colList">
-              <div
-                v-for="i in 10"
-                :key="i"
-                style="
-                  margin-bottom: 10px;
-                  width: 98%;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 15px;
-                  height: 70px;
-                  display: flex;
-                "
-              >
-                <div
-                  style="
-                    background-color: #909399;
-                    width: 35%;
-                    height: 100%;
-                    border-radius: 15px;
-                  "
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    margin-left: 5px;
-                  "
-                >
-                  <h4 style="margin-bottom: -15px">自定收藏夹2-标题{{ i }}</h4>
-                  <h5>自定收藏夹2-作者{{ i }}</h5>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 历史悬浮信息 -->
-        <div
-          class="history"
-          v-show="hisState"
-          @mouseover="(hisState = true), (hisFunType = 0)"
-          @mouseleave="hisLeave"
-        >
-          <!-- 历史菜单 -->
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              flex-wrap: nowrap;
-              align-content: center;
-
-              align-items: center;
-              margin-top: 10px;
-            "
-          >
-            <input
-              type="text"
-              v-model="colInput"
-              placeholder="请输入关键词"
-              style="
-                height: 25px;
-                margin-left: 5px;
-                border: none;
-                border-bottom: 1px solid #909399;
-                outline: none;
-                font-size: 10px;
-                width: 240px;
-              "
-            />
-            <el-button round size="small" style="margin-left: 15px"
-              >查看更多</el-button
-            >
-          </div>
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              flex-wrap: nowrap;
-              align-content: center;
-              align-items: center;
-              justify-content: space-between;
-            "
-          >
-            <p>过滤：</p>
-            <div>
-              <el-button round size="small">视频</el-button>
-              <el-button round size="small">番剧</el-button>
-              <el-button round size="small">专栏</el-button>
-              <el-button round size="small">直播</el-button>
-            </div>
-          </div>
-          <!-- 历史内容 -->
-          <div class="hisList">
-            <!-- 今天 -->
-            <div>
-              <span>今天</span>
-              <div
-                v-for="i in 3"
-                :key="i"
-                style="
-                  width: 99%;
-                  height: 50px;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 15px;
-                  margin-bottom: 10px;
-                  display: flex;
-                  flex-direction: row;
-                  flex-wrap: nowrap;
-                "
-              >
-                <div
-                  style="
-                    background-color: #909399;
-                    width: 25%;
-                    height: 100%;
-                    border-radius: 15px;
-                  "
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    margin-left: 10px;
-                    flex-direction: column;
-                    justify-content: space-around;
-                  "
-                >
-                  <h4 style="margin-bottom: -6px; margin-top: 14px">
-                    标题{{ i }}
-                  </h4>
-                  <div
-                    style="
-                      display: flex;
-                      flex-direction: row;
-                      align-items: center;
-                      justify-content: space-between;
-                    "
-                  >
-                    <p style="margin-right: 142px; font-size: 13px">
-                      作者{{ i }}
-                    </p>
-                    <p style="font-size: 13px">观看时间{{ i }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 昨天 -->
-            <div>
-              <span>昨天</span>
-              <div
-                v-for="i in 3"
-                :key="i"
-                style="
-                  width: 99%;
-                  height: 50px;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 15px;
-                  margin-bottom: 10px;
-                  display: flex;
-                  flex-direction: row;
-                  flex-wrap: nowrap;
-                "
-              >
-                <div
-                  style="
-                    background-color: #909399;
-                    width: 25%;
-                    height: 100%;
-                    border-radius: 15px;
-                  "
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    margin-left: 10px;
-                    flex-direction: column;
-                    justify-content: space-around;
-                  "
-                >
-                  <h4 style="margin-bottom: -6px; margin-top: 14px">
-                    标题{{ i }}
-                  </h4>
-                  <div
-                    style="
-                      display: flex;
-                      flex-direction: row;
-                      align-items: center;
-                      justify-content: space-between;
-                    "
-                  >
-                    <p style="margin-right: 142px; font-size: 13px">
-                      作者{{ i }}
-                    </p>
-                    <p style="font-size: 13px">观看时间{{ i }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 本周 -->
-            <div>
-              <span>本周</span>
-              <div
-                v-for="i in 5"
-                :key="i"
-                style="
-                  width: 99%;
-                  height: 50px;
-                  border: 1px solid #e5eaf3;
-                  border-radius: 15px;
-                  margin-bottom: 10px;
-                  display: flex;
-                  flex-direction: row;
-                  flex-wrap: nowrap;
-                "
-              >
-                <div
-                  style="
-                    background-color: #909399;
-                    width: 25%;
-                    height: 100%;
-                    border-radius: 15px;
-                  "
-                >
-                  封面{{ i }}
-                </div>
-                <div
-                  style="
-                    display: flex;
-                    margin-left: 10px;
-                    flex-direction: column;
-                    justify-content: space-around;
-                  "
-                >
-                  <h4 style="margin-bottom: -6px; margin-top: 14px">
-                    标题{{ i }}
-                  </h4>
-                  <div
-                    style="
-                      display: flex;
-                      flex-direction: row;
-                      align-items: center;
-                      justify-content: space-between;
-                    "
-                  >
-                    <p style="margin-right: 142px; font-size: 13px">
-                      作者{{ i }}
-                    </p>
-                    <p style="font-size: 13px">观看时间{{ i }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <el-header>
+        <header-nav></header-nav>
       </el-header>
       <!-- 主体 -->
       <el-main class="el-main">
@@ -1092,8 +207,61 @@
                         size="large"
                         v-for="(i, index) in tagItem1"
                         :key="index"
+                        @mouseover="showMenu1(index)"
+                        @mouseleave="closeMenu1(index)"
                         >{{ i }}</el-button
                       >
+                      <!-- 番剧弹框 -->
+                      <div
+                        @mouseover="anime.over"
+                        @mouseleave="anime.closeMenu"
+                        v-if="anime.show == true"
+                        style="
+                          width: 200px;
+                          height: 150px;
+                          top: 134px;
+                          left: 325px;
+                          z-index: 10;
+                          position: fixed;
+                          display: flex;
+                          flex-flow: row nowrap;
+                          justify-content: space-around;
+                          align-items: flex-start;
+                          background: white;
+                          border-radius: 10px;
+                          box-shadow: var(--el-box-shadow-lighter);
+                        "
+                      >
+                        <div
+                          style="
+                            display: flex;
+                            flex-direction: column;
+                            align-items: baseline;
+                            margin-top: 10px;
+                            width: 80px;
+                            margin-left: -20px;
+                          "
+                        >
+                          <el-button text plain>连载动画</el-button>
+                          <el-button text plain>完结动画</el-button>
+                          <el-button text plain>资讯</el-button>
+                          <el-button text plain>官方延伸</el-button>
+                        </div>
+                        <div
+                          style="
+                            display: flex;
+                            flex-direction: column;
+                            align-items: baseline;
+                            width: 80px;
+                            margin: 10px 25px 0px 0px;
+                          "
+                        >
+                          <el-button text plain @click="toAnimeTimeline"
+                            >新番时间表</el-button
+                          >
+                          <el-button text plain>番剧索引</el-button>
+                        </div>
+                      </div>
                     </div>
                     <div>
                       <el-button
@@ -1154,15 +322,9 @@
                         align-items: center;
                       "
                     >
-                      <span :style="zhuanlan" @mouseover="changeFont1"
-                        >专栏</span
-                      >
-                      <span :style="huodong" @mouseover="changeFont2"
-                        >活动</span
-                      >
-                      <span :style="shequ" @mouseover="changeFont3"
-                        >社区中心</span
-                      >
+                      <span class="rightTag">专栏</span>
+                      <span class="rightTag">活动</span>
+                      <span class="rightTag">社区中心</span>
                     </div>
                     <div
                       style="
@@ -1175,9 +337,7 @@
                       "
                     >
                       <el-dropdown style="font-size: 17px">
-                        <span :style="zhibo" @mouseover="changeFont4"
-                          >直播</span
-                        >
+                        <span class="rightTag">直播</span>
                         <template #dropdown>
                           <el-dropdown-menu>
                             <el-dropdown-item>全部</el-dropdown-item>
@@ -1188,10 +348,8 @@
                           </el-dropdown-menu>
                         </template>
                       </el-dropdown>
-                      <span :style="ketang" @mouseover="changeFont5">课堂</span>
-                      <span :style="xinge" @mouseover="changeFont6"
-                        >新歌热榜</span
-                      >
+                      <span class="rightTag">课堂</span>
+                      <span class="rightTag">新歌热榜</span>
                     </div>
                   </div>
                 </div>
@@ -1804,14 +962,14 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+import HeaderNav from "../components/HeaderNav.vue";
 import { reactive, onMounted, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 // import { Search } from '@element-plus/icons-vue'
 export default {
   name: "HomePage",
-
+  components: { HeaderNav },
   setup() {
     // 菜单栏
     let headmenu = reactive({
@@ -2111,60 +1269,39 @@ export default {
         "动物圈",
         "VLOG",
       ],
-      blueFont: "color:#409EFF",
-      zhuanlan: "",
-      huodong: "",
-      shequ: "",
-      zhibo: "",
-      ketang: "",
-      xinge: "",
-      changeFont1() {
-        tag.zhuanlan = tag.blueFont;
-        tag.huodong = "";
-        tag.shequ = "";
-        tag.zhibo = "";
-        tag.ketang = "";
-        tag.xinge = "";
+      showMenu1(index) {
+        if (index == 0) {
+          tag.anime.over();
+          console.log("触碰元素");
+        }
       },
-      changeFont2() {
-        tag.zhuanlan = "";
-        tag.huodong = tag.blueFont;
-        tag.shequ = "";
-        tag.zhibo = "";
-        tag.ketang = "";
-        tag.xinge = "";
+      closeMenu1(index) {
+        if (index == 0) {
+          tag.anime.closeMenu();
+          // setTimeout(tag.anime.noDisplay(), 1000);
+          // console.log('check1，离开元素')
+        }
       },
-      changeFont3() {
-        tag.zhuanlan = "";
-        tag.huodong = "";
-        tag.shequ = tag.blueFont;
-        tag.zhibo = "";
-        tag.ketang = "";
-        tag.xinge = "";
-      },
-      changeFont4() {
-        tag.zhuanlan = "";
-        tag.huodong = "";
-        tag.shequ = "";
-        tag.zhibo = tag.blueFont;
-        tag.ketang = "";
-        tag.xinge = "";
-      },
-      changeFont5() {
-        tag.zhuanlan = "";
-        tag.huodong = "";
-        tag.shequ = "";
-        tag.zhibo = "";
-        tag.ketang = tag.blueFont;
-        tag.xinge = "";
-      },
-      changeFont6() {
-        tag.zhuanlan = "";
-        tag.huodong = "";
-        tag.shequ = "";
-        tag.zhibo = "";
-        tag.ketang = "";
-        tag.xinge = tag.blueFont;
+      anime: {
+        show: false,
+        Funtype: 0,
+        over() {
+          tag.anime.show = true;
+          tag.anime.Funtype = 0;
+          console.log("over");
+        },
+        closeMenu() {
+          tag.anime.Funtype = 1;
+          setTimeout(tag.anime.noDisplay, 1000);
+          console.log("check2", tag.anime.Funtype);
+        },
+        noDisplay() {
+          if (tag.anime.Funtype == 1) {
+            tag.anime.show = false;
+            console.log("close", tag.anime.Funtype);
+          }
+          console.log("display");
+        },
       },
     });
 
@@ -2238,6 +1375,9 @@ export default {
       },
       toMsgOpt() {
         router.push({ path: "/msgopt" });
+      },
+      toAnimeTimeline() {
+        router.push({ path: "/animetimeline" });
       },
     });
 
@@ -2548,5 +1688,9 @@ export default {
 }
 .list:hover {
   background-color: #d1d2d3;
+}
+
+.rightTag:hover {
+  color: #409eff;
 }
 </style>

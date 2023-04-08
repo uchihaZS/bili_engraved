@@ -87,6 +87,11 @@ const routes = [
     name:'dynamic',
     component:()=>import('../views/Dynamic.vue')
   },
+  {
+    path:'/animetimeline',
+    name:'animetimeline',
+    component:()=>import('../views/AnimeTimeline.vue')
+  },
 ]
 
 const router = createRouter({
