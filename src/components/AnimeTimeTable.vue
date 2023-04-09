@@ -57,12 +57,14 @@
         <div style="width: 160px; height: 1px; background-color: #cfd3dc"></div>
       </div>
       <!-- 时间线 -->
-      <div v-if="data.animeData.Monday.length" style="margin-top: 10px">
-        <el-timeline
-          v-for="(item, index) in data.animeData.Monday"
-          :key="index"
-        >
-          <el-timeline-item :timestamp="item.playtime" placement="top">
+      <div v-if="sortedAnimeData.Monday.length" style="margin-top: 10px">
+        <el-timeline>
+          <el-timeline-item
+            :timestamp="item.playtime"
+            placement="top"
+            v-for="(item, index) in sortedAnimeData.Monday"
+            :key="index"
+          >
             <div style="display: flex">
               <div
                 style="
@@ -146,12 +148,14 @@
         <div style="width: 160px; height: 1px; background-color: #cfd3dc"></div>
       </div>
       <!-- 时间线 -->
-      <div v-if="data.animeData.Tuesday.length" style="margin-top: 10px">
-        <el-timeline
-          v-for="(item, index) in data.animeData.Tuesday"
-          :key="index"
-        >
-          <el-timeline-item :timestamp="item.playtime" placement="top">
+      <div v-if="sortedAnimeData.Tuesday.length" style="margin-top: 10px">
+        <el-timeline>
+          <el-timeline-item
+            :timestamp="item.playtime"
+            placement="top"
+            v-for="(item, index) in sortedAnimeData.Tuesday"
+            :key="index"
+          >
             <div style="display: flex">
               <div
                 style="
@@ -235,12 +239,14 @@
         <div style="width: 160px; height: 1px; background-color: #cfd3dc"></div>
       </div>
       <!-- 时间线 -->
-      <div v-if="data.animeData.Wednesday.length" style="margin-top: 10px">
-        <el-timeline
-          v-for="(item, index) in data.animeData.Wednesday"
-          :key="index"
-        >
-          <el-timeline-item :timestamp="item.playtime" placement="top">
+      <div v-if="sortedAnimeData.Wednesday.length" style="margin-top: 10px">
+        <el-timeline>
+          <el-timeline-item
+            :timestamp="item.playtime"
+            placement="top"
+            v-for="(item, index) in sortedAnimeData.Wednesday"
+            :key="index"
+          >
             <div style="display: flex">
               <div
                 style="
@@ -324,12 +330,14 @@
         <div style="width: 160px; height: 1px; background-color: #cfd3dc"></div>
       </div>
       <!-- 时间线 -->
-      <div v-if="data.animeData.Thursday.length" style="margin-top: 10px">
-        <el-timeline
-          v-for="(item, index) in data.animeData.Thursday"
-          :key="index"
-        >
-          <el-timeline-item :timestamp="item.playtime" placement="top">
+      <div v-if="sortedAnimeData.Thursday.length" style="margin-top: 10px">
+        <el-timeline>
+          <el-timeline-item
+            :timestamp="item.playtime"
+            placement="top"
+            v-for="(item, index) in sortedAnimeData.Thursday"
+            :key="index"
+          >
             <div style="display: flex">
               <div
                 style="
@@ -413,12 +421,14 @@
         <div style="width: 160px; height: 1px; background-color: #cfd3dc"></div>
       </div>
       <!-- 时间线 -->
-      <div v-if="data.animeData.Friday.length" style="margin-top: 10px">
-        <el-timeline
-          v-for="(item, index) in data.animeData.Friday"
-          :key="index"
-        >
-          <el-timeline-item :timestamp="item.playtime" placement="top">
+      <div v-if="sortedAnimeData.Friday.length" style="margin-top: 10px">
+        <el-timeline>
+          <el-timeline-item
+            :timestamp="item.playtime"
+            placement="top"
+            v-for="(item, index) in sortedAnimeData.Friday"
+            :key="index"
+          >
             <div style="display: flex">
               <div
                 style="
@@ -502,12 +512,14 @@
         <div style="width: 160px; height: 1px; background-color: #cfd3dc"></div>
       </div>
       <!-- 时间线 -->
-      <div v-if="data.animeData.Saturday.length" style="margin-top: 10px">
-        <el-timeline
-          v-for="(item, index) in data.animeData.Saturday"
-          :key="index"
-        >
-          <el-timeline-item :timestamp="item.playtime" placement="top">
+      <div v-if="sortedAnimeData.Saturday.length" style="margin-top: 10px">
+        <el-timeline>
+          <el-timeline-item
+            :timestamp="item.playtime"
+            placement="top"
+            v-for="(item, index) in sortedAnimeData.Saturday"
+            :key="index"
+          >
             <div style="display: flex">
               <div
                 style="
@@ -591,12 +603,14 @@
         <div style="width: 160px; height: 1px; background-color: #cfd3dc"></div>
       </div>
       <!-- 时间线 -->
-      <div v-if="data.animeData.Sunday.length" style="margin-top: 10px">
-        <el-timeline
-          v-for="(item, index) in data.animeData.Sunday"
-          :key="index"
-        >
-          <el-timeline-item :timestamp="item.playtime" placement="top">
+      <div v-if="sortedAnimeData.Sunday.length" style="margin-top: 10px">
+        <el-timeline>
+          <el-timeline-item
+            :timestamp="item.playtime"
+            placement="top"
+            v-for="(item, index) in sortedAnimeData.Sunday"
+            :key="index"
+          >
             <div style="display: flex">
               <div
                 style="
@@ -639,17 +653,35 @@ export default {
 
     console.log(data);
     console.log(data.animeData.WednesDay);
+    let animeData = data.animeData;
+    function sortAnimeData(animeData) {
+      const days = Object.keys(animeData);
+
+      for (let day of days) {
+        const animeList = animeData[day];
+        const sortedAnimeList = animeList.sort((a, b) => {
+          const aDate = new Date(`2000-01-01T${a.playtime}:00`);
+          const bDate = new Date(`2000-01-01T${b.playtime}:00`);
+          return aDate - bDate;
+        });
+        sortedAnimeData[day] = sortedAnimeList;
+      }
+
+      return sortedAnimeData;
+    }
+    const sortedAnimeData = {};
     // 生命函数
     onBeforeMount(() => {
       let timeDate = getTime();
       //   console.log(timeDate);
       data.weekDay = timeDate.weekDay;
-      //   console.log(data.weekDay)
-      //   console.log(data.animeData.WednesDay)
+      const sortedAnimeData = sortAnimeData(animeData);
+      console.log(sortedAnimeData);
     });
 
     return {
       ...toRefs(data),
+      sortedAnimeData,
     };
   },
 };

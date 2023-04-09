@@ -578,7 +578,7 @@ export default {
           ],
           Thursday: [
             { name: "妖精的尾巴", playtime: "18:40", episode: "第210话" },
-            { name: "死神", playtime: "16:30", episode: "第200话" },
+            { name: "死神", playtime: "16:00", episode: "第200话" },
             { name: "海贼王", playtime: "16:00", episode: "第750话" },
             { name: "钢之炼金术师", playtime: "17:20", episode: "第64话" },
           ],
