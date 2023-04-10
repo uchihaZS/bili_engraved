@@ -5,25 +5,54 @@
       flex-wrap: nowrap;
       flex-direction: row;
       justify-content: space-between;
+      height: auto;
     "
   >
     <!-- 左边 -->
-    <div>
+    <div style="width: 1380px">
       <!-- 排序栏 -->
-      <div style="width: 275px; display: flex; justify-content: space-between">
-        <el-button text plain>追番人数</el-button>
-        <el-button text plain>最高评分</el-button>
-        <el-button text plain>播放数量</el-button>
-        <el-button text plain>开播时间</el-button>
+      <div
+        style="
+          width: 384px;
+          display: flex;
+          justify-content: space-between;
+          margin-left: 50px;
+        "
+      >
+        <el-button text plain style="font-size: 18px">追番人数</el-button>
+        <el-button text plain style="font-size: 18px">最高评分</el-button>
+        <el-button text plain style="font-size: 18px">播放数量</el-button>
+        <el-button text plain style="font-size: 18px">开播时间</el-button>
       </div>
       <!-- 列表栏 -->
-      <div></div>
+      <div
+        style="
+          margin-top: 15px;
+          margin-left: 60px;
+          width: 90%;
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: space-between;
+        "
+      >
+        <pic-and-text
+          direction="col"
+          totalHeight="365px"
+          totalWidth="225px"
+          borderRadius="10px"
+          backgroundColor="#909399"
+          picWidth="225px"
+          picHeight="300px"
+          v-for="i in 1"
+          :key="i"
+        ></pic-and-text>
+      </div>
       <!-- 翻页栏 -->
       <div></div>
     </div>
     <!-- 右边 -->
     <div>
-      <p style="font-size: 20px;margin: 0px;">筛选</p>
+      <p style="font-size: 20px; margin: 0px">筛选</p>
       <div
         style="
           display: flex;
@@ -31,13 +60,14 @@
           flex-wrap: nowrap;
           line-height: 40px;
           height: 600px;
-          margin-top:20px
+          margin-top: 20px;
         "
       >
         <!-- 类型 -->
         <div class="tag" v-if="data.type.length">
           <span style="color: #a6a9ad">类型</span>
           <span
+            class="toBlue"
             v-for="(i, index) in data.type"
             :key="index"
             style="margin-left: 10px"
@@ -48,6 +78,7 @@
         <div v-if="data.voice.length" class="tag">
           <span style="color: #a6a9ad">配音</span>
           <span
+            class="toBlue"
             v-for="(i, index) in data.voice"
             :key="index"
             style="margin-left: 10px"
@@ -58,6 +89,7 @@
         <div class="tag">
           <span style="color: #a6a9ad">地区</span>
           <span
+            class="toBlue"
             v-for="(i, index) in data.area"
             :key="index"
             style="margin-left: 10px"
@@ -68,6 +100,7 @@
         <div v-if="data.state.length" class="tag">
           <span style="color: #a6a9ad">状态</span>
           <span
+            class="toBlue"
             v-for="(i, index) in data.state"
             :key="index"
             style="margin-left: 10px"
@@ -78,6 +111,7 @@
         <div v-if="data.copyright.length" class="tag">
           <span style="color: #a6a9ad">版权</span>
           <span
+            class="toBlue"
             v-for="(i, index) in data.copyright"
             :key="index"
             style="margin-left: 10px"
@@ -88,6 +122,7 @@
         <div class="tag">
           <span style="color: #a6a9ad">付费</span>
           <span
+            class="toBlue"
             v-for="(i, index) in data.ispay"
             :key="index"
             style="margin-left: 10px"
@@ -98,6 +133,7 @@
         <div v-if="data.season.length" class="tag">
           <span style="color: #a6a9ad">季度</span>
           <span
+            class="toBlue"
             v-for="(i, index) in data.season"
             :key="index"
             style="margin-left: 10px"
@@ -116,6 +152,7 @@
             "
           >
             <span
+              class="toBlue"
               v-for="(i, index) in data.year"
               :key="index"
               style="margin: 0px 10px 10px 0px"
@@ -135,6 +172,7 @@
             "
           >
             <span
+              class="toBlue"
               v-for="(i, index) in data.style"
               :key="index"
               style="margin: 0px 10px 10px 0px"
@@ -149,17 +187,32 @@
 
 <script>
 import { reactive, toRefs } from "vue";
+import PicAndText from "./PicAndText.vue";
 export default {
   props: {
     data: Object,
   },
+  components: { PicAndText },
   setup(props) {
     let data = reactive(props.data);
+    // onlytext = () => {};
+    // console.log(data);
 
-    console.log(data);
+    let picdata = reactive({
+      direction: "",
+      totalWidth: "",
+      totalHeight: "",
+      picWidth: "",
+      picHeight: "",
+      borderRadius: "",
+      backgroundColor: "",
+
+      //   text: onlytext,
+    });
 
     return {
       ...toRefs(data),
+      ...toRefs(picdata),
     };
   },
 };
@@ -170,7 +223,10 @@ export default {
   width: 275px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   flex-wrap: nowrap;
+}
+
+.toBlue:hover {
+  color: #409eff;
 }
 </style>

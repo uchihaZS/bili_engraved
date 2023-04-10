@@ -366,7 +366,7 @@
                 </div>
               </div>
               <el-divider></el-divider>
-              <!-- 时间线列表 -->
+              <!-- 索引列表 -->
               <div
                 style="
                   display: flex;
@@ -408,7 +408,7 @@
 <script>
 // @ is an alias to /src
 import HeaderNav from "../../components/HeaderNav.vue";
-import { reactive, onMounted, toRefs } from "vue";
+import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import Sift from "@/components/Sift.vue";
@@ -690,183 +690,6 @@ export default {
   flex-grow: 1;
 }
 
-.input-with-select {
-  background-color: var(--el-fill-color-blank);
-  width: 400px;
-  height: 45px;
-  margin-top: 3px;
-}
-
-.avatarInfo {
-  z-index: 998;
-  width: 200px;
-  height: 380px;
-  position: absolute;
-  left: 1168px;
-  border-radius: 20px;
-  top: 65px;
-}
-.username:hover {
-  color: #409eff;
-}
-.dynamic {
-  width: 340px;
-  height: 520px;
-  z-index: 998;
-  position: absolute;
-  left: 1250px;
-  top: 65px;
-  border-radius: 20px;
-  border: 1px solid #e5eaf3;
-  padding: 5px 10px;
-  background-color: white;
-}
-
-.dyvideo {
-  margin-top: 10px;
-  height: 483px;
-  overflow-y: auto;
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-.dyvideo::-webkit-scrollbar {
-  display: none;
-}
-
-.dyanime {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.dyanime::-webkit-scrollbar {
-  display: none;
-}
-
-.dycol {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.dycol::-webkit-scrollbar {
-  display: none;
-}
-
-.dylive {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.dylive::-webkit-scrollbar {
-  display: none;
-}
-
-.subscribe {
-  width: 340px;
-  height: 520px;
-  z-index: 998;
-  position: absolute;
-  left: 1315px;
-  top: 65px;
-  border-radius: 20px;
-  border: 1px solid #e5eaf3;
-  padding: 5px 10px;
-  background-color: white;
-}
-
-.subanime {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.subanime::-webkit-scrollbar {
-  display: none;
-}
-
-.subvideo {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.subvideo::-webkit-scrollbar {
-  display: none;
-}
-
-.collect {
-  width: 340px;
-  height: 520px;
-  z-index: 998;
-  position: absolute;
-  left: 1385px;
-  top: 65px;
-  border-radius: 20px;
-  border: 1px solid #e5eaf3;
-  padding: 5px 10px;
-  background-color: white;
-}
-.colList {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 471px;
-}
-.colList::-webkit-scrollbar {
-  display: none;
-}
-
-.history {
-  width: 340px;
-  height: 520px;
-  z-index: 998;
-  position: absolute;
-  left: 1455px;
-  top: 65px;
-  border-radius: 20px;
-  border: 1px solid #e5eaf3;
-  padding: 5px 10px;
-  background-color: white;
-}
-
-.hisList {
-  overflow-y: auto;
-  height: 431px;
-}
-.hisList::-webkit-scrollbar {
-  display: none;
-}
-
-.example-showcase .el-dropdown-link {
-  cursor: pointer;
-  color: var(--el-color-primary);
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-}
 .el-main {
   display: flex;
   height: auto;
@@ -893,39 +716,7 @@ export default {
   display: none;
 }
 
-.demonstration {
-  color: var(--el-text-color-secondary);
-}
 
-.el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 150px;
-  margin: 0;
-  text-align: center;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
-
-.avatag:hover {
-  color: #409eff;
-}
-.list {
-  width: 200px;
-  height: 30px;
-  position: relative;
-  right: 60px;
-  text-align: center;
-}
-.list:hover {
-  background-color: #d1d2d3;
-}
 
 .rightTag:hover {
   color: #409eff;
