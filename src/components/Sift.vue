@@ -25,16 +25,7 @@
         <el-button text plain style="font-size: 18px">开播时间</el-button>
       </div>
       <!-- 列表栏 -->
-      <div
-        style="
-          margin-top: 15px;
-          margin-left: 60px;
-          width: 90%;
-          display: flex;
-          flex-flow: row wrap;
-          justify-content: space-between;
-        "
-      >
+      <div style="margin-top: 15px; margin-left: 60px; width: 90%">
         <pic-and-text
           direction="col"
           totalHeight="365px"
@@ -43,8 +34,8 @@
           backgroundColor="#909399"
           picWidth="225px"
           picHeight="300px"
-          v-for="i in 1"
-          :key="i"
+          rowadd="true"
+          :text="onlytext"
         ></pic-and-text>
       </div>
       <!-- 翻页栏 -->
@@ -195,24 +186,26 @@ export default {
   components: { PicAndText },
   setup(props) {
     let data = reactive(props.data);
-    // onlytext = () => {};
-    // console.log(data);
 
-    let picdata = reactive({
-      direction: "",
-      totalWidth: "",
-      totalHeight: "",
-      picWidth: "",
-      picHeight: "",
-      borderRadius: "",
-      backgroundColor: "",
-
-      //   text: onlytext,
+    // 元素名更换和判断
+    const onlytext = data.animedata.map(({ name: textOne, episode, isEnd }) => {
+      let textTwo;
+      if (episode === undefined || episode === null) {
+        textTwo = "敬请期待";
+      } else if (isEnd) {
+        textTwo = `全${episode}话`;
+      } else {
+        textTwo = `更新到第${episode}话`;
+      }
+      return { textOne, textTwo };
     });
 
+    // console.log(onlytext);
+    // console.log(data);
+
     return {
+      onlytext,
       ...toRefs(data),
-      ...toRefs(picdata),
     };
   },
 };
