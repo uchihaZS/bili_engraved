@@ -90,7 +90,37 @@ const routes = [
   {
     path:'/animetimeline',
     name:'animetimeline',
-    component:()=>import('../views/AnimeTimeline.vue')
+    component:()=>import('../views/AnimePage/AnimeTimeline.vue')
+  },
+  {
+    path:'/animesearch',
+    name:'animesearch',
+    component:()=>import('../views/AnimePage/AnimeSearch.vue')
+  },
+  {
+    path:'/animeall',
+    name:'animeall',
+    component:()=>import('../views/AnimePage/AnimeAll.vue')
+  },
+  {
+    path:'/animeserialize',
+    name:'animeserialize',
+    component:()=>import('../views/AnimePage/AnimeSerialize.vue')
+  },
+  {
+    path:'/animemsg',
+    name:'animemsg',
+    component:()=>import('../views/AnimePage/AnimeMsg.vue')
+  },
+  {
+    path:'/animeend',
+    name:'animeend',
+    component:()=>import('../views/AnimePage/AnimeEnd.vue')
+  },
+  {
+    path:'/animeoffical',
+    name:'animeoffical',
+    component:()=>import('../views/AnimePage/AnimeOffical.vue')
   },
 ]
 

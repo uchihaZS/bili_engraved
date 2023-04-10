@@ -243,10 +243,18 @@
                             margin-left: -20px;
                           "
                         >
-                          <el-button text plain>连载动画</el-button>
-                          <el-button text plain>完结动画</el-button>
-                          <el-button text plain>资讯</el-button>
-                          <el-button text plain>官方延伸</el-button>
+                          <el-button text plain @click="toAnimeSerialize"
+                            >连载动画</el-button
+                          >
+                          <el-button text plain @click="toAnimeEnd"
+                            >完结动画</el-button
+                          >
+                          <el-button text plain @click="toAnimeMsg"
+                            >资讯</el-button
+                          >
+                          <el-button text plain @click="toAnimeOffical"
+                            >官方延伸</el-button
+                          >
                         </div>
                         <div
                           style="
@@ -260,7 +268,9 @@
                           <el-button text plain @click="toAnimeTimeline"
                             >新番时间表</el-button
                           >
-                          <el-button text plain>番剧索引</el-button>
+                          <el-button text plain @click="toAnimeSearch"
+                            >番剧索引</el-button
+                          >
                         </div>
                       </div>
                     </div>
@@ -366,18 +376,16 @@
                   justify-content: space-evenly;
                 "
               >
-                <span class="avatag">全部</span>
-                <span class="avatag">连载动画</span>
-                <span class="avatag">完结动画</span>
-                <span class="avatag">资讯</span>
-                <span class="avatag">官方延伸</span>
-                <span class="avatag">新番时间表</span>
-                <span class="avatag">番剧索引</span>
+                <span class="avatag" @click="toAnimeAll">全部</span>
+                <span class="avatag" @click="toAnimeSerialize">连载动画</span>
+                <span class="avatag" @click="toAnimeEnd" style="color: #409eff"
+                  >完结动画</span
+                >
+                <span class="avatag" @click="toAnimeMsg">资讯</span>
+                <span class="avatag" @click="toAnimeOffical">官方延伸</span>
+                <span class="avatag" @click="toAnimeTimeline">新番时间表</span>
+                <span class="avatag" @click="toAnimeSearch">番剧索引</span>
               </div>
-              <anime-time-table-vue
-                style="margin-top: 20px"
-                :data="toSon"
-              ></anime-time-table-vue>
             </el-col>
             <el-col :span="1">
               <div
@@ -393,15 +401,13 @@
 
 <script>
 // @ is an alias to /src
-import HeaderNav from "../components/HeaderNav.vue";
-import AnimeTimeTableVue from "../components/AnimeTimeTable.vue";
+import HeaderNav from "../../components/HeaderNav.vue";
 import { reactive, onMounted, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import getTime from "../hooks/getTime";
 export default {
-  name: "animetimeline",
-  components: { HeaderNav, AnimeTimeTableVue },
+  name: "animeend",
+  components: { HeaderNav },
   setup() {
     // 跳转和vuex
     var router = useRouter();
@@ -412,52 +418,6 @@ export default {
       router.push({ path: link });
       // console.log(link);
     };
-    // 推荐视频列表
-    let videoList = reactive({
-      vList: [
-        {
-          vname: "鬼灭之刃游郭篇《残響散歌》真.完整粤语版",
-          poster: "./fm.jpg",
-          author: "不是词神",
-          link: "/playpage",
-        },
-        {
-          vname: "推荐视频2",
-          poster: "",
-          author: "作者2",
-        },
-        {
-          vname: "推荐视频3",
-          poster: "",
-          author: "作者3",
-        },
-        {
-          vname: "推荐视频4",
-          poster: "",
-          author: "作者4",
-        },
-        {
-          vname: "推荐视频5",
-          poster: "",
-          author: "作者5",
-        },
-        {
-          vname: "推荐视频6",
-          poster: "",
-          author: "作者6",
-        },
-        {
-          vname: "推荐视频7",
-          poster: "",
-          author: "作者7",
-        },
-        {
-          vname: "推荐视频8",
-          poster: "",
-          author: "作者8",
-        },
-      ],
-    });
 
     let tag = reactive({
       tagItem1: [
@@ -523,82 +483,6 @@ export default {
       },
     });
 
-    let animeRank = reactive([
-      {
-        rank: 1,
-        name: "鬼灭之刃",
-      },
-      {
-        rank: 2,
-        name: "钢之炼金术师",
-      },
-      {
-        rank: 3,
-        name: "进击的巨人",
-      },
-      {
-        rank: 4,
-        name: "狼与香辛料",
-      },
-      {
-        rank: 5,
-        name: "赛马娘",
-      },
-      {
-        rank: 6,
-        name: "偶像大师",
-      },
-      {
-        rank: 7,
-        name: "火影忍者疾风传",
-      },
-      {
-        rank: 8,
-        name: "家庭教师reborn",
-      },
-    ]);
-
-    let animeTimeList = reactive({
-      weekday: "0",
-    });
-
-    let animetimeline = reactive({
-      toSon: {
-        weekday: 0,
-        month: 0,
-        date: 0,
-        animeData: {
-          Monday: [
-            { name: "火影忍者疾风传", playtime: "17:30", episode: "第720话" },
-          ],
-          Tuesday: [],
-          Wednesday: [
-            { name: "银魂", playtime: "17:30", episode: "第200话" },
-            { name: "家庭教师Reborn", playtime: "18:30", episode: "第180话" },
-          ],
-          Thursday: [
-            { name: "妖精的尾巴", playtime: "18:40", episode: "第210话" },
-            { name: "死神", playtime: "16:00", episode: "第200话" },
-            { name: "海贼王", playtime: "16:00", episode: "第750话" },
-            { name: "钢之炼金术师", playtime: "17:20", episode: "第64话" },
-          ],
-          Friday: [
-            { name: "新世纪福音战士", playtime: "22:30", episode: "第10话" },
-            { name: "名侦探柯南", playtime: "17:30", episode: "第620话" },
-            { name: "鬼灭之刃", playtime: "21:30", episode: "第24话" },
-          ],
-          Saturday: [
-            { name: "宝可梦", playtime: "16:30", episode: "第500话" },
-            { name: "假面骑士Decade", playtime: "17:00", episode: "第40话" },
-          ],
-          Sunday: [
-            { name: "间谍过家家", playtime: "17:00", episode: "第20话" },
-            { name: "孤独摇滚", playtime: "19:30", episode: "第12话" },
-          ],
-        },
-      },
-    });
-
     // 跳转函数
     let skipFun = reactive({
       toMessage() {
@@ -631,17 +515,33 @@ export default {
       toMsgOpt() {
         router.push({ path: "/msgopt" });
       },
+      toAnimeTimeline() {
+        router.push({ path: "/animetimeline" });
+      },
+      toAnimeSearch() {
+        router.push({ path: "/animesearch" });
+      },
+      toAnimeSerialize() {
+        router.push({ path: "/animeserialize" });
+      },
+      toAnimeEnd() {
+        router.push({ path: "/animeend" });
+      },
+      toAnimeMsg() {
+        router.push({ path: "/animemsg" });
+      },
+      toAnimeOffical() {
+        router.push({ path: "/animeoffical" });
+      },
+      toAnimeAll() {
+        router.push({ path: "/animeall" });
+      },
     });
 
-    
     return {
       goToPage,
       ...toRefs(skipFun),
-      ...toRefs(videoList),
-      ...toRefs(animetimeline),
       ...toRefs(tag),
-      animeRank,
-      ...toRefs(animeTimeList),
     };
   },
 };

@@ -259,7 +259,7 @@
                           <el-button text plain @click="toAnimeTimeline"
                             >新番时间表</el-button
                           >
-                          <el-button text plain>番剧索引</el-button>
+                          <el-button text plain @click="toAnimeSearch">番剧索引</el-button>
                         </div>
                       </div>
                     </div>
@@ -1378,6 +1378,24 @@ export default {
       },
       toAnimeTimeline() {
         router.push({ path: "/animetimeline" });
+      },
+      toAnimeSearch() {
+        router.push({ path: "/animesearch" });
+      },
+      toAnimeSerialize() {
+        router.push({ path: "/animeserialize" });
+      },
+      toAnimeEnd() {
+        router.push({ path: "/animeend" });
+      },
+      toAnimeMsg() {
+        router.push({ path: "/animemsg" });
+      },
+      toAnimeOffical() {
+        router.push({ path: "/animeoffical" });
+      },
+      toAnimeAll(){
+        router.push({ path: "/animeall" });
       },
     });
 

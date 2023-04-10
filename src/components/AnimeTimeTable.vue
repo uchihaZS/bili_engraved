@@ -641,7 +641,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, onMounted, onBeforeMount } from "vue";
+import { reactive, toRefs, onBeforeMount } from "vue";
 import getTime from "../hooks/getTime";
 
 export default {
@@ -653,10 +653,11 @@ export default {
 
     console.log(data);
     console.log(data.animeData.WednesDay);
+
     let animeData = data.animeData;
+    // 根据播放时间进行排序函数
     function sortAnimeData(animeData) {
       const days = Object.keys(animeData);
-
       for (let day of days) {
         const animeList = animeData[day];
         const sortedAnimeList = animeList.sort((a, b) => {
@@ -666,7 +667,6 @@ export default {
         });
         sortedAnimeData[day] = sortedAnimeList;
       }
-
       return sortedAnimeData;
     }
     const sortedAnimeData = {};
