@@ -242,10 +242,18 @@
                             margin-left: -20px;
                           "
                         >
-                          <el-button text plain>连载动画</el-button>
-                          <el-button text plain>完结动画</el-button>
-                          <el-button text plain>资讯</el-button>
-                          <el-button text plain>官方延伸</el-button>
+                          <el-button text plain @click="toAnimeSerialize"
+                            >连载动画</el-button
+                          >
+                          <el-button text plain @click="toAnimeEnd"
+                            >完结动画</el-button
+                          >
+                          <el-button text plain @click="toAnimeMsg"
+                            >资讯</el-button
+                          >
+                          <el-button text plain @click="toAnimeOffical"
+                            >官方延伸</el-button
+                          >
                         </div>
                         <div
                           style="
@@ -259,7 +267,9 @@
                           <el-button text plain @click="toAnimeTimeline"
                             >新番时间表</el-button
                           >
-                          <el-button text plain @click="toAnimeSearch">番剧索引</el-button>
+                          <el-button text plain @click="toAnimeSearch"
+                            >番剧索引</el-button
+                          >
                         </div>
                       </div>
                     </div>
@@ -1394,7 +1404,7 @@ export default {
       toAnimeOffical() {
         router.push({ path: "/animeoffical" });
       },
-      toAnimeAll(){
+      toAnimeAll() {
         router.push({ path: "/animeall" });
       },
     });

@@ -389,6 +389,122 @@
                 <span class="avatag" @click="toAnimeTimeline">新番时间表</span>
                 <span class="avatag" @click="toAnimeSearch">番剧索引</span>
               </div>
+              <div style="padding: 0px 300px">
+                <!-- 标签栏 -->
+                <div>
+                  <p style="font-size: 20px">热门标签</p>
+                  <div
+                    style="
+                      display: flex;
+                      width: 400px;
+                      justify-content: space-between;
+                    "
+                  >
+                    <el-button round size="small" plain v-for="i in 6" :key="i"
+                      >标签{{ i }}</el-button
+                    >
+                  </div>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    margin-top: 30px;
+                    justify-content: space-between;
+                  "
+                >
+                  <div
+                    style="display: flex; flex-direction: column; width: 815px"
+                  >
+                    <!-- 动态栏 -->
+                    <div style="width: 100%">
+                      <div
+                        style="
+                          display: flex;
+                          justify-content: space-between;
+                          width: 100%;
+                          align-items: center;
+                        "
+                      >
+                        <p style="font-size: 20px">最新动态</p>
+                        <el-button>换一换</el-button>
+                      </div>
+                      <div style="width: 100%; height: 200px; display: flex">
+                        <pic-and-text
+                          direction="col"
+                          totalHeight="150px"
+                          totalWidth="150px"
+                          borderRadius="10px"
+                          backgroundColor="#909399"
+                          picWidth="100%"
+                          picHeight="140px"
+                          style="width: 100%"
+                          :text="textArray"
+                        ></pic-and-text>
+                      </div>
+                    </div>
+                    <!-- 视频列表 -->
+                    <div style="width: 100%;margin-top:20px"></div>
+                  </div>
+
+                  <!-- 热门列表 -->
+                  <div style="width: 250px">
+                    <p style="font-size: 20px">热门</p>
+                    <div>
+                      <div v-for="i in 10" :key="i">
+                        <!-- 前三个 -->
+                        <div
+                          v-if="i <= 3"
+                          style="display: flex; margin-bottom: 15px"
+                        >
+                          <!-- 左边序号 -->
+                          <div
+                            style="
+                              width: 25px;
+                              height: 25px;
+                              background-color: #f78989;
+                              color: white;
+                              border-radius: 5px;
+                              text-align: center;
+                            "
+                          >
+                            {{ i }}
+                          </div>
+                          <!-- 右边图文 -->
+                          <div style="display: flex; margin-left: 10px">
+                            <div
+                              style="
+                                width: 100px;
+                                height: 80px;
+                                border-radius: 5px;
+                                background-color: #909399;
+                              "
+                            ></div>
+                            <div style="margin-left: 10px">番剧名{{ i }}</div>
+                          </div>
+                        </div>
+                        <!-- 后七个 -->
+                        <div v-else style="display: flex; margin-bottom: 15px">
+                          <!-- 左边序号 -->
+                          <div
+                            style="
+                              width: 25px;
+                              height: 25px;
+                              background-color: #909399;
+                              color: white;
+                              border-radius: 5px;
+                              text-align: center;
+                            "
+                          >
+                            {{ i }}
+                          </div>
+                          <!-- 右边文字 -->
+                          <div style="margin-left: 10px">番剧名{{ i }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </el-col>
             <el-col :span="1">
               <div
@@ -408,11 +524,12 @@ import HeaderNav from "../../components/HeaderNav.vue";
 import { reactive, onMounted, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import PicAndText from "@/components/PicAndText.vue";
 export default {
   name: "animeserialize",
-  components: { HeaderNav },
+  components: { HeaderNav, PicAndText },
   setup() {
-    // 跳转和vuex
+    PicAndText; // 跳转和vuex
     var router = useRouter();
     const store = useStore();
     const goToPage = (link, vname, author) => {
@@ -485,7 +602,14 @@ export default {
         },
       },
     });
-
+    let textArray = [
+      { rowOne: { p1: "播放数", p2: "弹幕数" } },
+      { rowOne: { p1: "播放数", p2: "弹幕数" } },
+      { rowOne: { p1: "播放数", p2: "弹幕数" } },
+      { rowOne: { p1: "播放数", p2: "弹幕数" } },
+      { rowOne: { p1: "播放数", p2: "弹幕数" } },
+    ];
+    console.log(textArray[0].rowOne.p1);
     // 跳转函数
     let skipFun = reactive({
       toMessage() {
@@ -543,6 +667,7 @@ export default {
 
     return {
       goToPage,
+      textArray,
       ...toRefs(skipFun),
       ...toRefs(tag),
     };
@@ -562,183 +687,6 @@ export default {
   flex-grow: 1;
 }
 
-.input-with-select {
-  background-color: var(--el-fill-color-blank);
-  width: 400px;
-  height: 45px;
-  margin-top: 3px;
-}
-
-.avatarInfo {
-  z-index: 998;
-  width: 200px;
-  height: 380px;
-  position: absolute;
-  left: 1168px;
-  border-radius: 20px;
-  top: 65px;
-}
-.username:hover {
-  color: #409eff;
-}
-.dynamic {
-  width: 340px;
-  height: 520px;
-  z-index: 998;
-  position: absolute;
-  left: 1250px;
-  top: 65px;
-  border-radius: 20px;
-  border: 1px solid #e5eaf3;
-  padding: 5px 10px;
-  background-color: white;
-}
-
-.dyvideo {
-  margin-top: 10px;
-  height: 483px;
-  overflow-y: auto;
-
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-.dyvideo::-webkit-scrollbar {
-  display: none;
-}
-
-.dyanime {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.dyanime::-webkit-scrollbar {
-  display: none;
-}
-
-.dycol {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.dycol::-webkit-scrollbar {
-  display: none;
-}
-
-.dylive {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.dylive::-webkit-scrollbar {
-  display: none;
-}
-
-.subscribe {
-  width: 340px;
-  height: 520px;
-  z-index: 998;
-  position: absolute;
-  left: 1315px;
-  top: 65px;
-  border-radius: 20px;
-  border: 1px solid #e5eaf3;
-  padding: 5px 10px;
-  background-color: white;
-}
-
-.subanime {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.subanime::-webkit-scrollbar {
-  display: none;
-}
-
-.subvideo {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 483px;
-}
-.subvideo::-webkit-scrollbar {
-  display: none;
-}
-
-.collect {
-  width: 340px;
-  height: 520px;
-  z-index: 998;
-  position: absolute;
-  left: 1385px;
-  top: 65px;
-  border-radius: 20px;
-  border: 1px solid #e5eaf3;
-  padding: 5px 10px;
-  background-color: white;
-}
-.colList {
-  overflow-y: auto;
-  display: flex;
-  // flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
-  height: 471px;
-}
-.colList::-webkit-scrollbar {
-  display: none;
-}
-
-.history {
-  width: 340px;
-  height: 520px;
-  z-index: 998;
-  position: absolute;
-  left: 1455px;
-  top: 65px;
-  border-radius: 20px;
-  border: 1px solid #e5eaf3;
-  padding: 5px 10px;
-  background-color: white;
-}
-
-.hisList {
-  overflow-y: auto;
-  height: 431px;
-}
-.hisList::-webkit-scrollbar {
-  display: none;
-}
-
-.example-showcase .el-dropdown-link {
-  cursor: pointer;
-  color: var(--el-color-primary);
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-}
 .el-main {
   display: flex;
   height: auto;
@@ -763,26 +711,6 @@ export default {
 }
 .row::-webkit-scrollbar {
   display: none;
-}
-
-.demonstration {
-  color: var(--el-text-color-secondary);
-}
-
-.el-carousel__item h3 {
-  color: #475669;
-  opacity: 0.75;
-  line-height: 150px;
-  margin: 0;
-  text-align: center;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
 }
 
 .avatag:hover {

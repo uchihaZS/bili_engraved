@@ -188,7 +188,7 @@ export default {
     let data = reactive(props.data);
 
     // 元素名更换和判断
-    const onlytext = data.animedata.map(({ name: textOne, episode, isEnd }) => {
+    const onlytext = data.animedata.map(({ name: rowOne, episode, isEnd }) => {
       let textTwo;
       if (episode === undefined || episode === null) {
         textTwo = "敬请期待";
@@ -197,10 +197,10 @@ export default {
       } else {
         textTwo = `更新到第${episode}话`;
       }
-      return { textOne, textTwo };
+      return { rowOne, textTwo };
     });
 
-    // console.log(onlytext);
+    console.log(onlytext);
     // console.log(data);
 
     return {
