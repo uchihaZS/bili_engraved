@@ -453,8 +453,10 @@
                         "
                       >
                         <div style="display: flex; width: 30%">
-                          <el-button plain>投稿时间排序</el-button>
-                          <el-button plain>视频热度排序</el-button>
+                          <el-button text plain autofocus
+                            >投稿时间排序</el-button
+                          >
+                          <el-button text plain>视频热度排序</el-button>
                         </div>
                         <div
                           style="
@@ -464,7 +466,11 @@
                           "
                         >
                           <div style="display: flex">
-                            <el-button text plain @click="hotdisplay = true"
+                            <el-button
+                              text
+                              plain
+                              @click="hotdisplay = true"
+                              autofocus
                               >全部</el-button
                             >
                             <el-button text plain @click="hotdisplay = false"
@@ -473,7 +479,11 @@
                           </div>
                           <div style="color: #909399">|</div>
                           <div style="display: flex">
-                            <el-button text plain @click="tableType = 1"
+                            <el-button
+                              text
+                              plain
+                              @click="tableType = 1"
+                              autofocus
                               >列表</el-button
                             >
                             <el-button text plain @click="tableType = 2"
@@ -523,12 +533,14 @@
                                 i.author
                               }}</span>
                             </div>
-                            <div style="color: #909399;margin-top:20px">#{{ i.episode }}</div>
+                            <div style="color: #909399; margin-top: 20px">
+                              #{{ i.episode }}
+                            </div>
                             <div
                               style="
                                 display: flex;
                                 justify-content: space-between;
-                                width: 300px;
+                                width: 150px;
                                 color: #909399;
                                 font-size: 14px;
                                 margin-top: 55px;
@@ -541,9 +553,147 @@
                         </div>
                       </div>
                       <!-- 方格模式 -->
-                      <div v-if="tableType == 2"></div>
+                      <div
+                        v-if="tableType == 2"
+                        style="
+                          display: flex;
+                          flex-wrap: wrap;
+                          flex-direction: row;
+                        "
+                      >
+                        <div
+                          style="
+                            display: flex;
+                            margin: 0px 0px 20px 10px;
+                            height: 150px;
+                            border: 1px solid #cfd3dc;
+                            border-radius: 10px;
+                            box-shadow: var(--el-box-shadow-lighter);
+                            width: 370px;
+                            padding: 10px 10px;
+                          "
+                          v-for="i in data"
+                          :key="i"
+                        >
+                          <div
+                            style="
+                              width: 200px;
+                              height: 140px;
+                              border-radius: 5px;
+                              background-color: #909399;
+                            "
+                          ></div>
+                          <div
+                            style="
+                              margin-left: 10px;
+
+                              width: 255px;
+                            "
+                          >
+                            <div
+                              style="
+                                display: flex;
+                                justify-content: space-between;
+                              "
+                            >
+                              <span>{{ i.name }}</span>
+                            </div>
+                            <div style="color: #909399; margin-top: 20px">
+                              #{{ i.episode }}
+                            </div>
+                            <div
+                              style="
+                                display: flex;
+                                justify-content: space-between;
+                                width: 200px;
+                                color: #909399;
+                                font-size: 14px;
+                                margin-top: 55px;
+                              "
+                            >
+                              <span style="color: #909399; font-size: 14px">{{
+                                i.author
+                              }}</span>
+                              <span>{{ i.plays }}播放</span>
+                              <span>{{ i.danmus }}弹幕</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <!-- 密集模式 -->
-                      <div v-if="tableType == 3"></div>
+                      <div
+                        v-if="tableType == 3"
+                        style="
+                          display: flex;
+                          flex-wrap: wrap;
+                          flex-direction: row;
+                          justify-content: space-between;
+                        "
+                      >
+                        <div
+                          style="
+                            display: flex;
+                            flex-direction: column;
+                            height: 200px;
+                            border: 1px solid #cfd3dc;
+                            border-radius: 10px;
+                            box-shadow: var(--el-box-shadow-lighter);
+                            width: 150px;
+                            justify-content: space-between;
+                            margin-bottom: 15px;
+                          "
+                          v-for="i in data"
+                          :key="i"
+                        >
+                          <div
+                            style="
+                              width: 100%;
+                              height: 140px;
+                              border-radius: 5px;
+                              background-color: #909399;
+                            "
+                          ></div>
+                          <div style="width: 100%">
+                            <div
+                              style="
+                                display: flex;
+
+                                margin: 10px 10px;
+                              "
+                            >
+                              <span>{{ i.name }}</span>
+                              <span style="color: #909399; margin-left: 10px"
+                                >#{{ i.episode }}</span
+                              >
+                            </div>
+
+                            <div
+                              style="
+                                display: flex;
+                                justify-content: flex-start;
+                                width: 100%;
+                                color: #909399;
+                                font-size: 14px;
+                                margin: 0px 10px;
+                              "
+                            >
+                              <span>{{ i.plays }}播放</span>
+                              <span style="margin-left: 10px"
+                                >{{ i.danmus }}弹幕</span
+                              >
+                            </div>
+                            <div
+                              style="
+                                color: #909399;
+                                font-size: 14px;
+                                margin: 5px 10px;
+                              "
+                            >
+                              {{ i.author }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

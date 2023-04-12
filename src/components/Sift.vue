@@ -19,7 +19,7 @@
           margin-left: 50px;
         "
       >
-        <el-button text plain style="font-size: 18px">追番人数</el-button>
+        <el-button text plain style="font-size: 18px" autofocus>追番人数</el-button>
         <el-button text plain style="font-size: 18px">最高评分</el-button>
         <el-button text plain style="font-size: 18px">播放数量</el-button>
         <el-button text plain style="font-size: 18px">开播时间</el-button>
