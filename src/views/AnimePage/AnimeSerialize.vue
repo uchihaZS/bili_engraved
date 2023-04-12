@@ -443,11 +443,112 @@
                       </div>
                     </div>
                     <!-- 视频列表 -->
-                    <div style="width: 100%;margin-top:20px"></div>
+                    <div style="width: 100%; margin-top: 20px">
+                      <!-- 顶栏 -->
+                      <div
+                        style="
+                          display: flex;
+                          width: 100%;
+                          justify-content: space-between;
+                        "
+                      >
+                        <div style="display: flex; width: 30%">
+                          <el-button plain>投稿时间排序</el-button>
+                          <el-button plain>视频热度排序</el-button>
+                        </div>
+                        <div
+                          style="
+                            display: flex;
+                            width: 40%;
+                            align-items: baseline;
+                          "
+                        >
+                          <div style="display: flex">
+                            <el-button text plain @click="hotdisplay = true"
+                              >全部</el-button
+                            >
+                            <el-button text plain @click="hotdisplay = false"
+                              >原创</el-button
+                            >
+                          </div>
+                          <div style="color: #909399">|</div>
+                          <div style="display: flex">
+                            <el-button text plain @click="tableType = 1"
+                              >列表</el-button
+                            >
+                            <el-button text plain @click="tableType = 2"
+                              >方格</el-button
+                            >
+                            <el-button text plain @click="tableType = 3"
+                              >密集</el-button
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <el-divider style="margin: 10px 0px"></el-divider>
+                      <!-- 列表模式 -->
+                      <div v-if="tableType == 1">
+                        <div
+                          style="
+                            display: flex;
+                            margin-bottom: 15px;
+                            height: 150px;
+                          "
+                          v-for="i in data"
+                          :key="i"
+                        >
+                          <div
+                            style="
+                              width: 200px;
+                              height: 140px;
+                              border-radius: 5px;
+                              background-color: #909399;
+                            "
+                          ></div>
+                          <div
+                            style="
+                              margin-left: 10px;
+                              border-bottom: 1px solid #e5eaf3;
+                              width: 605px;
+                            "
+                          >
+                            <div
+                              style="
+                                display: flex;
+                                justify-content: space-between;
+                              "
+                            >
+                              <span>{{ i.name }}</span>
+                              <span style="color: #909399; font-size: 14px">{{
+                                i.author
+                              }}</span>
+                            </div>
+                            <div style="color: #909399;margin-top:20px">#{{ i.episode }}</div>
+                            <div
+                              style="
+                                display: flex;
+                                justify-content: space-between;
+                                width: 300px;
+                                color: #909399;
+                                font-size: 14px;
+                                margin-top: 55px;
+                              "
+                            >
+                              <span>{{ i.plays }}播放</span>
+                              <span>{{ i.danmus }}弹幕</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 方格模式 -->
+                      <div v-if="tableType == 2"></div>
+                      <!-- 密集模式 -->
+                      <div v-if="tableType == 3"></div>
+                    </div>
                   </div>
 
                   <!-- 热门列表 -->
-                  <div style="width: 250px">
+                  <div style="width: 250px" v-if="hotdisplay == true">
                     <p style="font-size: 20px">热门</p>
                     <div>
                       <div v-for="i in 10" :key="i">
@@ -507,10 +608,30 @@
               </div>
             </el-col>
             <el-col :span="1">
-              <div
-                style="background-color: #ffffff; width: 100%; height: 100%"
-              ></div
-            ></el-col>
+              <div style="background-color: #ffffff; width: 100%; height: 100%">
+                <el-backtop
+                  :right="50"
+                  :bottom="100"
+                  :visibility-height="400"
+                  style="width: 40px; height: 40px"
+                >
+                  <div
+                    style="
+                      height: 100%;
+                      width: 100%;
+                      background-color: var(--el-bg-color-overlay);
+                      box-shadow: var(--el-box-shadow-lighter);
+                      text-align: center;
+                      line-height: 20px;
+                      color: #1989fa;
+                      font-size: 16px;
+                    "
+                  >
+                    回到顶部
+                  </div>
+                </el-backtop>
+              </div></el-col
+            >
           </el-row>
         </div>
       </el-main>
@@ -521,7 +642,7 @@
 <script>
 // @ is an alias to /src
 import HeaderNav from "../../components/HeaderNav.vue";
-import { reactive, onMounted, toRefs } from "vue";
+import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import PicAndText from "@/components/PicAndText.vue";
@@ -609,7 +730,85 @@ export default {
       { rowOne: { p1: "播放数", p2: "弹幕数" } },
       { rowOne: { p1: "播放数", p2: "弹幕数" } },
     ];
-    console.log(textArray[0].rowOne.p1);
+    // console.log(textArray[0].rowOne.p1);
+
+    let videoData = reactive({
+      data: [
+        {
+          name: "番剧名1",
+          episode: "2",
+          author: "pilipili",
+          plays: 153,
+          danmus: 487,
+        },
+        {
+          name: "番剧名2",
+          episode: "26",
+          author: "pilipili",
+          plays: 543,
+          danmus: 87,
+        },
+        {
+          name: "番剧名3",
+          episode: "25",
+          author: "pilipili",
+          plays: 6757,
+          danmus: 5435,
+        },
+        {
+          name: "番剧名4",
+          episode: "12",
+          author: "pilipili出差",
+          plays: 13,
+          danmus: 24,
+        },
+        {
+          name: "番剧名5",
+          episode: "209",
+          author: "pilipili",
+          plays: 435,
+          danmus: 89,
+        },
+        {
+          name: "番剧名6",
+          episode: "22",
+          author: "pilipili出差",
+          plays: 768,
+          danmus: 43,
+        },
+        {
+          name: "番剧名7",
+          episode: "21",
+          author: "pilipili",
+          plays: 5435,
+          danmus: 7666,
+        },
+        {
+          name: "番剧名8",
+          episode: "23",
+          author: "pilipili",
+          plays: 12333,
+          danmus: 4244,
+        },
+        {
+          name: "番剧名9",
+          episode: "12",
+          author: "pilipili出差",
+          plays: 1543,
+          danmus: 435,
+        },
+        {
+          name: "番剧名10",
+          episode: "3",
+          author: "pilipili出差",
+          plays: 19983,
+          danmus: 543,
+        },
+      ],
+      tableType: 1,
+      hotdisplay: true,
+    });
+
     // 跳转函数
     let skipFun = reactive({
       toMessage() {
@@ -668,6 +867,7 @@ export default {
     return {
       goToPage,
       textArray,
+      ...toRefs(videoData),
       ...toRefs(skipFun),
       ...toRefs(tag),
     };
