@@ -386,12 +386,33 @@
                 <span class="avatag" @click="toAnimeTimeline">新番时间表</span>
                 <span class="avatag" @click="toAnimeSearch">番剧索引</span>
               </div>
+              <anime-com-use-vue></anime-com-use-vue>
             </el-col>
             <el-col :span="1">
-              <div
-                style="background-color: #ffffff; width: 100%; height: 100%"
-              ></div
-            ></el-col>
+              <div style="background-color: #ffffff; width: 100%; height: 100%">
+                <el-backtop
+                  :right="50"
+                  :bottom="100"
+                  :visibility-height="400"
+                  style="width: 40px; height: 40px"
+                >
+                  <div
+                    style="
+                      height: 100%;
+                      width: 100%;
+                      background-color: var(--el-bg-color-overlay);
+                      box-shadow: var(--el-box-shadow-lighter);
+                      text-align: center;
+                      line-height: 20px;
+                      color: #1989fa;
+                      font-size: 16px;
+                    "
+                  >
+                    回到顶部
+                  </div>
+                </el-backtop>
+              </div></el-col
+            >
           </el-row>
         </div>
       </el-main>
@@ -402,12 +423,13 @@
 <script>
 // @ is an alias to /src
 import HeaderNav from "../../components/HeaderNav.vue";
-import { reactive, onMounted, toRefs } from "vue";
+import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import AnimeComUseVue from "@/components/AnimeComUse.vue";
 export default {
   name: "animeend",
-  components: { HeaderNav },
+  components: { HeaderNav, AnimeComUseVue },
   setup() {
     // 跳转和vuex
     var router = useRouter();

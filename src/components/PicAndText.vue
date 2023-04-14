@@ -57,7 +57,11 @@
           <!-- 文字 -->
           <div style="margin-top: 10px">
             <div
-              v-if="item.rowOne.p2 && item.rowOne.p1 != ''"
+              v-if="
+                typeof item.rowOne === 'object' &&
+                item.rowOne.p1 &&
+                item.rowOne.p2
+              "
               style="
                 display: flex;
                 flex-flow: row nowrap;
@@ -71,9 +75,9 @@
                 item.rowOne.p2
               }}</span>
             </div>
-            <div v-if="(item.rowOne.p1 && item.rowOne.p2) == undefined">
+            <div v-else-if="typeof item.rowOne === 'string'">
               <p class="textStyle" style="font-size: 18px">
-                {{ item.rowOne}}
+                {{ item.rowOne }}
               </p>
             </div>
             <div
@@ -98,7 +102,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, watch } from "vue";
 export default {
   props: {
     totalWidth: { type: String, required: true }, //总宽度(px)
@@ -111,6 +115,9 @@ export default {
     text: Object, //文字内容(既是内容也用于决定循环次数)
     rowadd: { type: String, default: "false" }, //是否添加第二行文字
     testmode: { type: String, default: "false" }, //测试模式
+    // [          图片          ]
+    // rowOne.p1        rowOne.p2
+    // textTwo          textThree
   },
   setup(props) {
     // let picdata = reactive(props.picdata);
@@ -121,13 +128,20 @@ export default {
     let picHeight = "height:" + props.picHeight;
     let borderRadius = "border-radius:" + props.borderRadius;
     let backgroundColor = "background-color:" + props.backgroundColor;
-    let text = props.text;
+    let text = toRefs(reactive(props.text));
     let rowadd = props.rowadd;
     let testmode = props.testmode;
     let totalStyle = totalWidth + ";" + totalHeight;
     let picStyle =
       picWidth + ";" + picHeight + ";" + borderRadius + ";" + backgroundColor;
-    // console.log(totalHeight, totalWidth, direction);
+    console.log("子组件：" + props.text);
+
+    for (let i = 0; i < text.length; i++) {
+      console.log(text[i]);
+    }
+    watch(text, (newText, oldText) => {
+      console.log("text changed: ", newText);
+    });
 
     return {
       //   ...toRefs(picdata),
