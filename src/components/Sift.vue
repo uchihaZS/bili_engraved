@@ -33,7 +33,7 @@
         >
       </div>
       <!-- 列表栏 -->
-      <div v-if="onlytext.length">
+      <div v-if="textdata.length">
         <div style="margin-top: 15px; margin-left: 60px; width: 90%">
           <pic-and-text
             direction="col"
@@ -44,7 +44,7 @@
             picWidth="225px"
             picHeight="300px"
             rowadd="true"
-            :text="onlytext"
+            :text="textdata"
           ></pic-and-text>
         </div>
       </div>
@@ -196,8 +196,6 @@ export default {
   },
   components: { PicAndText },
   setup() {
-    
-
     let animeSiftData = reactive({
       type: ["全部", "正片", "电影", "其他"],
       voice: ["全部", "原声", "中文配音"],
@@ -460,7 +458,7 @@ export default {
     function playnumsort() {
       animeSiftData.arrType = 3;
       animeSiftData.playnumType++;
-      getOnlyText.check;
+      getOnlyText.check();
       console.log(
         animeSiftData.arrType,
         "playnumType:" + animeSiftData.playnumType
@@ -472,7 +470,7 @@ export default {
     function starttimesort() {
       animeSiftData.arrType = 4;
       animeSiftData.starttimeType++;
-      getOnlyText.check;
+      getOnlyText.check();
       console.log(
         animeSiftData.arrType,
         "starttimeType:" + animeSiftData.starttimeType
@@ -484,20 +482,19 @@ export default {
     function scoresort() {
       animeSiftData.arrType = 2;
       animeSiftData.scoreType++;
-      getOnlyText.check;
+      getOnlyText.check();
       console.log(
         animeSiftData.arrType,
         "scoreType:" + animeSiftData.scoreType
       );
     }
     let getOnlyText = reactive({
-      onlytext: [],
       check() {
         // 元素名更换和判断
         if (animeSiftData.arrType == 1) {
           // 追番人数排序
           if (animeSiftData.fansType % 2 != 0) {
-            getOnlyText.onlytext =toRefs(fansTobig.map(
+            onlytext.textdata = fansTobig.map(
               ({ name: rowOne, episode, isEnd }) => {
                 let textTwo;
                 if (episode === undefined || episode === null) {
@@ -509,9 +506,9 @@ export default {
                 }
                 return { rowOne, textTwo };
               }
-            )) 
+            );
           } else if (animeSiftData.fansType % 2 == 0) {
-            getOnlyText.onlytext =toRefs(fansTosmall.map(
+            onlytext.textdata = fansTosmall.map(
               ({ name: rowOne, episode, isEnd }) => {
                 let textTwo;
                 if (episode === undefined || episode === null) {
@@ -523,12 +520,12 @@ export default {
                 }
                 return { rowOne, textTwo };
               }
-            )) 
+            );
           }
         } else if (animeSiftData.arrType == 2) {
           // 评分人数排序
           if (animeSiftData.scoreType % 2 != 0) {
-            getOnlyText.onlytext = scoreTobig.map(
+            onlytext.textdata = scoreTobig.map(
               ({ name: rowOne, episode, isEnd }) => {
                 let textTwo;
                 if (episode === undefined || episode === null) {
@@ -542,7 +539,7 @@ export default {
               }
             );
           } else if (animeSiftData.scoreType % 2 == 0) {
-            getOnlyText.onlytext = scoreTosmall.map(
+            onlytext.textdata = scoreTosmall.map(
               ({ name: rowOne, episode, isEnd }) => {
                 let textTwo;
                 if (episode === undefined || episode === null) {
@@ -559,7 +556,7 @@ export default {
         } else if (animeSiftData.arrType == 3) {
           // 播放人数排序
           if (animeSiftData.playnumType % 2 != 0) {
-            getOnlyText.onlytext = playnumTobig.map(
+            onlytext.textdata = playnumTobig.map(
               ({ name: rowOne, episode, isEnd }) => {
                 let textTwo;
                 if (episode === undefined || episode === null) {
@@ -573,7 +570,7 @@ export default {
               }
             );
           } else if (animeSiftData.playnumType % 2 == 0) {
-            getOnlyText.onlytext = playnumTosmall.map(
+            onlytext.textdata = playnumTosmall.map(
               ({ name: rowOne, episode, isEnd }) => {
                 let textTwo;
                 if (episode === undefined || episode === null) {
@@ -590,7 +587,7 @@ export default {
         } else if (animeSiftData.arrType == 4) {
           // 开播时间排序
           if (animeSiftData.starttimeType % 2 != 0) {
-            getOnlyText.onlytext = starttimeTobig.map(
+            onlytext.textdata = starttimeTobig.map(
               ({ name: rowOne, episode, isEnd }) => {
                 let textTwo;
                 if (episode === undefined || episode === null) {
@@ -604,7 +601,7 @@ export default {
               }
             );
           } else if (animeSiftData.starttimeType % 2 == 0) {
-            getOnlyText.onlytext = starttimeTosmall.map(
+            onlytext.textdata = starttimeTosmall.map(
               ({ name: rowOne, episode, isEnd }) => {
                 let textTwo;
                 if (episode === undefined || episode === null) {
@@ -619,17 +616,19 @@ export default {
             );
           }
         }
-        console.log(getOnlyText.onlytext);
+        console.log(onlytext.textdata);
       },
     });
-
+    let onlytext = reactive({
+      textdata: [],
+    });
     onMounted(() => {
       fansort();
       console.log("mounted");
+      // console.log(onlytext.textdata);
     });
 
     return {
-      // onlytext,
       sortByProp,
       fansTobig,
       fansTosmall,
@@ -643,8 +642,8 @@ export default {
       playnumsort,
       starttimesort,
       scoresort,
-      // ...toRefs(data),
       ...toRefs(getOnlyText),
+      ...toRefs(onlytext),
       ...toRefs(animeSiftData),
     };
   },

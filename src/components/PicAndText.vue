@@ -20,7 +20,30 @@
           <div :style="picStyle"></div>
           <!-- 文字 -->
           <div style="margin-top: 10px">
-            <p class="textStyle" style="font-size: 18px">{{ item.textOne }}</p>
+            <div
+              v-if="
+                typeof item.rowOne === 'object' &&
+                item.rowOne.p1 &&
+                item.rowOne.p2
+              "
+              style="
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-between;
+              "
+            >
+              <span class="textStyle" style="font-size: 18px">{{
+                item.rowOne.p1
+              }}</span>
+              <span class="textStyle" style="font-size: 18px">{{
+                item.rowOne.p2
+              }}</span>
+            </div>
+            <div v-else-if="typeof item.rowOne === 'string'">
+              <p class="textStyle" style="font-size: 18px">
+                {{ item.rowOne }}
+              </p>
+            </div>
             <div
               v-if="rowadd == 'true'"
               style="
@@ -47,7 +70,7 @@
         "
       >
         <div
-          v-for="item in text"
+          v-for="item in onlytext"
           :key="item"
           :style="totalStyle"
           style="margin-bottom: 15px"
@@ -102,7 +125,7 @@
 </template>
 
 <script>
-import { reactive, toRefs, watch } from "vue";
+import { watch, toRefs, onMounted } from "vue";
 export default {
   props: {
     totalWidth: { type: String, required: true }, //总宽度(px)
@@ -112,7 +135,7 @@ export default {
     picHeight: { type: String, required: true }, //图片高度(px)
     borderRadius: { type: String, default: "" }, //图片圆角(px)
     backgroundColor: { type: String, default: "" }, //图片背景色(十六进制或预设英文)
-    text: Object, //文字内容(既是内容也用于决定循环次数)
+    text: Array, //文字内容(既是内容也用于决定循环次数)
     rowadd: { type: String, default: "false" }, //是否添加第二行文字
     testmode: { type: String, default: "false" }, //测试模式
     // [          图片          ]
@@ -128,21 +151,26 @@ export default {
     let picHeight = "height:" + props.picHeight;
     let borderRadius = "border-radius:" + props.borderRadius;
     let backgroundColor = "background-color:" + props.backgroundColor;
-    let text = toRefs(reactive(props.text));
+    // let onlytext = toRefs(props.text)
+    let onlytext = props.text;
     let rowadd = props.rowadd;
     let testmode = props.testmode;
     let totalStyle = totalWidth + ";" + totalHeight;
     let picStyle =
       picWidth + ";" + picHeight + ";" + borderRadius + ";" + backgroundColor;
-    console.log("子组件：" + props.text);
 
-    for (let i = 0; i < text.length; i++) {
-      console.log(text[i]);
-    }
-    watch(text, (newText, oldText) => {
-      console.log("text changed: ", newText);
+    // console.log("子组件：" + JSON.stringify(onlytext));
+    // console.log("子组件props：" + onlytext);
+
+    // watch(() => onlytext, (newValue, oldValue) => {
+    //   console.log('myArray changed!', newValue, oldValue);
+    //   // 可以在这里更新子组件数据或者调用子组件的刷新函数
+    // });
+    onMounted(() => {
+      
+      console.log("子组件mounted");
+      // console.log(onlytext.textdata);
     });
-
     return {
       //   ...toRefs(picdata),
       totalWidth,
@@ -154,7 +182,7 @@ export default {
       picHeight,
       borderRadius,
       backgroundColor,
-      text,
+      onlytext,
       rowadd,
       testmode,
     };
