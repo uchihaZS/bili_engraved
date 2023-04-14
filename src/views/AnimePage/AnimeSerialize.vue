@@ -452,52 +452,113 @@
                           justify-content: space-between;
                         "
                       >
-                        <div style="display: flex; width: 30%">
-                          <el-button text plain autofocus
-                            >投稿时间排序</el-button
+                        <!-- 排序 -->
+                        <div
+                          style="
+                            display: flex;
+                            width: 227px;
+                            align-items: center;
+                            justify-content: space-between;
+                          "
+                        >
+                          <span
+                            :style="{ color: colorA }"
+                            @click="changeSort('A')"
+                            >投稿时间排序</span
                           >
-                          <el-button text plain>视频热度排序</el-button>
+                          <span
+                            :style="{ color: colorB }"
+                            @click="changeSort('B')"
+                            >视频热度排序</span
+                          >
+                        </div>
+                        <!-- 选择器 -->
+                        <div
+                          v-show="ishotsoft == true"
+                          style="
+                            display: flex;
+                            width: 284px;
+                            justify-content: space-evenly;
+                            align-items: center;
+                          "
+                        >
+                          <el-select
+                            v-model="selectValue"
+                            size="small"
+                            style="width: 80px"
+                          >
+                            <el-option label="播放数" value="播放数" />
+                            <el-option label="弹幕数" value="弹幕数" />
+                            <el-option label="收藏数" value="收藏数" />
+                            <el-option label="投币数" value="投币数" />
+                            <el-option label="评论数" value="评论数" />
+                          </el-select>
+                          <el-date-picker
+                            v-model="dateValue"
+                            type="daterange"
+                            range-separator="To"
+                            start-placeholder="Start date"
+                            end-placeholder="End date"
+                            size="small"
+                            style="width: 200px; margin-left: 10px"
+                          />
                         </div>
                         <div
                           style="
                             display: flex;
-                            width: 40%;
-                            align-items: baseline;
+                            width: 262px;
+                            align-items: center;
                           "
                         >
-                          <div style="display: flex">
-                            <el-button
-                              text
-                              plain
-                              @click="hotdisplay = true"
-                              autofocus
-                              >全部</el-button
+                          <div
+                            style="
+                              display: flex;
+                              justify-content: space-between;
+                              margin-right: 10px;
+                              width: 80px;
+                            "
+                          >
+                            <span
+                              :style="{ color: colorC }"
+                              @click="changeOri('C')"
+                              >全部</span
                             >
-                            <el-button text plain @click="hotdisplay = false"
-                              >原创</el-button
+                            <span
+                              :style="{ color: colorD }"
+                              @click="changeOri('D')"
+                              >原创</span
                             >
                           </div>
                           <div style="color: #909399">|</div>
-                          <div style="display: flex">
-                            <el-button
-                              text
-                              plain
-                              @click="tableType = 1"
-                              autofocus
-                              >列表</el-button
+                          <div
+                            style="
+                              display: flex;
+                              justify-content: space-between;
+                              width: 158px;
+                              margin-left: 10px;
+                            "
+                          >
+                            <span
+                              :style="{ color: colorE }"
+                              @click="changeTable('E')"
+                              >列表</span
                             >
-                            <el-button text plain @click="tableType = 2"
-                              >方格</el-button
+                            <span
+                              :style="{ color: colorF }"
+                              @click="changeTable('F')"
+                              >方格</span
                             >
-                            <el-button text plain @click="tableType = 3"
-                              >密集</el-button
+                            <span
+                              :style="{ color: colorG }"
+                              @click="changeTable('G')"
+                              >密集</span
                             >
                           </div>
                         </div>
                       </div>
                       <el-divider style="margin: 10px 0px"></el-divider>
                       <!-- 列表模式 -->
-                      <div v-if="tableType == 1">
+                      <div v-show="tableType == 1">
                         <div
                           style="
                             display: flex;
@@ -554,7 +615,7 @@
                       </div>
                       <!-- 方格模式 -->
                       <div
-                        v-if="tableType == 2"
+                        v-show="tableType == 2"
                         style="
                           display: flex;
                           flex-wrap: wrap;
@@ -622,7 +683,7 @@
                       </div>
                       <!-- 密集模式 -->
                       <div
-                        v-if="tableType == 3"
+                        v-show="tableType == 3"
                         style="
                           display: flex;
                           flex-wrap: wrap;
@@ -649,18 +710,15 @@
                             style="
                               width: 100%;
                               height: 140px;
-                              border-radius: 5px;
+                              border-top-left-radius: 5px;
+                              border-top-right-radius: 5px;
+                              border-bottom-right-radius: 0px;
+                              border-bottom-left-radius: 0px;
                               background-color: #909399;
                             "
                           ></div>
                           <div style="width: 100%">
-                            <div
-                              style="
-                                display: flex;
-
-                                margin: 10px 10px;
-                              "
-                            >
+                            <div style="display: flex; margin: 10px 10px">
                               <span>{{ i.name }}</span>
                               <span style="color: #909399; margin-left: 10px"
                                 >#{{ i.episode }}</span
@@ -698,7 +756,7 @@
                   </div>
 
                   <!-- 热门列表 -->
-                  <div style="width: 250px" v-if="hotdisplay == true">
+                  <div style="width: 250px" v-show="hotdisplay == true">
                     <p style="font-size: 20px">热门</p>
                     <div>
                       <div v-for="i in 10" :key="i">
@@ -957,6 +1015,47 @@ export default {
       ],
       tableType: 1,
       hotdisplay: true,
+      selectValue: "播放数",
+      dateValue: "",
+      ishotsoft: false,
+      colorA: "#409eff",
+      colorB: "black",
+      colorC: "#409eff",
+      colorD: "black",
+      colorE: "#409eff",
+      colorF: "black",
+      colorG: "black",
+
+      changeSort(element) {
+        videoData.colorA = element === "A" ? "#409eff" : "black";
+        videoData.ishotsoft = element === "A" ? false : true;
+        videoData.ishotsoft = element === "B" ? true : false;
+        videoData.colorB = element === "B" ? "#409eff" : "black";
+      },
+      changeOri(element) {
+        videoData.colorC = element === "C" ? "#409eff" : "black";
+        videoData.hotdisplay = element === "C" ? true : false;
+        videoData.hotdisplay = element === "D" ? false : true;
+        videoData.colorD = element === "D" ? "#409eff" : "black";
+      },
+      changeTable(element) {
+        if (element === "E") {
+          videoData.colorE = "#409eff";
+          videoData.colorF = "black";
+          videoData.colorG = "black";
+          videoData.tableType = 1;
+        } else if (element === "F") {
+          videoData.colorE = "black";
+          videoData.colorF = "#409eff";
+          videoData.colorG = "black";
+          videoData.tableType = 2;
+        } else if (element === "G") {
+          videoData.colorE = "black";
+          videoData.colorF = "black";
+          videoData.colorG = "#409eff";
+          videoData.tableType = 3;
+        }
+      },
     });
 
     // 跳转函数
