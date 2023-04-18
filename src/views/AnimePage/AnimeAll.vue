@@ -23,17 +23,18 @@
         <div
           style="
             width: 86%;
-            height: 180px;
+            height: 200px;
             padding: 0px 135px;
             display: flex;
             justify-content: space-evenly;
             background: linear-gradient(rgb(0 0 0 / 0%), #ffffff);
             z-index: 900;
-            margin-top: -180px;
+            margin-top: -200px;
           "
         >
-          <div v-for="item in 7" :key="item" class="carouselDiv">
+          <div v-for="item in 7" :key="item">
             <div
+              class="carouselDiv"
               style="
                 width: 220px;
                 height: 150px;
@@ -56,11 +57,142 @@
           </div>
         </div>
         <!-- 内容 -->
-        <div>
+        <div
+          style="width: 86%; height: auto; padding: 0px 135px; margin-top: 40px"
+        >
           <!-- 索引行 -->
-          <div></div>
+          <div
+            style="display: flex; justify-content: space-between; width: 100%"
+          >
+            <!-- 番剧索引 -->
+            <div
+              style="
+                width: 22%;
+                height: 130px;
+                border-radius: 10px;
+                background-color: rgb(247 137 137 / 33%);
+                padding: 15px;
+              "
+            >
+              <h3 class="toBlue">番剧索引 ></h3>
+              <div>
+                <span class="toBlue">追番人数</span>
+                <span class="toBlue" style="margin-left: 15px">最高评分</span>
+              </div>
+              <div style="margin-top: 10px">
+                <span class="toBlue">更新时间</span>
+                <span class="toBlue" style="margin-left: 15px">播放数量</span>
+              </div>
+            </div>
+            <!-- 类型风格 -->
+            <div
+              style="
+                width: 22%;
+                height: 130px;
+                border-radius: 10px;
+                background-color: rgb(133 206 97 / 33%);
+                padding: 15px;
+              "
+            >
+              <h3 class="toBlue">类型风格 ></h3>
+              <div style="display: flex; flex-wrap: wrap; width: 310px">
+                <span
+                  v-for="i in style"
+                  :key="i"
+                  class="toBlue"
+                  style="margin: 0px 10px 10px 0px"
+                  >{{ i }}</span
+                >
+              </div>
+            </div>
+            <!-- 首播时间 -->
+            <div
+              style="
+                width: 22%;
+                height: 130px;
+                border-radius: 10px;
+                background-color: rgb(102 177 255 / 33%);
+                padding: 15px;
+              "
+            >
+              <h3 class="toBlue">首播时间 ></h3>
+              <div style="display: flex; flex-wrap: wrap; width: 310px">
+                <span
+                  v-for="i in startTime"
+                  :key="i"
+                  class="toBlue"
+                  style="margin: 0px 10px 10px 0px"
+                  >{{ i }}</span
+                >
+              </div>
+            </div>
+            <!-- 热搜 -->
+            <div
+              style="
+                width: 22%;
+                height: 130px;
+                border-radius: 10px;
+                background-color: rgb(211 0 0 / 33%);
+                padding: 15px;
+              "
+            >
+              <h3 class="toBlue">热搜</h3>
+              <div style="display: flex; flex-wrap: wrap; width: 310px">
+                <span
+                  v-for="i in hotSearch"
+                  :key="i"
+                  class="toBlue"
+                  style="margin: 0px 10px 10px 0px"
+                  >{{ i }}</span
+                >
+              </div>
+            </div>
+          </div>
           <!-- 正在追 -->
-          <div></div>
+          <div style="width: 100%; margin-top: 30px">
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <h2>正在追</h2>
+              <el-button @click="toPerSub">我的追番</el-button>
+            </div>
+            <div style="display:flex">
+              <!-- 左箭头 -->
+              <div class="arrow left" @click="scroll(-1)"></div>
+              <!-- 列表 -->
+              <div style="width: 100%;display:flex;justify-content: space-between;">
+                <div v-for="(mySub, index) in displayedData" :key="index">
+                  <div
+                    style="
+                      width: 250px;
+                      height: 200px;
+                      border-radius: 10px;
+                      background-color: #909399;
+                    "
+                  >
+                    <div
+                      style="
+                        display: inline-block;
+                        margin: 150px 0px 0px 10px;
+                        color: white;
+                      "
+                    >
+                      <div style="margin-bottom:10px">看到{{mySub.episode}}</div>
+                      <el-progress :percentage="mySub.progress" :show-text=false stroke-width="8" style="width:230px" />
+                    </div>
+                  </div>
+                  <p>{{ mySub.name }}</p>
+                </div>
+              </div>
+              <!-- 右箭头 -->
+              <div class="arrow right" @click="scroll(1)"></div>
+            </div>
+          </div>
           <!-- 新番时间表 -->
           <div></div>
           <!-- 番剧热播榜 -->
@@ -84,7 +216,7 @@
 <script>
 // @ is an alias to /src
 
-import { reactive, ref, toRefs } from "vue";
+import { reactive, ref, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
@@ -109,6 +241,58 @@ export default {
     const switchCarousel = (index) => {
       // 调用轮播图组件实例的 setActiveItem 方法来切换轮播图
       carouselRef.value.setActiveItem(index - 1);
+    };
+    const style = [
+      "原创",
+      "小说改",
+      "奇幻",
+      "热血",
+      "战斗",
+      "校园",
+      "恋爱",
+      "日常",
+      "搞笑",
+      "异世界",
+      "龙傲天",
+      "种田文",
+    ];
+    const startTime = [
+      "2023",
+      "2022",
+      "2021",
+      "2020",
+      "2019",
+      "2018",
+      "2017",
+      "2016",
+    ];
+    const hotSearch = ["假面骑士", "鬼灭之刃", "新海诚", "EVA"];
+    const mySub = [
+      { name: "番剧名1", progress: 33, episode: "第1话" },
+      { name: "番剧名2", progress: 45, episode: "第10话" },
+      { name: "番剧名3", progress: 37, episode: "第23话" },
+      { name: "番剧名4", progress: 11, episode: "第14话" },
+      { name: "番剧名5", progress: 22, episode: "第15话" },
+      { name: "番剧名6", progress: 33, episode: "第11话" },
+      { name: "番剧名7", progress: 44, episode: "第24话" },
+      { name: "番剧名8", progress: 10, episode: "第23话" },
+      { name: "番剧名9", progress: 1, episode: "第12话" },
+      { name: "番剧名10", progress: 2, episode: "第1话" },
+      { name: "番剧名11", progress: 5, episode: "第7话" },
+      { name: "番剧名12", progress: 99, episode: "第6话" },
+    ];
+    let startIndex = 0;
+    let endIndex = 5;
+    let displayedData = computed(() => mySub.slice(startIndex, endIndex + 1));
+
+    let scroll = (direction) => {
+      if (direction === 1 && endIndex < mySub.length - 1) {
+        startIndex += 6;
+        endIndex += 6;
+      } else if (direction === -1 && startIndex > 0) {
+        startIndex -= 6;
+        endIndex -= 6;
+      }
     };
 
     // 跳转函数
@@ -171,6 +355,11 @@ export default {
       ...toRefs(skipFun),
       carouselRef,
       switchCarousel,
+      style,
+      startTime,
+      hotSearch,
+      displayedData,
+      scroll,
     };
   },
 };
@@ -210,6 +399,7 @@ export default {
   transform: scale(1.2);
   transition: all 0.3s ease;
   cursor: pointer;
+  box-shadow: var(--el-box-shadow);
 }
 
 .el-main {
@@ -223,5 +413,29 @@ export default {
 }
 .el-main::-webkit-scrollbar {
   display: none;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.left {
+  border-width: 8px 10px 8px 0;
+  border-color: transparent #000000 transparent transparent;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.right {
+  border-width: 8px 0 8px 10px;
+  border-color: transparent transparent transparent #000000;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.toBlue:hover {
+  color: #409eff;
 }
 </style>
