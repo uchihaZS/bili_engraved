@@ -207,6 +207,7 @@
                         size="large"
                         v-for="(i, index) in tagItem1"
                         :key="index"
+                        @click="skipTag(index)"
                         @mouseover="showMenu1(index)"
                         @mouseleave="closeMenu1(index)"
                         >{{ i }}</el-button
@@ -560,8 +561,12 @@
                       </el-menu>
                     </div>
                     <div style="margin-left: 450px">
-                      <el-button size="large">新番时间表</el-button>
-                      <el-button size="large">查看更多</el-button>
+                      <el-button size="large" @click="toAnimeTimeline"
+                        >新番时间表</el-button
+                      >
+                      <el-button size="large" @click="toAnimeAll"
+                        >查看更多</el-button
+                      >
                     </div>
                   </div>
 
@@ -973,7 +978,7 @@
 <script>
 // @ is an alias to /src
 import HeaderNav from "../components/HeaderNav.vue";
-import { reactive, onMounted, toRefs } from "vue";
+import { reactive, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 // import { Search } from '@element-plus/icons-vue'
@@ -981,220 +986,6 @@ export default {
   name: "HomePage",
   components: { HeaderNav },
   setup() {
-    // 菜单栏
-    let headmenu = reactive({
-      searchValue: "",
-      goToSearchPage(searchValue) {
-        store.dispatch("updateSearchValue", headmenu.searchValue);
-        console.log(headmenu.searchValue);
-        router.push({ path: "/searchpage" });
-      },
-    });
-    // logo
-    let logo = reactive({
-      debugState: false,
-      debugname: "",
-      debugxp: 0,
-      debugFuntype: 0,
-      debugOver() {
-        logo.debugState = true;
-      },
-      debugLeave() {
-        logo.debugFuntype = 1;
-        setTimeout(logo.debugNoDisplay, 300);
-      },
-      debugNoDisplay() {
-        if (logo.debugFuntype == 1) {
-          logo.debugState = false;
-        }
-      },
-      namechange() {
-        avatar.avatarName = this.debugname;
-      },
-      xpchange() {
-        avatar.xp = this.debugxp;
-        getPercentage();
-        console.log("获取经验值和等级成功");
-      },
-    });
-    // 头像
-    let avatar = reactive({
-      avatarState: false,
-      percentage: 0,
-      avatarName: "用户名",
-      avatarOri: "margin-top: 9px;z-index:999",
-      avatarUse: "margin-top: 9px;z-index:999",
-      avatarCss: "position: relative;top:30px;z-index:999",
-      level: "",
-      levelCss: "",
-      xp: 10000,
-      circleUrl:
-        "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-      avatarOver() {
-        avatar.avatarState = true;
-        avatar.avatarUse = avatar.avatarCss;
-      },
-      avatarLeave() {
-        avatar.avatarState = false;
-        avatar.avatarUse = avatar.avatarOri;
-      },
-      goToPersonalPage() {
-        router.push({ path: "/personalpage" });
-      },
-    });
-    // 动态
-    let dynamic = reactive({
-      dynamicState: false,
-      dynamicType: 0,
-      dyFunType: 0,
-      dyVideoCss: "width: 0px;font-size:15px",
-      dyAnimeCss: "width: 0px;font-size:15px",
-      dyColCss: "width: 0px;font-size:15px",
-      dyLiveCss: "width: 0px;font-size:15px",
-      borderColor: "width: 0px;color: #409EFF;font-size:15px",
-      dynamicOver() {
-        dynamic.dyVideo();
-        dynamic.dynamicState = true;
-        subscribe.subState = false;
-        collect.colState = false;
-        history.hisState = false;
-        // console.log('进入动态标签')
-      },
-      dynamicLeave() {
-        dynamic.dyFunType = 1;
-        setTimeout(dynamic.dynamicNoDisplay, 300);
-        // console.log('离开动态标签')
-      },
-      dynamicNoDisplay() {
-        if (dynamic.dyFunType == 1) {
-          dynamic.dynamicState = false;
-          // console.log('关闭动态信息')
-        }
-      },
-      dyVideo() {
-        dynamic.dynamicType = 0;
-        dynamic.dyVideoCss = dynamic.borderColor;
-        dynamic.dyAnimeCss = "width: 0px;font-size:15px";
-        dynamic.dyColCss = "width: 0px;font-size:15px";
-        dynamic.dyLiveCss = "width: 0px;font-size:15px";
-      },
-      dyAnime() {
-        dynamic.dynamicType = 1;
-        dynamic.dyAnimeCss = dynamic.borderColor;
-        dynamic.dyVideoCss = "width: 0px;font-size:15px";
-        dynamic.dyColCss = "width: 0px;font-size:15px";
-        dynamic.dyLiveCss = "width: 0px;font-size:15px";
-      },
-      dyCol() {
-        dynamic.dynamicType = 2;
-        dynamic.dyAnimeCss = "width: 0px;font-size:15px";
-        dynamic.dyVideoCss = "width: 0px;font-size:15px";
-        dynamic.dyColCss = dynamic.borderColor;
-        dynamic.dyLiveCss = "width: 0px;font-size:15px";
-      },
-      dyLive() {
-        dynamic.dynamicType = 3;
-        dynamic.dyAnimeCss = "width: 0px;font-size:15px";
-        dynamic.dyVideoCss = "width: 0px;font-size:15px";
-        dynamic.dyColCss = "width: 0px;font-size:15px";
-        dynamic.dyLiveCss = dynamic.borderColor;
-      },
-    });
-    // 订阅
-    let subscribe = reactive({
-      subState: false,
-      subType: 0,
-      subFunType: 0,
-      subAnimeCss: "width: 0px;font-size:15px",
-      subVideoCss: "width: 0px;font-size:15px",
-      borderColor: "width: 0px;color: #409EFF;font-size:15px",
-      subAnime() {
-        subscribe.subType = 0;
-        subscribe.subVideoCss = "width: 0px;font-size:15px";
-        subscribe.subAnimeCss = subscribe.borderColor;
-      },
-      subVideo() {
-        subscribe.subType = 1;
-        subscribe.subVideoCss = subscribe.borderColor;
-        subscribe.subAnimeCss = "width: 0px;font-size:15px";
-      },
-
-      subOver() {
-        subscribe.subAnime();
-        subscribe.subState = true;
-        dynamic.dynamicState = false;
-        collect.colState = false;
-        history.hisState = false;
-      },
-      subLeave() {
-        subscribe.subFunType = 1;
-        setTimeout(subscribe.subNoDisplay, 300);
-      },
-      subNoDisplay() {
-        if (subscribe.subFunType == 1) {
-          subscribe.subState = false;
-        }
-      },
-    });
-    // 收藏
-    let collect = reactive({
-      colState: false,
-      colType: 0,
-      colFunType: 0,
-      contentType: 0,
-      selectItem: "",
-      handleCommand(command) {
-        if (command == "默认收藏夹") {
-          collect.contentType = 0;
-          collect.selectItem = "默认收藏夹";
-        } else if (command == "自定义收藏夹1") {
-          collect.contentType = 1;
-          collect.selectItem = "自定义收藏夹1";
-        } else if (command == "自定义收藏夹2") {
-          collect.contentType = 2;
-          collect.selectItem = "自定义收藏夹2";
-        }
-        console.log(command);
-      },
-      colOver() {
-        collect.colState = true;
-        subscribe.subState = false;
-        dynamic.dynamicState = false;
-        history.hisState = false;
-        collect.contentType = 0;
-        collect.selectItem = "默认收藏夹";
-      },
-      colLeave() {
-        collect.colFunType = 1;
-        setTimeout(collect.colNoDisplay, 300);
-      },
-      colNoDisplay() {
-        if (collect.colFunType == 1) {
-          collect.colState = false;
-        }
-      },
-    });
-    // 历史
-    let history = reactive({
-      hisState: false,
-      hisFunType: 0,
-
-      hisOver() {
-        collect.colState = false;
-        subscribe.subState = false;
-        dynamic.dynamicState = false;
-        history.hisState = true;
-      },
-      hisLeave() {
-        history.hisFunType = 1;
-        setTimeout(history.hisNoDisplay, 300);
-      },
-      hisNoDisplay() {
-        if (history.hisFunType == 1) {
-          history.hisState = false;
-        }
-      },
-    });
     // 跳转和vuex
     var router = useRouter();
     const store = useStore();
@@ -1282,7 +1073,7 @@ export default {
       showMenu1(index) {
         if (index == 0) {
           tag.anime.over();
-          console.log("触碰元素");
+          // console.log("触碰元素");
         }
       },
       closeMenu1(index) {
@@ -1298,19 +1089,19 @@ export default {
         over() {
           tag.anime.show = true;
           tag.anime.Funtype = 0;
-          console.log("over");
+          // console.log("over");
         },
         closeMenu() {
           tag.anime.Funtype = 1;
           setTimeout(tag.anime.noDisplay, 1000);
-          console.log("check2", tag.anime.Funtype);
+          // console.log("check2", tag.anime.Funtype);
         },
         noDisplay() {
           if (tag.anime.Funtype == 1) {
             tag.anime.show = false;
-            console.log("close", tag.anime.Funtype);
+            // console.log("close", tag.anime.Funtype);
           }
-          console.log("display");
+          // console.log("display");
         },
       },
     });
@@ -1407,60 +1198,17 @@ export default {
       toAnimeAll() {
         router.push({ path: "/animeall" });
       },
+      skipTag(index) {
+        if (index == 0) {
+          skipFun.toAnimeAll();
+        }
+      },
     });
-
-    // 生命函数
-    onMounted(() => {
-      getPercentage();
-      console.log("获取经验值和等级成功");
-    });
-
-    // 获取经验值显示等级和进度条
-    function getPercentage() {
-      let xp = avatar.xp;
-      let percentage = Math.round((xp / 10000) * 100);
-      let level = "";
-      let levelCss = "";
-      if (xp <= 500) {
-        level = "Lv1";
-        levelCss = "font-size:13px;color: #a6a9ad;font-weight: bold;";
-      } else if (xp > 500 && xp <= 2000) {
-        level = "Lv2";
-        levelCss = "font-size:13px;color: #66b1ff;font-weight: bold;";
-      } else if (xp > 2000 && xp <= 3500) {
-        level = "Lv3";
-        levelCss = "font-size:13px;color: #85ce61;font-weight: bold;";
-      } else if (xp > 3500 && xp <= 5500) {
-        level = "Lv4";
-        levelCss = "font-size:13px;color:orange;font-weight: bold;";
-      } else if (xp > 5500 && xp <= 8000) {
-        level = "Lv5";
-        levelCss = "font-size:13px;color:#F56C6C;font-weight: bold;";
-      } else if (xp > 8000 && xp < 10000) {
-        level = "Lv6";
-        levelCss = "font-size:13px;color:red;font-weight: bold;";
-      } else if (xp == 10000) {
-        level = "Max";
-        levelCss = "font-size:13px;color:#E6A23C;font-weight: bold;";
-      }
-      return (
-        (avatar.percentage = percentage),
-        (avatar.level = level),
-        (avatar.levelCss = levelCss)
-      );
-    }
 
     return {
-      ...toRefs(headmenu),
       goToPage,
       ...toRefs(skipFun),
       ...toRefs(videoList),
-      ...toRefs(logo),
-      ...toRefs(avatar),
-      ...toRefs(dynamic),
-      ...toRefs(subscribe),
-      ...toRefs(collect),
-      ...toRefs(history),
       ...toRefs(tag),
       animeRank,
       ...toRefs(animeTimeList),
