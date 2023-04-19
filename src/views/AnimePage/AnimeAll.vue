@@ -161,38 +161,32 @@
               <h2>正在追</h2>
               <el-button @click="toPerSub">我的追番</el-button>
             </div>
-            <div style="display:flex">
-              <!-- 左箭头 -->
-              <div class="arrow left" @click="scroll(-1)"></div>
-              <!-- 列表 -->
-              <div style="width: 100%;display:flex;justify-content: space-between;">
-                <div v-for="(mySub, index) in displayedData" :key="index">
+            <!-- 数据轮播 -->
+            <div>
+              <data-carousel :arrayData="mySub">
+                <template v-slot:inPicture="slotProps">
                   <div
                     style="
-                      width: 250px;
-                      height: 200px;
-                      border-radius: 10px;
-                      background-color: #909399;
+                      display: inline-block;
+                      margin: 150px 0px 0px 10px;
+                      color: white;
                     "
                   >
-                    <div
-                      style="
-                        display: inline-block;
-                        margin: 150px 0px 0px 10px;
-                        color: white;
-                      "
-                    >
-                      <div style="margin-bottom:10px">看到{{mySub.episode}}</div>
-                      <el-progress :percentage="mySub.progress" :show-text=false stroke-width="8" style="width:230px" />
+                    <div style="margin-bottom: 10px">
+                      看到{{ slotProps.episode }}
                     </div>
+                    <el-progress
+                      :percentage="slotProps.progress"
+                      :show-text="false"
+                      stroke-width="8"
+                      style="width: 230px"
+                    />
                   </div>
-                  <p>{{ mySub.name }}</p>
-                </div>
-              </div>
-              <!-- 右箭头 -->
-              <div class="arrow right" @click="scroll(1)"></div>
+                </template>
+              </data-carousel>
             </div>
           </div>
+
           <!-- 新番时间表 -->
           <div></div>
           <!-- 番剧热播榜 -->
@@ -220,9 +214,10 @@ import { reactive, ref, toRefs, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
+import DataCarousel from "@/components/DataCarousel.vue";
 export default {
   name: "animeall",
-  components: { HeaderNav },
+  components: { HeaderNav, DataCarousel },
   setup() {
     // 跳转和vuex
     var router = useRouter();
@@ -280,18 +275,23 @@ export default {
       { name: "番剧名10", progress: 2, episode: "第1话" },
       { name: "番剧名11", progress: 5, episode: "第7话" },
       { name: "番剧名12", progress: 99, episode: "第6话" },
+      { name: "番剧名13", progress: 2, episode: "第1话" },
+      { name: "番剧名14", progress: 5, episode: "第7话" },
+      { name: "番剧名15", progress: 99, episode: "第6话" },
     ];
-    let startIndex = 0;
-    let endIndex = 5;
-    let displayedData = computed(() => mySub.slice(startIndex, endIndex + 1));
+    let startIndex = ref(0);
+    let endIndex = ref(5);
+    let displayedData = computed(() =>
+      mySub.slice(startIndex.value, endIndex.value + 1)
+    );
 
     let scroll = (direction) => {
-      if (direction === 1 && endIndex < mySub.length - 1) {
-        startIndex += 6;
-        endIndex += 6;
-      } else if (direction === -1 && startIndex > 0) {
-        startIndex -= 6;
-        endIndex -= 6;
+      if (direction === 1 && endIndex.value < mySub.length - 1) {
+        startIndex.value += 6;
+        endIndex.value += 6;
+      } else if (direction === -1 && startIndex.value > 0) {
+        startIndex.value -= 6;
+        endIndex.value -= 6;
       }
     };
 
@@ -358,6 +358,7 @@ export default {
       style,
       startTime,
       hotSearch,
+      mySub,
       displayedData,
       scroll,
     };
@@ -416,23 +417,30 @@ export default {
 }
 
 .arrow {
-  width: 0;
-  height: 0;
-  border-style: solid;
+  width: 55px;
+  height: 60px;
+  border: 1px solid #e5eaf3;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  z-index: 800;
 }
 
 .left {
-  border-width: 8px 10px 8px 0;
-  border-color: transparent #000000 transparent transparent;
-  margin-right: 10px;
+  top: 990px;
+  left: 125px;
   cursor: pointer;
 }
 
 .right {
-  border-width: 8px 0 8px 10px;
-  border-color: transparent transparent transparent #000000;
-  margin-left: 10px;
+  left: 1720px;
+  top: 990px;
   cursor: pointer;
+}
+.arrowFont {
+  font-size: 40px;
+  text-align: center;
+  color: #79bbff;
 }
 
 .toBlue:hover {
