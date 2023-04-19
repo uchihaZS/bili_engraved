@@ -188,7 +188,72 @@
           </div>
 
           <!-- 新番时间表 -->
-          <div></div>
+          <div style="margin-top: 300px">
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  width: 650px;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <h2 style="margin: 0px">新番时间表</h2>
+                <ul
+                  style="
+                    list-style-type: none;
+                    display: flex;
+                    height: 30px;
+                    width: 490px;
+                    background-color: #e5eaf3;
+                    border-radius: 20px;
+                    font-size: 14px;
+                    justify-content: space-around;
+                    margin: 0px;
+                    padding: 0px 1px;
+                    align-items: center;
+                  "
+                >
+                  <li
+                    v-for="(item, index) in days"
+                    :key="index"
+                    @click="handleItemClick(index)"
+                    :style="{
+                      backgroundColor:
+                        selectedIndex === index ? 'white' : 'transparent',
+                      borderRadius:
+                        selectedIndex === index ? '15px' : 'transparent',
+                      border:
+                        selectedIndex === index
+                          ? '1px solid #E5EAF3'
+                          : 'transparent',
+                    }"
+                    style="
+                      width: 140px;
+                      height: 28px;
+                      border-radius: 15px;
+                      align-items: center;
+                      display: flex;
+                      color: black;
+                      cursor: pointer;
+                      justify-content: center;
+                    "
+                  >
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
+
+              <el-button @click="toAnimeTimeline">查看全部></el-button>
+            </div>
+          </div>
           <!-- 番剧热播榜 -->
           <div></div>
           <!-- 新热推荐 -->
@@ -215,9 +280,11 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
 import DataCarousel from "@/components/DataCarousel.vue";
+import Test from "@/components/test.vue";
 export default {
   name: "animeall",
-  components: { HeaderNav, DataCarousel },
+  components: { HeaderNav, DataCarousel, Test },
+
   setup() {
     // 跳转和vuex
     var router = useRouter();
@@ -279,21 +346,24 @@ export default {
       { name: "番剧名14", progress: 5, episode: "第7话" },
       { name: "番剧名15", progress: 99, episode: "第6话" },
     ];
-    let startIndex = ref(0);
-    let endIndex = ref(5);
-    let displayedData = computed(() =>
-      mySub.slice(startIndex.value, endIndex.value + 1)
-    );
+    let timeUL = reactive({
+      days: [
+        "最近更新",
+        "周一",
+        "周二",
+        "周三",
+        "周四",
+        "周五",
+        "周六",
+        "周日",
+      ],
+      selectedIndex: -1,
 
-    let scroll = (direction) => {
-      if (direction === 1 && endIndex.value < mySub.length - 1) {
-        startIndex.value += 6;
-        endIndex.value += 6;
-      } else if (direction === -1 && startIndex.value > 0) {
-        startIndex.value -= 6;
-        endIndex.value -= 6;
-      }
-    };
+      // 点击事件处理函数
+      handleItemClick(index) {
+        timeUL.selectedIndex = index;
+      },
+    });
 
     // 跳转函数
     let skipFun = reactive({
@@ -353,14 +423,13 @@ export default {
     return {
       goToPage,
       ...toRefs(skipFun),
+      ...toRefs(timeUL),
       carouselRef,
       switchCarousel,
       style,
       startTime,
       hotSearch,
       mySub,
-      displayedData,
-      scroll,
     };
   },
 };
@@ -414,33 +483,6 @@ export default {
 }
 .el-main::-webkit-scrollbar {
   display: none;
-}
-
-.arrow {
-  width: 55px;
-  height: 60px;
-  border: 1px solid #e5eaf3;
-  border-radius: 50%;
-  background-color: white;
-  position: absolute;
-  z-index: 800;
-}
-
-.left {
-  top: 990px;
-  left: 125px;
-  cursor: pointer;
-}
-
-.right {
-  left: 1720px;
-  top: 990px;
-  cursor: pointer;
-}
-.arrowFont {
-  font-size: 40px;
-  text-align: center;
-  color: #79bbff;
 }
 
 .toBlue:hover {

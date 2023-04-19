@@ -159,7 +159,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from "@vue/reactivity";
+import { reactive, toRefs, ref } from "@vue/reactivity";
 import { Search } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 export default {
@@ -172,30 +172,38 @@ export default {
     let href = reactive({
       toPersonMain() {
         router.push({ path: "/personalpage" });
+        activeTag.value = "main";
       },
       toPersonDya() {
         router.push({ path: "/personaldya" });
+        activeTag.value = "dya";
       },
       toPersonVid() {
         router.push({ path: "/personalvid" });
+        activeTag.value = "vid";
       },
       toPersonSer() {
         router.push({ path: "/personalser" });
+        activeTag.value = "ser";
       },
       toPersonCol() {
         router.push({ path: "/personalcol" });
+        activeTag.value = "col";
       },
       toPersonSub() {
         router.push({ path: "/personalsub" });
+        activeTag.value = "sub";
       },
       toPersonOpt() {
         router.push({ path: "/personalopt" });
+        activeTag.value = "opt";
       },
     });
-
+    let activeTag = ref("");
     return {
       ...toRefs(touxiang),
       Search,
+      activeTag,
       ...toRefs(href),
     };
   },
@@ -216,10 +224,12 @@ export default {
 }
 .tag:hover {
   color: #409eff;
+  cursor: pointer;
 }
 .tag:hover .direction {
   background-color: #409eff;
 }
+
 .direction {
   height: 2px;
   width: 100%;

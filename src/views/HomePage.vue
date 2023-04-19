@@ -413,6 +413,7 @@
                         { backgroundImage: `url(${item.poster})` },
                         { borderRadius: '10px' },
                         { backgroundSize: 'contain' },
+                        { cursor: 'pointer' },
                       ]"
                     ></div>
                     <div
@@ -422,6 +423,7 @@
                         height: 165px;
                         background-color: rgb(144, 147, 153);
                         border-radius: 10px;
+                        cursor: pointer;
                       "
                     ></div>
 
@@ -432,6 +434,7 @@
                         text-overflow: ellipsis;
                         display: block;
                         white-space: nowrap;
+                        cursor: pointer;
                       "
                     >
                       {{ item.vname }}</span
