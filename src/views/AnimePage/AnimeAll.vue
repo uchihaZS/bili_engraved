@@ -250,8 +250,346 @@
                   </li>
                 </ul>
               </div>
-
               <el-button @click="toAnimeTimeline">查看全部></el-button>
+            </div>
+            <div style="display: flex; position: absolute; margin-top: 20px">
+              <!-- 左箭头 -->
+              <div class="arrow left" @click="scroll(-1)" v-show="arrayData.length>5">
+                <div class="arrowFont">&lt;</div>
+              </div>
+              <!-- 列表 -->
+              <!-- 最近更新 -->
+              <div
+                style="width: 100%; display: flex; justify-content: flex-start"
+                v-if="selectedIndex == 0"
+              >
+                <div
+                  v-for="(arrayData, index) in displayedData"
+                  :key="index"
+                  style="margin: 0px 10px"
+                >
+                  <div
+                    style="
+                      width: 75px;
+                      border-radius: 20px;
+                      padding: 5px;
+                      margin-bottom: 10px;
+                      font-size: 14px;
+                      display: flex;
+                      justify-content: space-around;
+                    "
+                    :style="{ backgroundColor: arrayData.bgColor }"
+                  >
+                    <div style="font-weight: 600">
+                      {{ arrayData.updateDay }}
+                    </div>
+                    <div>{{ arrayData.updateTime }}</div>
+                  </div>
+
+                  <div
+                    style="
+                      width: 250px;
+                      height: 200px;
+                      border-radius: 10px;
+                      background-color: #909399;
+                    "
+                  >
+                    <slot name="inPicture" v-bind="arrayData"></slot>
+                  </div>
+                  <p>{{ arrayData.name }}</p>
+                </div>
+              </div>
+              <!-- 周一 -->
+              <div
+                style="width: 100%; display: flex; justify-content: flex-start"
+                v-if="selectedIndex == 1"
+              >
+                <div
+                  v-for="(arrayData, index) in displayedData"
+                  :key="index"
+                  style="margin: 0px 10px"
+                >
+                  <div
+                    style="
+                      width: 75px;
+                      border-radius: 20px;
+                      padding: 5px;
+                      margin-bottom: 10px;
+                      font-size: 14px;
+                      display: flex;
+                      justify-content: space-around;
+                    "
+                    :style="{ backgroundColor: arrayData.bgColor }"
+                  >
+                    <div style="font-weight: 600">
+                      {{ arrayData.updateDay }}
+                    </div>
+                    <div>{{ arrayData.updateTime }}</div>
+                  </div>
+
+                  <div
+                    style="
+                      width: 250px;
+                      height: 200px;
+                      border-radius: 10px;
+                      background-color: #909399;
+                    "
+                  >
+                    <slot name="inPicture" v-bind="arrayData"></slot>
+                  </div>
+                  <p>{{ arrayData.name }}</p>
+                </div>
+              </div>
+              <!-- 周二 -->
+              <div
+                style="width: 100%; display: flex; justify-content: flex-start"
+                v-if="selectedIndex == 2"
+              >
+                <div
+                  v-for="(arrayData, index) in displayedData"
+                  :key="index"
+                  style="margin: 0px 10px"
+                >
+                  <div
+                    style="
+                      width: 75px;
+                      border-radius: 20px;
+                      padding: 5px;
+                      margin-bottom: 10px;
+                      font-size: 14px;
+                      display: flex;
+                      justify-content: space-around;
+                    "
+                    :style="{ backgroundColor: arrayData.bgColor }"
+                  >
+                    <div style="font-weight: 600">
+                      {{ arrayData.updateDay }}
+                    </div>
+                    <div>{{ arrayData.updateTime }}</div>
+                  </div>
+
+                  <div
+                    style="
+                      width: 250px;
+                      height: 200px;
+                      border-radius: 10px;
+                      background-color: #909399;
+                    "
+                  >
+                    <slot name="inPicture" v-bind="arrayData"></slot>
+                  </div>
+                  <p>{{ arrayData.name }}</p>
+                </div>
+              </div>
+              <!-- 周三 -->
+              <div
+                style="width: 100%; display: flex; justify-content: flex-start"
+                v-if="selectedIndex == 3"
+              >
+                <div
+                  v-for="(arrayData, index) in displayedData"
+                  :key="index"
+                  style="margin: 0px 10px"
+                >
+                  <div
+                    style="
+                      width: 75px;
+                      border-radius: 20px;
+                      padding: 5px;
+                      margin-bottom: 10px;
+                      font-size: 14px;
+                      display: flex;
+                      justify-content: space-around;
+                    "
+                    :style="{ backgroundColor: arrayData.bgColor }"
+                  >
+                    <div style="font-weight: 600">
+                      {{ arrayData.updateDay }}
+                    </div>
+                    <div>{{ arrayData.updateTime }}</div>
+                  </div>
+
+                  <div
+                    style="
+                      width: 250px;
+                      height: 200px;
+                      border-radius: 10px;
+                      background-color: #909399;
+                    "
+                  >
+                    <slot name="inPicture" v-bind="arrayData"></slot>
+                  </div>
+                  <p>{{ arrayData.name }}</p>
+                </div>
+              </div>
+              <!-- 周四 -->
+              <div
+                style="width: 100%; display: flex; justify-content: flex-start"
+                v-if="selectedIndex == 4"
+              >
+                <div
+                  v-for="(arrayData, index) in displayedData"
+                  :key="index"
+                  style="margin: 0px 10px"
+                >
+                  <div
+                    style="
+                      width: 75px;
+                      border-radius: 20px;
+                      padding: 5px;
+                      margin-bottom: 10px;
+                      font-size: 14px;
+                      display: flex;
+                      justify-content: space-around;
+                    "
+                    :style="{ backgroundColor: arrayData.bgColor }"
+                  >
+                    <div style="font-weight: 600">
+                      {{ arrayData.updateDay }}
+                    </div>
+                    <div>{{ arrayData.updateTime }}</div>
+                  </div>
+
+                  <div
+                    style="
+                      width: 250px;
+                      height: 200px;
+                      border-radius: 10px;
+                      background-color: #909399;
+                    "
+                  >
+                    <slot name="inPicture" v-bind="arrayData"></slot>
+                  </div>
+                  <p>{{ arrayData.name }}</p>
+                </div>
+              </div>
+              <!-- 周五 -->
+              <div
+                style="width: 100%; display: flex; justify-content: flex-start"
+                v-if="selectedIndex == 5"
+              >
+                <div
+                  v-for="(arrayData, index) in displayedData"
+                  :key="index"
+                  style="margin: 0px 10px"
+                >
+                  <div
+                    style="
+                      width: 75px;
+                      border-radius: 20px;
+                      padding: 5px;
+                      margin-bottom: 10px;
+                      font-size: 14px;
+                      display: flex;
+                      justify-content: space-around;
+                    "
+                    :style="{ backgroundColor: arrayData.bgColor }"
+                  >
+                    <div style="font-weight: 600">
+                      {{ arrayData.updateDay }}
+                    </div>
+                    <div>{{ arrayData.updateTime }}</div>
+                  </div>
+
+                  <div
+                    style="
+                      width: 250px;
+                      height: 200px;
+                      border-radius: 10px;
+                      background-color: #909399;
+                    "
+                  >
+                    <slot name="inPicture" v-bind="arrayData"></slot>
+                  </div>
+                  <p>{{ arrayData.name }}</p>
+                </div>
+              </div>
+              <!-- 周六 -->
+              <div
+                style="width: 100%; display: flex; justify-content: flex-start"
+                v-if="selectedIndex == 6"
+              >
+                <div
+                  v-for="(arrayData, index) in displayedData"
+                  :key="index"
+                  style="margin: 0px 10px"
+                >
+                  <div
+                    style="
+                      width: 75px;
+                      border-radius: 20px;
+                      padding: 5px;
+                      margin-bottom: 10px;
+                      font-size: 14px;
+                      display: flex;
+                      justify-content: space-around;
+                    "
+                    :style="{ backgroundColor: arrayData.bgColor }"
+                  >
+                    <div style="font-weight: 600">
+                      {{ arrayData.updateDay }}
+                    </div>
+                    <div>{{ arrayData.updateTime }}</div>
+                  </div>
+
+                  <div
+                    style="
+                      width: 250px;
+                      height: 200px;
+                      border-radius: 10px;
+                      background-color: #909399;
+                    "
+                  >
+                    <slot name="inPicture" v-bind="arrayData"></slot>
+                  </div>
+                  <p>{{ arrayData.name }}</p>
+                </div>
+              </div>
+              <!-- 周日 -->
+              <div
+                style="width: 100%; display: flex; justify-content: flex-start"
+                v-if="selectedIndex == 7"
+              >
+                <div
+                  v-for="(arrayData, index) in displayedData"
+                  :key="index"
+                  style="margin: 0px 10px"
+                >
+                  <div
+                    style="
+                      width: 75px;
+                      border-radius: 20px;
+                      padding: 5px;
+                      margin-bottom: 10px;
+                      font-size: 14px;
+                      display: flex;
+                      justify-content: space-around;
+                    "
+                    :style="{ backgroundColor: arrayData.bgColor }"
+                  >
+                    <div style="font-weight: 600">
+                      {{ arrayData.updateDay }}
+                    </div>
+                    <div>{{ arrayData.updateTime }}</div>
+                  </div>
+
+                  <div
+                    style="
+                      width: 250px;
+                      height: 200px;
+                      border-radius: 10px;
+                      background-color: #909399;
+                    "
+                  >
+                    <slot name="inPicture" v-bind="arrayData"></slot>
+                  </div>
+                  <p>{{ arrayData.name }}</p>
+                </div>
+              </div>
+              <!-- 右箭头 -->
+              <div class="arrow right" @click="scroll(1)" v-show="arrayData.length>5">
+                <div class="arrowFont">&gt;</div>
+              </div>
             </div>
           </div>
           <!-- 番剧热播榜 -->
@@ -275,15 +613,15 @@
 <script>
 // @ is an alias to /src
 
-import { reactive, ref, toRefs, computed } from "vue";
+import { reactive, ref, toRefs, computed, onMounted, onBeforeMount } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
 import DataCarousel from "@/components/DataCarousel.vue";
-import Test from "@/components/test.vue";
+import getTime from "@/hooks/getTime";
 export default {
   name: "animeall",
-  components: { HeaderNav, DataCarousel, Test },
+  components: { HeaderNav, DataCarousel },
 
   setup() {
     // 跳转和vuex
@@ -329,23 +667,152 @@ export default {
       "2016",
     ];
     const hotSearch = ["假面骑士", "鬼灭之刃", "新海诚", "EVA"];
-    const mySub = [
-      { name: "番剧名1", progress: 33, episode: "第1话" },
-      { name: "番剧名2", progress: 45, episode: "第10话" },
-      { name: "番剧名3", progress: 37, episode: "第23话" },
-      { name: "番剧名4", progress: 11, episode: "第14话" },
-      { name: "番剧名5", progress: 22, episode: "第15话" },
-      { name: "番剧名6", progress: 33, episode: "第11话" },
-      { name: "番剧名7", progress: 44, episode: "第24话" },
-      { name: "番剧名8", progress: 10, episode: "第23话" },
-      { name: "番剧名9", progress: 1, episode: "第12话" },
-      { name: "番剧名10", progress: 2, episode: "第1话" },
-      { name: "番剧名11", progress: 5, episode: "第7话" },
-      { name: "番剧名12", progress: 99, episode: "第6话" },
-      { name: "番剧名13", progress: 2, episode: "第1话" },
-      { name: "番剧名14", progress: 5, episode: "第7话" },
-      { name: "番剧名15", progress: 99, episode: "第6话" },
-    ];
+    let mySub = reactive([
+      {
+        name: "番剧名1",
+        progress: 33,
+        episode: "第1话",
+        updateDay: "周一",
+        updateTime: "01:25",
+        bgColor: "#f78989",
+      },
+      {
+        name: "番剧名2",
+        progress: 45,
+        episode: "第10话",
+        updateDay: "周一",
+        updateTime: "02:25",
+        bgColor: "#f78989",
+      },
+      {
+        name: "番剧名3",
+        progress: 37,
+        episode: "第23话",
+        updateDay: "周一",
+        updateTime: "08:25",
+        bgColor: "#f78989",
+      },
+      {
+        name: "番剧名4",
+        progress: 11,
+        episode: "第14话",
+        updateDay: "周一",
+        updateTime: "17:25",
+        bgColor: "#f78989",
+      },
+      {
+        name: "番剧名4-0",
+        progress: 11,
+        episode: "第14话",
+        updateDay: "周一",
+        updateTime: "17:25",
+        bgColor: "#f78989",
+      },
+      {
+        name: "番剧名4-1",
+        progress: 11,
+        episode: "第14话",
+        updateDay: "周一",
+        updateTime: "17:25",
+        bgColor: "#f78989",
+      },
+      {
+        name: "番剧名4-2",
+        progress: 11,
+        episode: "第14话",
+        updateDay: "周一",
+        updateTime: "17:25",
+        bgColor: "#f78989",
+      },
+      {
+        name: "番剧名5",
+        progress: 22,
+        episode: "第15话",
+        updateDay: "周二",
+        updateTime: "01:25",
+        bgColor: "#85ce61",
+      },
+      {
+        name: "番剧名6",
+        progress: 33,
+        episode: "第11话",
+        updateDay: "周二",
+        updateTime: "03:05",
+        bgColor: "#85ce61",
+      },
+      {
+        name: "番剧名7",
+        progress: 44,
+        episode: "第24话",
+        updateDay: "周三",
+        updateTime: "18:35",
+        bgColor: "#66b1ff",
+      },
+      {
+        name: "番剧名8",
+        progress: 10,
+        episode: "第23话",
+        updateDay: "周四",
+        updateTime: "00:25",
+        bgColor: "#ebb563",
+      },
+      {
+        name: "番剧名9",
+        progress: 1,
+        episode: "第12话",
+        updateDay: "周四",
+        updateTime: "10:45",
+        bgColor: "#ebb563",
+      },
+      {
+        name: "番剧名10",
+        progress: 2,
+        episode: "第1话",
+        updateDay: "周五",
+        updateTime: "09:15",
+        bgColor: "#67C23A",
+      },
+      {
+        name: "番剧名11",
+        progress: 5,
+        episode: "第7话",
+        updateDay: "周五",
+        updateTime: "12:35",
+        bgColor: "#67C23A",
+      },
+      {
+        name: "番剧名12",
+        progress: 99,
+        episode: "第6话",
+        updateDay: "周五",
+        updateTime: "13:25",
+        bgColor: "#67C23A",
+      },
+      {
+        name: "番剧名13",
+        progress: 2,
+        episode: "第1话",
+        updateDay: "周六",
+        updateTime: "08:25",
+        bgColor: "#409EFF",
+      },
+      {
+        name: "番剧名14",
+        progress: 5,
+        episode: "第7话",
+        updateDay: "周日",
+        updateTime: "16:25",
+        bgColor: "#F56C6C",
+      },
+      {
+        name: "番剧名15",
+        progress: 99,
+        episode: "第6话",
+        updateDay: "周日",
+        updateTime: "17:25",
+        bgColor: "#F56C6C",
+      },
+    ]);
     let timeUL = reactive({
       days: [
         "最近更新",
@@ -357,11 +824,58 @@ export default {
         "周六",
         "周日",
       ],
+      today: "",
       selectedIndex: -1,
+      arrayData: mySub,
+      startIndex: 0,
+      endIndex: 5,
+      displayedData: computed(() =>
+        timeUL.arrayData.slice(timeUL.startIndex, timeUL.endIndex + 1)
+      ),
 
+      scroll: (direction) => {
+        if (direction === 1 && timeUL.endIndex < timeUL.arrayData.length - 1) {
+          timeUL.startIndex += 6;
+          timeUL.endIndex += 6;
+        } else if (direction === -1 && timeUL.startIndex > 0) {
+          timeUL.startIndex -= 6;
+          timeUL.endIndex -= 6;
+        }
+      },
       // 点击事件处理函数
       handleItemClick(index) {
         timeUL.selectedIndex = index;
+        if (index == 1) {
+          let MonData = timeUL.filteredDataByDay("周一");
+          timeUL.arrayData = MonData;
+          // console.log(timeUL.displayedData)
+        } else if (index == 2) {
+          let TueData = timeUL.filteredDataByDay("周二");
+          timeUL.arrayData = TueData;
+        } else if (index == 3) {
+          let WedData = timeUL.filteredDataByDay("周三");
+          timeUL.arrayData = WedData;
+        } else if (index == 4) {
+          let ThuData = timeUL.filteredDataByDay("周四");
+          timeUL.arrayData = ThuData;
+        } else if (index == 5) {
+          let FriData = timeUL.filteredDataByDay("周五");
+          timeUL.arrayData = FriData;
+        } else if (index == 6) {
+          let SatData = timeUL.filteredDataByDay("周六");
+          timeUL.arrayData = SatData;
+        } else if (index == 7) {
+          let SunData = timeUL.filteredDataByDay("周日");
+          timeUL.arrayData = SunData;
+        } else if (index == 0) {
+          let lastUpdate = timeUL.filteredDataByDay(timeUL.today);
+          timeUL.arrayData = lastUpdate;
+          
+        }
+      },
+
+      filteredDataByDay: (day) => {
+        return mySub.filter((item) => item.updateDay === day);
       },
     });
 
@@ -419,6 +933,17 @@ export default {
         router.push({ path: "/animeall" });
       },
     });
+
+    onMounted(() => {
+      timeUL.arrayData=mySub
+      timeUL.handleItemClick(0);
+      
+      // console.log(timeUL.arrayData,mySub,timeUL.displayedData)
+    });
+
+    onBeforeMount(()=>{
+      timeUL.today = getTime().weekDay_ZH;
+    })
 
     return {
       goToPage,
@@ -487,5 +1012,37 @@ export default {
 
 .toBlue:hover {
   color: #409eff;
+}
+
+.arrow {
+  width: 55px;
+  height: 60px;
+  border: 1px solid #e5eaf3;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 50%);
+  position: absolute;
+  z-index: 800;
+  backdrop-filter: blur(10px); /* 模糊效果，可以根据需要调整模糊半径 */
+  transform: scale(0.8); /* 初始缩放比例 */
+  transition: transform 0.3s ease; /* 过渡动画效果，可以根据需要调整时间和缓动函数 */
+}
+.arrow:hover {
+  transform: scale(1); /* 放大的缩放比例 */
+}
+.left {
+  top: 110px;
+  left: -20px;
+  cursor: pointer;
+}
+
+.right {
+  left: 1580px;
+  top: 110px;
+  cursor: pointer;
+}
+.arrowFont {
+  font-size: 40px;
+  text-align: center;
+  color: #79bbff;
 }
 </style>
