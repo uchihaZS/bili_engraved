@@ -163,7 +163,12 @@
             </div>
             <!-- 数据轮播 -->
             <div>
-              <data-carousel :arrayData="mySub">
+              <data-carousel
+                :arrayData="mySub"
+                picHeight="200px"
+                picWidth="250px"
+                arrowTop="70px"
+              >
                 <template v-slot:inPicture="slotProps">
                   <div
                     style="
@@ -254,7 +259,11 @@
             </div>
             <div style="display: flex; position: absolute; margin-top: 20px">
               <!-- 左箭头 -->
-              <div class="arrow left" @click="scroll(-1)" v-show="arrayData.length>5">
+              <div
+                class="arrow left"
+                @click="scroll(-1)"
+                v-show="arrayData.length > 5"
+              >
                 <div class="arrowFont">&lt;</div>
               </div>
               <!-- 列表 -->
@@ -292,11 +301,12 @@
                       height: 200px;
                       border-radius: 10px;
                       background-color: #909399;
+                      cursor: pointer;
                     "
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p>{{ arrayData.name }}</p>
+                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
                 </div>
               </div>
               <!-- 周一 -->
@@ -333,11 +343,12 @@
                       height: 200px;
                       border-radius: 10px;
                       background-color: #909399;
+                      cursor: pointer;
                     "
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p>{{ arrayData.name }}</p>
+                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
                 </div>
               </div>
               <!-- 周二 -->
@@ -374,11 +385,12 @@
                       height: 200px;
                       border-radius: 10px;
                       background-color: #909399;
+                      cursor: pointer;
                     "
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p>{{ arrayData.name }}</p>
+                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
                 </div>
               </div>
               <!-- 周三 -->
@@ -415,11 +427,12 @@
                       height: 200px;
                       border-radius: 10px;
                       background-color: #909399;
+                      cursor: pointer;
                     "
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p>{{ arrayData.name }}</p>
+                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
                 </div>
               </div>
               <!-- 周四 -->
@@ -456,11 +469,12 @@
                       height: 200px;
                       border-radius: 10px;
                       background-color: #909399;
+                      cursor: pointer;
                     "
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p>{{ arrayData.name }}</p>
+                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
                 </div>
               </div>
               <!-- 周五 -->
@@ -497,11 +511,12 @@
                       height: 200px;
                       border-radius: 10px;
                       background-color: #909399;
+                      cursor: pointer;
                     "
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p>{{ arrayData.name }}</p>
+                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
                 </div>
               </div>
               <!-- 周六 -->
@@ -538,11 +553,12 @@
                       height: 200px;
                       border-radius: 10px;
                       background-color: #909399;
+                      cursor: pointer;
                     "
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p>{{ arrayData.name }}</p>
+                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
                 </div>
               </div>
               <!-- 周日 -->
@@ -579,21 +595,88 @@
                       height: 200px;
                       border-radius: 10px;
                       background-color: #909399;
+                      cursor: pointer;
                     "
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p>{{ arrayData.name }}</p>
+                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
                 </div>
               </div>
               <!-- 右箭头 -->
-              <div class="arrow right" @click="scroll(1)" v-show="arrayData.length>5">
+              <div
+                class="arrow right"
+                @click="scroll(1)"
+                v-show="arrayData.length > 5"
+              >
                 <div class="arrowFont">&gt;</div>
               </div>
             </div>
           </div>
           <!-- 番剧热播榜 -->
-          <div></div>
+          <div style="margin-top: 330px">
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <h2>番剧热播榜</h2>
+              <el-button @click="toPerSub">查看全部></el-button>
+            </div>
+            <div>
+              <data-carousel
+                :arrayData="mySub"
+                picHeight="350px"
+                picWidth="250px"
+                arrowTop="150px"
+              >
+                <template v-slot:inPicture="slotProps">
+                  <div
+                    style="
+                      margin: 300px 0px 10px 193px;
+                      display: inline-block;
+                      font-size: 35px;
+                      color: white;
+                      font-family: math;
+                      font-style: oblique;
+                    "
+                  >
+                    {{ slotProps.score }}
+                  </div>
+                </template>
+                <template v-slot:detailText="slotProps">
+                  <div
+                    style="
+                      display: flex;
+                      height: 50px;
+                      border-radius: 7px;
+                      margin-top: -51px;
+                      align-items: center;
+                      background-color: rgb(0 0 0 / 10%);
+                      backdrop-filter: blur(-3px);
+                    "
+                  >
+                    <div
+                      style="
+                        font-size: 30px;
+                        color: black;
+                        font-family: math;
+                        font-style: oblique;
+                      "
+                    >
+                      {{ slotProps.rank }}
+                    </div>
+                    <div style="font-size: 18px; margin-left: 10px" class="toBlue">
+                      {{ slotProps.name }}
+                    </div>
+                  </div>
+                </template>
+              </data-carousel>
+            </div>
+          </div>
           <!-- 新热推荐 -->
           <div></div>
           <!-- 动画资讯 -->
@@ -675,6 +758,8 @@ export default {
         updateDay: "周一",
         updateTime: "01:25",
         bgColor: "#f78989",
+        score: 10,
+        rank: 1,
       },
       {
         name: "番剧名2",
@@ -683,6 +768,8 @@ export default {
         updateDay: "周一",
         updateTime: "02:25",
         bgColor: "#f78989",
+        score: 5.5,
+        rank: 2,
       },
       {
         name: "番剧名3",
@@ -691,6 +778,8 @@ export default {
         updateDay: "周一",
         updateTime: "08:25",
         bgColor: "#f78989",
+        score: 4.7,
+        rank: 3,
       },
       {
         name: "番剧名4",
@@ -699,6 +788,8 @@ export default {
         updateDay: "周一",
         updateTime: "17:25",
         bgColor: "#f78989",
+        score: 8.5,
+        rank: 4,
       },
       {
         name: "番剧名4-0",
@@ -707,6 +798,8 @@ export default {
         updateDay: "周一",
         updateTime: "17:25",
         bgColor: "#f78989",
+        score: 6.5,
+        rank: 5,
       },
       {
         name: "番剧名4-1",
@@ -715,6 +808,8 @@ export default {
         updateDay: "周一",
         updateTime: "17:25",
         bgColor: "#f78989",
+        score: 6.7,
+        rank: 6,
       },
       {
         name: "番剧名4-2",
@@ -723,6 +818,8 @@ export default {
         updateDay: "周一",
         updateTime: "17:25",
         bgColor: "#f78989",
+        score: 8.5,
+        rank: 7,
       },
       {
         name: "番剧名5",
@@ -731,6 +828,8 @@ export default {
         updateDay: "周二",
         updateTime: "01:25",
         bgColor: "#85ce61",
+        score: 8.6,
+        rank: 9,
       },
       {
         name: "番剧名6",
@@ -739,6 +838,8 @@ export default {
         updateDay: "周二",
         updateTime: "03:05",
         bgColor: "#85ce61",
+        score: 7.4,
+        rank: 8,
       },
       {
         name: "番剧名7",
@@ -747,6 +848,8 @@ export default {
         updateDay: "周三",
         updateTime: "18:35",
         bgColor: "#66b1ff",
+        score: 9.0,
+        rank: 10,
       },
       {
         name: "番剧名8",
@@ -755,6 +858,8 @@ export default {
         updateDay: "周四",
         updateTime: "00:25",
         bgColor: "#ebb563",
+        score: 3.4,
+        rank: 11,
       },
       {
         name: "番剧名9",
@@ -763,6 +868,8 @@ export default {
         updateDay: "周四",
         updateTime: "10:45",
         bgColor: "#ebb563",
+        score: 9.9,
+        rank: 12,
       },
       {
         name: "番剧名10",
@@ -771,6 +878,8 @@ export default {
         updateDay: "周五",
         updateTime: "09:15",
         bgColor: "#67C23A",
+        score: 8.9,
+        rank: 13,
       },
       {
         name: "番剧名11",
@@ -779,6 +888,8 @@ export default {
         updateDay: "周五",
         updateTime: "12:35",
         bgColor: "#67C23A",
+        score: 9.8,
+        rank: 14,
       },
       {
         name: "番剧名12",
@@ -787,6 +898,8 @@ export default {
         updateDay: "周五",
         updateTime: "13:25",
         bgColor: "#67C23A",
+        score: 9.7,
+        rank: 15,
       },
       {
         name: "番剧名13",
@@ -795,6 +908,8 @@ export default {
         updateDay: "周六",
         updateTime: "08:25",
         bgColor: "#409EFF",
+        score: 8.8,
+        rank: 16,
       },
       {
         name: "番剧名14",
@@ -803,6 +918,8 @@ export default {
         updateDay: "周日",
         updateTime: "16:25",
         bgColor: "#F56C6C",
+        score: 2.5,
+        rank: 17,
       },
       {
         name: "番剧名15",
@@ -811,6 +928,8 @@ export default {
         updateDay: "周日",
         updateTime: "17:25",
         bgColor: "#F56C6C",
+        score: 10,
+        rank: 18,
       },
     ]);
     let timeUL = reactive({
@@ -870,7 +989,6 @@ export default {
         } else if (index == 0) {
           let lastUpdate = timeUL.filteredDataByDay(timeUL.today);
           timeUL.arrayData = lastUpdate;
-          
         }
       },
 
@@ -935,15 +1053,15 @@ export default {
     });
 
     onMounted(() => {
-      timeUL.arrayData=mySub
+      timeUL.arrayData = mySub;
       timeUL.handleItemClick(0);
-      
+
       // console.log(timeUL.arrayData,mySub,timeUL.displayedData)
     });
 
-    onBeforeMount(()=>{
+    onBeforeMount(() => {
       timeUL.today = getTime().weekDay_ZH;
-    })
+    });
 
     return {
       goToPage,

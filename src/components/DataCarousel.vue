@@ -1,7 +1,12 @@
 <template>
   <div style="display: flex; position: absolute">
     <!-- 左箭头 -->
-    <div class="arrow left" @click="scroll(-1)">
+    <div
+      class="arrow left"
+      @click="scroll(-1)"
+      v-show="arrayData.length > 5"
+      :style="{ top: arrowTop }"
+    >
       <div class="arrowFont">&lt;</div>
     </div>
     <!-- 列表 -->
@@ -13,32 +18,46 @@
       >
         <div
           style="
-            width: 250px;
-            height: 200px;
             border-radius: 10px;
+            cursor: pointer;
             background-color: #909399;
           "
+          :style="{ width: picWidth, height: picHeight }"
+          class="toBlue"
         >
           <slot name="inPicture" v-bind="arrayData"></slot>
         </div>
-        <p>{{ arrayData.name }}</p>
+        <slot name="detailText" v-bind="arrayData">
+          <p style="cursor: pointer" class="toBlue">{{ arrayData.name }}</p>
+        </slot>
       </div>
     </div>
     <!-- 右箭头 -->
-    <div class="arrow right" @click="scroll(1)">
+    <div
+      class="arrow right"
+      @click="scroll(1)"
+      v-show="arrayData.length > 5"
+      :style="{ top: arrowTop }"
+    >
       <div class="arrowFont">&gt;</div>
     </div>
   </div>
 </template>
 
 <script>
-import { reactive, ref, toRefs, computed } from "vue";
+import { ref, computed } from "vue";
 export default {
   props: {
     arrayData: Array,
+    picWidth: String,
+    picHeight: String,
+    arrowTop: { type: String, default: "70px" },
   },
   setup(props) {
     let arrayData = props.arrayData;
+    let picWidth = props.picWidth;
+    let picHeight = props.picHeight;
+    let arrowTop = props.arrowTop;
     let startIndex = ref(0);
     let endIndex = ref(5);
     let displayedData = computed(() =>
@@ -57,6 +76,9 @@ export default {
 
     return {
       arrayData,
+      picHeight,
+      picWidth,
+      arrowTop,
       displayedData,
       scroll,
     };
@@ -81,19 +103,23 @@ export default {
   transform: scale(1); /* 放大的缩放比例 */
 }
 .left {
-  top: 70px;
+  // top: 70px;
   left: -20px;
   cursor: pointer;
 }
 
 .right {
   left: 1580px;
-  top: 70px;
+  // top: 70px;
   cursor: pointer;
 }
 .arrowFont {
   font-size: 40px;
   text-align: center;
   color: #79bbff;
+}
+
+.toBlue:hover {
+  color: #409eff;
 }
 </style>
