@@ -51,33 +51,110 @@
         "
       >
         <div style="display: flex">
-          <div class="tag" @click="toPersonMain">
+          <div
+            class="tag"
+            @click="toPersonMain"
+            :style="{
+              color: activeItem == 1 ? '#409eff' : '',
+            }"
+          >
             <div>主页</div>
-            <div class="direction"></div>
+            <div
+              class="direction"
+              :style="{
+                backgroundColor: activeItem == 1 ? '#409eff' : '',
+              }"
+            ></div>
           </div>
-          <div class="tag" @click="toPersonDya">
+          <div
+            class="tag"
+            @click="toPersonDya"
+            :style="{
+              color: activeItem == 2 ? '#409eff' : '',
+            }"
+          >
             <div>动态</div>
-            <div class="direction"></div>
+            <div
+              class="direction"
+              :style="{
+                backgroundColor: activeItem == 2 ? '#409eff' : '',
+              }"
+            ></div>
           </div>
-          <div class="tag" @click="toPersonVid">
+          <div
+            class="tag"
+            @click="toPersonVid"
+            :style="{
+              color: activeItem == 3 ? '#409eff' : '',
+            }"
+          >
             <div>投稿</div>
-            <div class="direction"></div>
+            <div
+              class="direction"
+              :style="{
+                backgroundColor: activeItem == 3 ? '#409eff' : '',
+              }"
+            ></div>
           </div>
-          <div class="tag" @click="toPersonSer">
+          <div
+            class="tag"
+            @click="toPersonSer"
+            :style="{
+              color: activeItem == 4 ? '#409eff' : '',
+            }"
+          >
             <div>合集与列表</div>
-            <div class="direction"></div>
+            <div
+              class="direction"
+              :style="{
+                backgroundColor: activeItem == 4 ? '#409eff' : '',
+              }"
+            ></div>
           </div>
-          <div class="tag" @click="toPersonCol">
+          <div
+            class="tag"
+            @click="toPersonCol"
+            :style="{
+              color: activeItem == 5 ? '#409eff' : '',
+            }"
+          >
             <div>收藏</div>
-            <div class="direction"></div>
+            <div
+              class="direction"
+              :style="{
+                backgroundColor: activeItem == 5 ? '#409eff' : '',
+              }"
+            ></div>
           </div>
-          <div class="tag" @click="toPersonSub">
+          <div
+            class="tag"
+            @click="toPersonSub"
+            :style="{
+              color: activeItem == 6 ? '#409eff' : '',
+            }"
+          >
             <div>订阅</div>
-            <div class="direction"></div>
+            <div
+              class="direction"
+              :style="{
+                backgroundColor: activeItem == 6 ? '#409eff' : '',
+              }"
+            ></div>
           </div>
-          <div class="tag" @click="toPersonOpt">
+          <div
+            class="tag"
+            @click="toPersonOpt"
+            :style="{
+              color: activeItem == 7 ? '#409eff' : '',
+            }"
+          >
             <div>设置</div>
-            <div class="direction"></div>
+            <div
+              class="direction"
+              :style="{
+                backgroundColor: activeItem == 7 ? '#409eff' : '',
+              }"
+            ></div>
           </div>
         </div>
         <el-input
@@ -162,8 +239,13 @@
 import { reactive, toRefs, ref } from "@vue/reactivity";
 import { Search } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
+import { onMounted } from "vue";
 export default {
-  setup() {
+  props: {
+    activeItem: String,
+  },
+  setup(props) {
+    let activeItem = props.activeItem;
     let touxiang = reactive({
       circleUrl:
         "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
@@ -200,8 +282,13 @@ export default {
       },
     });
     let activeTag = ref("");
+    onMounted(() => {
+      console.log(activeItem);
+    });
+
     return {
       ...toRefs(touxiang),
+      activeItem,
       Search,
       activeTag,
       ...toRefs(href),

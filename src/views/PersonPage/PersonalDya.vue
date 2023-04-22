@@ -14,7 +14,7 @@
           </el-col>
           <!-- 中间主要内容 -->
           <el-col :span="20" style="background-color: white">
-            <personal-head></personal-head>
+            <personal-head activeItem="2"></personal-head>
             <div style="display: flex; width: 100%; background-color: #f4f5f7">
               <!-- 左边 -->
               <div

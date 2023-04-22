@@ -14,7 +14,7 @@
           </el-col>
           <!-- 中间主要内容 -->
           <el-col :span="20" style="background-color: #f4f5f7">
-            <personal-head></personal-head>
+            <personal-head activeItem="4"></personal-head>
             <div
               style="
                 margin-top: 10px;
