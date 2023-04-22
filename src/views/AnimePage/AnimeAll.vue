@@ -56,6 +56,28 @@
             </div>
           </div>
         </div>
+        <!-- 回到顶部 -->
+        <el-backtop
+          :right="50"
+          :bottom="100"
+          :visibility-height="400"
+          style="width: 40px; height: 40px"
+        >
+          <div
+            style="
+              height: 100%;
+              width: 100%;
+              background-color: var(--el-bg-color-overlay);
+              box-shadow: var(--el-box-shadow-lighter);
+              text-align: center;
+              line-height: 20px;
+              color: #1989fa;
+              font-size: 16px;
+            "
+          >
+            回到顶部
+          </div>
+        </el-backtop>
         <!-- 内容 -->
         <div
           style="width: 86%; height: auto; padding: 0px 135px; margin-top: 40px"
@@ -799,10 +821,12 @@
                     style="
                       width: 200px;
                       height: 145px;
-                      background-color: rgb(144, 144, 144);
+                      background-size: cover;
+                      background-repeat: no-repeat;
                       border: 5px solid rgb(229, 234, 243);
                       border-radius: 11px;
                     "
+                    :style="{ backgroundImage: `url('/fm.jpg')` }"
                   ></div>
                   <div
                     style="
@@ -836,9 +860,51 @@
             </div>
           </div>
           <!-- 动画资讯 -->
-          <div></div>
+          <div style="margin-top: 50px">
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <h2>动画资讯</h2>
+              <el-button @click="toAnimeMsg">查看全部></el-button>
+            </div>
+            <div>
+              <data-carousel
+                :arrayData="testVideo"
+                picHeight="200px"
+                picWidth="250px"
+                arrowTop="70px"
+              >
+              </data-carousel>
+            </div>
+          </div>
           <!-- 官方延伸 -->
-          <div></div>
+          <div style="margin-top: 300px">
+            <div
+              style="
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <h2>官方延伸</h2>
+              <el-button @click="toAnimeOffical">查看全部></el-button>
+            </div>
+            <div>
+              <data-carousel
+                :arrayData="testVideo"
+                picHeight="200px"
+                picWidth="250px"
+                arrowTop="70px"
+              >
+              </data-carousel>
+            </div>
+          </div>
           <!-- 猜你喜欢 -->
           <div></div>
           <!-- 热门热血番剧榜 -->
@@ -1153,7 +1219,50 @@ export default {
         return mySub.filter((item) => item.updateDay === day);
       },
     });
-
+    let testVideo = [
+      {
+        name: "视频名1",
+      },
+      {
+        name: "视频名2",
+      },
+      {
+        name: "视频名3",
+      },
+      {
+        name: "视频名4",
+      },
+      {
+        name: "视频名4-0",
+      },
+      {
+        name: "视频名4-1",
+      },
+      {
+        name: "视频名4-2",
+      },
+      {
+        name: "视频名5",
+      },
+      {
+        name: "视频名6",
+      },
+      {
+        name: "视频名7",
+      },
+      {
+        name: "视频名8",
+      },
+      {
+        name: "视频名9",
+      },
+      {
+        name: "视频名10",
+      },
+      {
+        name: "视频名11",
+      },
+    ];
     // 跳转函数
     let skipFun = reactive({
       toMessage() {
@@ -1232,6 +1341,7 @@ export default {
       mySub,
       CaretRight,
       StarFilled,
+      testVideo,
     };
   },
 };
