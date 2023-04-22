@@ -306,7 +306,9 @@
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
+                  <p style="cursor: pointer" class="toBlue">
+                    {{ arrayData.name }}
+                  </p>
                 </div>
               </div>
               <!-- 周一 -->
@@ -348,7 +350,9 @@
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
+                  <p style="cursor: pointer" class="toBlue">
+                    {{ arrayData.name }}
+                  </p>
                 </div>
               </div>
               <!-- 周二 -->
@@ -390,7 +394,9 @@
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
+                  <p style="cursor: pointer" class="toBlue">
+                    {{ arrayData.name }}
+                  </p>
                 </div>
               </div>
               <!-- 周三 -->
@@ -432,7 +438,9 @@
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
+                  <p style="cursor: pointer" class="toBlue">
+                    {{ arrayData.name }}
+                  </p>
                 </div>
               </div>
               <!-- 周四 -->
@@ -474,7 +482,9 @@
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
+                  <p style="cursor: pointer" class="toBlue">
+                    {{ arrayData.name }}
+                  </p>
                 </div>
               </div>
               <!-- 周五 -->
@@ -516,7 +526,9 @@
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
+                  <p style="cursor: pointer" class="toBlue">
+                    {{ arrayData.name }}
+                  </p>
                 </div>
               </div>
               <!-- 周六 -->
@@ -558,7 +570,9 @@
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
+                  <p style="cursor: pointer" class="toBlue">
+                    {{ arrayData.name }}
+                  </p>
                 </div>
               </div>
               <!-- 周日 -->
@@ -600,7 +614,9 @@
                   >
                     <slot name="inPicture" v-bind="arrayData"></slot>
                   </div>
-                  <p style="cursor: pointer;" class="toBlue">{{ arrayData.name }}</p>
+                  <p style="cursor: pointer" class="toBlue">
+                    {{ arrayData.name }}
+                  </p>
                 </div>
               </div>
               <!-- 右箭头 -->
@@ -669,7 +685,10 @@
                     >
                       {{ slotProps.rank }}
                     </div>
-                    <div style="font-size: 18px; margin-left: 10px" class="toBlue">
+                    <div
+                      style="font-size: 18px; margin-left: 10px"
+                      class="toBlue"
+                    >
                       {{ slotProps.name }}
                     </div>
                   </div>
@@ -678,7 +697,144 @@
             </div>
           </div>
           <!-- 新热推荐 -->
-          <div></div>
+          <div style="margin-top: 460px">
+            <h2>新热推荐</h2>
+            <div style="display: flex">
+              <div style="">
+                <video
+                  autoplay="autoplay"
+                  controls="controls"
+                  muted="muted"
+                  src="/cx.mp4"
+                  style="
+                    z-index: 800;
+                    position: absolute;
+                    top: 2155px;
+                    left: 145px;
+                    width: 939px;
+                    height: 530px;
+                    border-radius: 20px;
+                  "
+                ></video>
+              </div>
+              <div
+                style="
+                  width: 95%;
+                  height: 520px;
+                  background-color: red;
+                  margin-left: 70px;
+                  border-radius: 10px;
+                  margin-top: 27px;
+                  overflow-x: hidden;
+                "
+              >
+                <!-- 文字描述 -->
+                <div style="margin: 150px 0px 0px 900px">
+                  <h1 style="color: white">番剧名</h1>
+                  <div
+                    style="
+                      font-size: 20px;
+                      color: white;
+                      font-family: math;
+                      font-style: oblique;
+                      font-weight: bolder;
+                    "
+                  >
+                    评分(9.8)
+                  </div>
+                  <p style="color: white">番剧简介</p>
+                  <div
+                    style="
+                      display: flex;
+                      width: 120px;
+                      height: 65px;
+                      justify-content: space-between;
+                    "
+                  >
+                    <!-- 播放按钮 -->
+                    <div
+                      style="
+                        width: 55px;
+                        height: 60px;
+                        border-radius: 50%;
+                        background-color: rgb(255 255 255 / 50%);
+                        backdrop-filter: blur(10px);
+                        transform: scale(0.8);
+                        cursor: pointer;
+                      "
+                    >
+                      <el-icon color="white" size="50" style="margin: 5px 2px"
+                        ><CaretRight
+                      /></el-icon>
+                    </div>
+                    <!-- 收藏按钮 -->
+                    <div
+                      style="
+                        width: 55px;
+                        height: 60px;
+                        border-radius: 50%;
+                        background-color: rgb(255 255 255 / 50%);
+                        backdrop-filter: blur(10px);
+                        transform: scale(0.8);
+                        cursor: pointer;
+                      "
+                    >
+                      <el-icon color="white" size="50" style="margin: 5px 2px"
+                        ><StarFilled
+                      /></el-icon>
+                    </div>
+                  </div>
+                </div>
+                <!-- 封面列表 -->
+                <div
+                  style="
+                    width: 800px;
+                    margin-left: 900px;
+                    margin-top: 0px;
+                    display: flex;
+                    align-items: center;
+                  "
+                >
+                  <div
+                    style="
+                      width: 200px;
+                      height: 145px;
+                      background-color: rgb(144, 144, 144);
+                      border: 5px solid rgb(229, 234, 243);
+                      border-radius: 11px;
+                    "
+                  ></div>
+                  <div
+                    style="
+                      width: 200px;
+                      height: 145px;
+                      background-color: rgb(144, 144, 144);
+                      border-radius: 10px;
+                      transform: scale(0.9);
+                    "
+                  ></div>
+                  <div
+                    style="
+                      width: 200px;
+                      height: 145px;
+                      background-color: rgb(144, 144, 144);
+                      border-radius: 10px;
+                      transform: scale(0.9);
+                    "
+                  ></div>
+                  <div
+                    style="
+                      width: 200px;
+                      height: 145px;
+                      background-color: rgb(144, 144, 144);
+                      border-radius: 10px;
+                      transform: scale(0.9);
+                    "
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- 动画资讯 -->
           <div></div>
           <!-- 官方延伸 -->
@@ -702,9 +858,10 @@ import { useRouter } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
 import DataCarousel from "@/components/DataCarousel.vue";
 import getTime from "@/hooks/getTime";
+import { CaretRight, StarFilled } from "@element-plus/icons-vue";
 export default {
   name: "animeall",
-  components: { HeaderNav, DataCarousel },
+  components: { HeaderNav, DataCarousel, CaretRight, StarFilled },
 
   setup() {
     // 跳转和vuex
@@ -1073,6 +1230,8 @@ export default {
       startTime,
       hotSearch,
       mySub,
+      CaretRight,
+      StarFilled,
     };
   },
 };
