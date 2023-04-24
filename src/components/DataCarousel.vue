@@ -1,5 +1,5 @@
 <template>
-  <div style="display: flex; position: absolute">
+  <div style="display: flex; position: relative">
     <!-- 左箭头 -->
     <div
       class="arrow left"

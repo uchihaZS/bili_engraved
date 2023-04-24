@@ -215,7 +215,7 @@
           </div>
 
           <!-- 新番时间表 -->
-          <div style="margin-top: 300px">
+          <div style="margin-top: 30px">
             <div
               style="
                 width: 100%;
@@ -279,7 +279,7 @@
               </div>
               <el-button @click="toAnimeTimeline">查看全部></el-button>
             </div>
-            <div style="display: flex; position: absolute; margin-top: 20px">
+            <div style="display: flex; position: relative; margin-top: 20px">
               <!-- 左箭头 -->
               <div
                 class="arrow left"
@@ -652,7 +652,7 @@
             </div>
           </div>
           <!-- 番剧热播榜 -->
-          <div style="margin-top: 330px">
+          <div style="margin-top: 30px">
             <div
               style="
                 width: 100%;
@@ -719,7 +719,7 @@
             </div>
           </div>
           <!-- 新热推荐 -->
-          <div style="margin-top: 460px">
+          <div style="margin-top: 60px">
             <h2>新热推荐</h2>
             <div style="display: flex">
               <div style="">
@@ -730,9 +730,9 @@
                   src="/cx.mp4"
                   style="
                     z-index: 800;
-                    position: absolute;
-                    top: 2155px;
-                    left: 145px;
+                    position: relative;
+                    top: 0px;
+                    left: 0px;
                     width: 939px;
                     height: 530px;
                     border-radius: 20px;
@@ -744,10 +744,11 @@
                   width: 95%;
                   height: 520px;
                   background-color: red;
-                  margin-left: 70px;
+                  margin-left: -860px;
                   border-radius: 10px;
                   margin-top: 27px;
                   overflow-x: hidden;
+                  z-index: 200;
                 "
               >
                 <!-- 文字描述 -->
@@ -883,7 +884,7 @@
             </div>
           </div>
           <!-- 官方延伸 -->
-          <div style="margin-top: 300px">
+          <div style="margin-top: 30px">
             <div
               style="
                 width: 100%;
@@ -906,7 +907,15 @@
             </div>
           </div>
           <!-- 猜你喜欢 -->
-          <div></div>
+          <div
+            style="
+              margin-top: 30px;
+              width: 100%;
+              border:1px solid;
+            "
+          >
+            <test></test>
+          </div>
           <!-- 热门热血番剧榜 -->
           <div></div>
         </div>
@@ -923,11 +932,12 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
 import DataCarousel from "@/components/DataCarousel.vue";
+import test from "@/components/test.vue";
 import getTime from "@/hooks/getTime";
 import { CaretRight, StarFilled } from "@element-plus/icons-vue";
 export default {
   name: "animeall",
-  components: { HeaderNav, DataCarousel, CaretRight, StarFilled },
+  components: { HeaderNav, DataCarousel, CaretRight, StarFilled, test },
 
   setup() {
     // 跳转和vuex
