@@ -907,13 +907,8 @@
             </div>
           </div>
           <!-- 猜你喜欢 -->
-          <div
-            style="
-              margin-top: 30px;
-              width: 100%;
-              border:1px solid;
-            "
-          >
+          <div style="margin-top: 30px; width: 100%">
+            <h2>猜你喜欢</h2>
             <test></test>
           </div>
           <!-- 热门热血番剧榜 -->

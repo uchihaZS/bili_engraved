@@ -14,18 +14,50 @@
         @mouseenter="hovered(index)"
         @mouseleave="leave()"
       >
-        <div v-if="isVideo == false">
+        <div>
           <div class="pic">
-            <div v-if="isVideo == true">
+            <!-- 图文模式 -->
+            <div
+              :style="{
+                display:
+                  isVideo == true && activeIndex == index
+                    ? 'none'
+                    : 'inline-block',
+              }"
+              style="
+                margin: 300px 0px 10px 175px;
+                font-size: 35px;
+                color: white;
+                font-family: math;
+                font-style: oblique;
+              "
+            >
+              {{ i.score }}
+            </div>
+            <!-- 视频模式 -->
+            <div
+              v-if="isVideo == true && activeIndex == index"
+              style="width: 100%; height: 350px"
+            >
               <video
                 src="/cx.mp4"
                 width="100%"
                 height="100%"
-                @mouseleave="leave()"
+                muted="muted"
+                autoplay="autoplay"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  object-fit: fill;
+                  border-radius: 10px;
+                "
               ></video>
             </div>
           </div>
-          <div>{{ i.name }}</div>
+
+          <div class="toBlue" style="margin-top: 10px; font-size: 20px">
+            {{ i.name }}
+          </div>
         </div>
       </div>
     </div>
@@ -45,7 +77,7 @@ export default {
     let subArray4 = reactive([]);
     onBeforeMount(() => {
       for (let i = 1; i < 29; i++) {
-        let obj = { name: "番剧名" + i }; // 创建一个包含 name 属性的对象
+        let obj = { name: "番剧名" + i, score: i }; // 创建一个包含 name 属性的对象
         testVideo.push(obj); // 将对象推入数组
       }
       // console.log(testVideo);
@@ -59,17 +91,17 @@ export default {
 
     let activeIndex = ref(-1);
 
-    let hoverStyle = reactive({
-      zeroWidth: "0px",
-      originWidth: "212px",
-      doubleWidth: "424px",
-    });
     let isVideo = ref(false);
+
     function hovered(index) {
       activeIndex.value = index;
+      setTimeout(() => {
+        isVideo.value = true;
+      }, 500);
     }
     function leave(index) {
       activeIndex.value = -1;
+      isVideo.value = false;
     }
     // 返回新数组的引用
     return {
@@ -80,7 +112,7 @@ export default {
       activeIndex,
       hovered,
       leave,
-      hoverStyle,
+
       isVideo,
     };
   },
@@ -107,7 +139,7 @@ export default {
 }
 // 动画效果
 .animation-active {
-  transition: all 1s ease;
+  transition: all 0.5s ease;
 }
 // hover时的效果（变宽）
 .head .item.active {
@@ -124,5 +156,9 @@ export default {
   background-color: #909399;
   height: 350px;
   width: 100%;
+}
+
+.toBlue:hover {
+  color: #409eff;
 }
 </style>
