@@ -1,146 +1,33 @@
 <template>
   <div>
     <div v-if="subArray1.length" class="head">
-      <!-- <div
+      <div
         v-for="(i, index) in subArray1"
         :key="index"
         class="item animation-active"
         :class="{
+          //判断当前hover的元素下标
           active: activeIndex == index,
-        
-        }"
-      > -->
-      <div
-        class="item animation-active"
-        :class="{
+          //如果下标为6给第一个元素加样式，看样式表
           itemOne: activeIndex == 6,
         }"
-        v-if="isVideo == false"
-        @mouseenter="hovered(0)"
+        @mouseenter="hovered(index)"
         @mouseleave="leave()"
       >
-        <div class="pic">
-          <div v-if="isVideo == true">
-            <video
-              src="/cx.mp4"
-              width="100%"
-              height="100%"
-              @mouseleave="leave()"
-            ></video>
+        <div v-if="isVideo == false">
+          <div class="pic">
+            <div v-if="isVideo == true">
+              <video
+                src="/cx.mp4"
+                width="100%"
+                height="100%"
+                @mouseleave="leave()"
+              ></video>
+            </div>
           </div>
+          <div>{{ i.name }}</div>
         </div>
-        <div>{{ subArray1[0].name }}</div>
       </div>
-      <div
-        class="item animation-active"
-        v-if="isVideo == false"
-        @mouseenter="hovered(1)"
-        @mouseleave="leave()"
-      >
-        <div class="pic">
-          <div v-if="isVideo == true">
-            <video
-              src="/cx.mp4"
-              width="100%"
-              height="100%"
-              @mouseleave="leave()"
-            ></video>
-          </div>
-        </div>
-        <div>{{ subArray1[1].name }}</div>
-      </div>
-      <div
-        class="item animation-active"
-        v-if="isVideo == false"
-        @mouseenter="hovered(2)"
-        @mouseleave="leave()"
-      >
-        <div class="pic">
-          <div v-if="isVideo == true">
-            <video
-              src="/cx.mp4"
-              width="100%"
-              height="100%"
-              @mouseleave="leave()"
-            ></video>
-          </div>
-        </div>
-        <div>{{ subArray1[2].name }}</div>
-      </div>
-      <div
-        class="item animation-active"
-        v-if="isVideo == false"
-        @mouseenter="hovered(3)"
-        @mouseleave="leave()"
-      >
-        <div class="pic">
-          <div v-if="isVideo == true">
-            <video
-              src="/cx.mp4"
-              width="100%"
-              height="100%"
-              @mouseleave="leave()"
-            ></video>
-          </div>
-        </div>
-        <div>{{ subArray1[3].name }}</div>
-      </div>
-      <div
-        class="item animation-active"
-        v-if="isVideo == false"
-        @mouseenter="hovered(4)"
-        @mouseleave="leave()"
-      >
-        <div class="pic">
-          <div v-if="isVideo == true">
-            <video
-              src="/cx.mp4"
-              width="100%"
-              height="100%"
-              @mouseleave="leave()"
-            ></video>
-          </div>
-        </div>
-        <div>{{ subArray1[4].name }}</div>
-      </div>
-      <div
-        class="item animation-active"
-        v-if="isVideo == false"
-        @mouseenter="hovered(5)"
-        @mouseleave="leave()"
-      >
-        <div class="pic">
-          <div v-if="isVideo == true">
-            <video
-              src="/cx.mp4"
-              width="100%"
-              height="100%"
-              @mouseleave="leave()"
-            ></video>
-          </div>
-        </div>
-        <div>{{ subArray1[5].name }}</div>
-      </div>
-      <div
-        class="item animation-active"
-        v-if="isVideo == false"
-        @mouseenter="hovered(6)"
-        @mouseleave="leave()"
-      >
-        <div class="pic">
-          <div v-if="isVideo == true">
-            <video
-              src="/cx.mp4"
-              width="100%"
-              height="100%"
-              @mouseleave="leave()"
-            ></video>
-          </div>
-        </div>
-        <div>{{ subArray1[6].name }}</div>
-      </div>
-      <!-- </div> -->
-      <!-- <div class="spacer"></div> -->
     </div>
   </div>
 </template>
@@ -179,9 +66,7 @@ export default {
     });
     let isVideo = ref(false);
     function hovered(index) {
-      if (index == 6) {
-        activeIndex.value = 6;
-      }
+      activeIndex.value = index;
     }
     function leave(index) {
       activeIndex.value = -1;
@@ -203,31 +88,36 @@ export default {
 </script>
 
 <style lang="less" scoped>
+// 最外部div设置overflow: hidden做出溢出隐藏
 .head {
   display: flex;
   justify-content: flex-start;
   overflow: hidden;
   max-width: 100%;
 }
+// 每个元素的默认样式
 .head .item {
   flex: 0 0 calc(14.29% - 17.14px);
   width: calc(14.29% - 17.14px);
   margin-right: 20px;
-  // border: 1px red solid;
 }
+// 最后一个元素的样式
 .head .item:last-child {
   margin-right: 0;
 }
+// 动画效果
 .animation-active {
   transition: all 1s ease;
 }
-.head .item:hover {
+// hover时的效果（变宽）
+.head .item.active {
   flex: 0 0 calc(28.57% - 14.29px);
 }
-
-.itemOne {
+// 当hover最后一个元素时给第一个元素左移（通过index判断）
+.head .item:first-child.itemOne {
   margin-left: -235px !important;
 }
+
 .pic {
   border-radius: 10px;
   cursor: pointer;
@@ -235,8 +125,4 @@ export default {
   height: 350px;
   width: 100%;
 }
-
-// .spacer {
-//   margin-left: auto;
-// }
 </style>
