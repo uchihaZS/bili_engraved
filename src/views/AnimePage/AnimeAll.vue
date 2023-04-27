@@ -290,15 +290,21 @@
               </div>
               <!-- 列表 -->
               <!-- 最近更新 -->
-              <div
-                style="width: 100%; display: flex; justify-content: flex-start"
-                v-if="selectedIndex == 0"
-              >
+              <div style="width: 100%" v-if="selectedIndex == 0" class="head">
                 <div
                   v-for="(arrayData, index) in displayedData"
                   :key="index"
-                  style="margin: 0px 10px"
+                  class="item animation-active"
+                  :class="{
+                    //判断当前hover的元素下标
+                    active: activeIndex == index,
+                    //如果下标为6给第一个元素加样式，看样式表
+                    itemOne: activeIndex == 6,
+                  }"
+                  @mouseenter="hovered(index)"
+                  @mouseleave="leave()"
                 >
+                  <!-- 周几和时间 -->
                   <div
                     style="
                       width: 75px;
@@ -316,33 +322,58 @@
                     </div>
                     <div>{{ arrayData.updateTime }}</div>
                   </div>
-
+                  <!-- 图片 -->
                   <div
                     style="
-                      width: 250px;
-                      height: 200px;
+                      width: 100%;
+                      height: 350px;
                       border-radius: 10px;
                       background-color: #909399;
                       cursor: pointer;
                     "
                   >
-                    <slot name="inPicture" v-bind="arrayData"></slot>
+                    <!-- 视频模式 -->
+                    <div
+                      v-if="isVideo == true && activeIndex == index"
+                      style="width: 100%; height: 350px"
+                    >
+                      <video
+                        src="/cx.mp4"
+                        width="100%"
+                        height="100%"
+                        muted="muted"
+                        autoplay="autoplay"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          object-fit: fill;
+                          border-radius: 10px;
+                        "
+                      ></video>
+                    </div>
                   </div>
+                  <!-- 名字 -->
                   <p style="cursor: pointer" class="toBlue">
                     {{ arrayData.name }}
                   </p>
                 </div>
               </div>
               <!-- 周一 -->
-              <div
-                style="width: 100%; display: flex; justify-content: flex-start"
-                v-if="selectedIndex == 1"
-              >
+              <div style="width: 100%" v-if="selectedIndex == 1" class="head">
                 <div
                   v-for="(arrayData, index) in displayedData"
                   :key="index"
-                  style="margin: 0px 10px"
+                  class="item animation-active"
+                  :class="{
+                    //判断当前hover的元素下标
+                    active: activeIndex == index,
+                    //如果下标为6给第一个元素加样式，看样式表
+                    itemOne: activeIndex == 6,
+                  }"
+                  @mouseenter="hovered(index)"
+                  @mouseleave="leave()"
                 >
+                  <!-- 周几和时间 -->
                   <div
                     style="
                       width: 75px;
@@ -360,33 +391,58 @@
                     </div>
                     <div>{{ arrayData.updateTime }}</div>
                   </div>
-
+                  <!-- 图片 -->
                   <div
                     style="
-                      width: 250px;
-                      height: 200px;
+                      width: 100%;
+                      height: 350px;
                       border-radius: 10px;
                       background-color: #909399;
                       cursor: pointer;
                     "
                   >
-                    <slot name="inPicture" v-bind="arrayData"></slot>
+                    <!-- 视频模式 -->
+                    <div
+                      v-if="isVideo == true && activeIndex == index"
+                      style="width: 100%; height: 350px"
+                    >
+                      <video
+                        src="/cx.mp4"
+                        width="100%"
+                        height="100%"
+                        muted="muted"
+                        autoplay="autoplay"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          object-fit: fill;
+                          border-radius: 10px;
+                        "
+                      ></video>
+                    </div>
                   </div>
+                  <!-- 名字 -->
                   <p style="cursor: pointer" class="toBlue">
                     {{ arrayData.name }}
                   </p>
                 </div>
               </div>
               <!-- 周二 -->
-              <div
-                style="width: 100%; display: flex; justify-content: flex-start"
-                v-if="selectedIndex == 2"
-              >
+              <div style="width: 100%" v-if="selectedIndex == 2" class="head">
                 <div
                   v-for="(arrayData, index) in displayedData"
                   :key="index"
-                  style="margin: 0px 10px"
+                  class="item animation-active"
+                  :class="{
+                    //判断当前hover的元素下标
+                    active: activeIndex == index,
+                    //如果下标为6给第一个元素加样式，看样式表
+                    itemOne: activeIndex == 6,
+                  }"
+                  @mouseenter="hovered(index)"
+                  @mouseleave="leave()"
                 >
+                  <!-- 周几和时间 -->
                   <div
                     style="
                       width: 75px;
@@ -404,33 +460,58 @@
                     </div>
                     <div>{{ arrayData.updateTime }}</div>
                   </div>
-
+                  <!-- 图片 -->
                   <div
                     style="
-                      width: 250px;
-                      height: 200px;
+                      width: 100%;
+                      height: 350px;
                       border-radius: 10px;
                       background-color: #909399;
                       cursor: pointer;
                     "
                   >
-                    <slot name="inPicture" v-bind="arrayData"></slot>
+                    <!-- 视频模式 -->
+                    <div
+                      v-if="isVideo == true && activeIndex == index"
+                      style="width: 100%; height: 350px"
+                    >
+                      <video
+                        src="/cx.mp4"
+                        width="100%"
+                        height="100%"
+                        muted="muted"
+                        autoplay="autoplay"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          object-fit: fill;
+                          border-radius: 10px;
+                        "
+                      ></video>
+                    </div>
                   </div>
+                  <!-- 名字 -->
                   <p style="cursor: pointer" class="toBlue">
                     {{ arrayData.name }}
                   </p>
                 </div>
               </div>
               <!-- 周三 -->
-              <div
-                style="width: 100%; display: flex; justify-content: flex-start"
-                v-if="selectedIndex == 3"
-              >
+              <div style="width: 100%" v-if="selectedIndex == 3" class="head">
                 <div
                   v-for="(arrayData, index) in displayedData"
                   :key="index"
-                  style="margin: 0px 10px"
+                  class="item animation-active"
+                  :class="{
+                    //判断当前hover的元素下标
+                    active: activeIndex == index,
+                    //如果下标为6给第一个元素加样式，看样式表
+                    itemOne: activeIndex == 6,
+                  }"
+                  @mouseenter="hovered(index)"
+                  @mouseleave="leave()"
                 >
+                  <!-- 周几和时间 -->
                   <div
                     style="
                       width: 75px;
@@ -448,33 +529,58 @@
                     </div>
                     <div>{{ arrayData.updateTime }}</div>
                   </div>
-
+                  <!-- 图片 -->
                   <div
                     style="
-                      width: 250px;
-                      height: 200px;
+                      width: 100%;
+                      height: 350px;
                       border-radius: 10px;
                       background-color: #909399;
                       cursor: pointer;
                     "
                   >
-                    <slot name="inPicture" v-bind="arrayData"></slot>
+                    <!-- 视频模式 -->
+                    <div
+                      v-if="isVideo == true && activeIndex == index"
+                      style="width: 100%; height: 350px"
+                    >
+                      <video
+                        src="/cx.mp4"
+                        width="100%"
+                        height="100%"
+                        muted="muted"
+                        autoplay="autoplay"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          object-fit: fill;
+                          border-radius: 10px;
+                        "
+                      ></video>
+                    </div>
                   </div>
+                  <!-- 名字 -->
                   <p style="cursor: pointer" class="toBlue">
                     {{ arrayData.name }}
                   </p>
                 </div>
               </div>
               <!-- 周四 -->
-              <div
-                style="width: 100%; display: flex; justify-content: flex-start"
-                v-if="selectedIndex == 4"
-              >
+              <div style="width: 100%" v-if="selectedIndex == 4" class="head">
                 <div
                   v-for="(arrayData, index) in displayedData"
                   :key="index"
-                  style="margin: 0px 10px"
+                  class="item animation-active"
+                  :class="{
+                    //判断当前hover的元素下标
+                    active: activeIndex == index,
+                    //如果下标为6给第一个元素加样式，看样式表
+                    itemOne: activeIndex == 6,
+                  }"
+                  @mouseenter="hovered(index)"
+                  @mouseleave="leave()"
                 >
+                  <!-- 周几和时间 -->
                   <div
                     style="
                       width: 75px;
@@ -492,33 +598,58 @@
                     </div>
                     <div>{{ arrayData.updateTime }}</div>
                   </div>
-
+                  <!-- 图片 -->
                   <div
                     style="
-                      width: 250px;
-                      height: 200px;
+                      width: 100%;
+                      height: 350px;
                       border-radius: 10px;
                       background-color: #909399;
                       cursor: pointer;
                     "
                   >
-                    <slot name="inPicture" v-bind="arrayData"></slot>
+                    <!-- 视频模式 -->
+                    <div
+                      v-if="isVideo == true && activeIndex == index"
+                      style="width: 100%; height: 350px"
+                    >
+                      <video
+                        src="/cx.mp4"
+                        width="100%"
+                        height="100%"
+                        muted="muted"
+                        autoplay="autoplay"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          object-fit: fill;
+                          border-radius: 10px;
+                        "
+                      ></video>
+                    </div>
                   </div>
+                  <!-- 名字 -->
                   <p style="cursor: pointer" class="toBlue">
                     {{ arrayData.name }}
                   </p>
                 </div>
               </div>
               <!-- 周五 -->
-              <div
-                style="width: 100%; display: flex; justify-content: flex-start"
-                v-if="selectedIndex == 5"
-              >
+              <div style="width: 100%" v-if="selectedIndex == 5" class="head">
                 <div
                   v-for="(arrayData, index) in displayedData"
                   :key="index"
-                  style="margin: 0px 10px"
+                  class="item animation-active"
+                  :class="{
+                    //判断当前hover的元素下标
+                    active: activeIndex == index,
+                    //如果下标为6给第一个元素加样式，看样式表
+                    itemOne: activeIndex == 6,
+                  }"
+                  @mouseenter="hovered(index)"
+                  @mouseleave="leave()"
                 >
+                  <!-- 周几和时间 -->
                   <div
                     style="
                       width: 75px;
@@ -536,33 +667,58 @@
                     </div>
                     <div>{{ arrayData.updateTime }}</div>
                   </div>
-
+                  <!-- 图片 -->
                   <div
                     style="
-                      width: 250px;
-                      height: 200px;
+                      width: 100%;
+                      height: 350px;
                       border-radius: 10px;
                       background-color: #909399;
                       cursor: pointer;
                     "
                   >
-                    <slot name="inPicture" v-bind="arrayData"></slot>
+                    <!-- 视频模式 -->
+                    <div
+                      v-if="isVideo == true && activeIndex == index"
+                      style="width: 100%; height: 350px"
+                    >
+                      <video
+                        src="/cx.mp4"
+                        width="100%"
+                        height="100%"
+                        muted="muted"
+                        autoplay="autoplay"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          object-fit: fill;
+                          border-radius: 10px;
+                        "
+                      ></video>
+                    </div>
                   </div>
+                  <!-- 名字 -->
                   <p style="cursor: pointer" class="toBlue">
                     {{ arrayData.name }}
                   </p>
                 </div>
               </div>
               <!-- 周六 -->
-              <div
-                style="width: 100%; display: flex; justify-content: flex-start"
-                v-if="selectedIndex == 6"
-              >
+              <div style="width: 100%" v-if="selectedIndex == 6" class="head">
                 <div
                   v-for="(arrayData, index) in displayedData"
                   :key="index"
-                  style="margin: 0px 10px"
+                  class="item animation-active"
+                  :class="{
+                    //判断当前hover的元素下标
+                    active: activeIndex == index,
+                    //如果下标为6给第一个元素加样式，看样式表
+                    itemOne: activeIndex == 6,
+                  }"
+                  @mouseenter="hovered(index)"
+                  @mouseleave="leave()"
                 >
+                  <!-- 周几和时间 -->
                   <div
                     style="
                       width: 75px;
@@ -580,33 +736,58 @@
                     </div>
                     <div>{{ arrayData.updateTime }}</div>
                   </div>
-
+                  <!-- 图片 -->
                   <div
                     style="
-                      width: 250px;
-                      height: 200px;
+                      width: 100%;
+                      height: 350px;
                       border-radius: 10px;
                       background-color: #909399;
                       cursor: pointer;
                     "
                   >
-                    <slot name="inPicture" v-bind="arrayData"></slot>
+                    <!-- 视频模式 -->
+                    <div
+                      v-if="isVideo == true && activeIndex == index"
+                      style="width: 100%; height: 350px"
+                    >
+                      <video
+                        src="/cx.mp4"
+                        width="100%"
+                        height="100%"
+                        muted="muted"
+                        autoplay="autoplay"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          object-fit: fill;
+                          border-radius: 10px;
+                        "
+                      ></video>
+                    </div>
                   </div>
+                  <!-- 名字 -->
                   <p style="cursor: pointer" class="toBlue">
                     {{ arrayData.name }}
                   </p>
                 </div>
               </div>
               <!-- 周日 -->
-              <div
-                style="width: 100%; display: flex; justify-content: flex-start"
-                v-if="selectedIndex == 7"
-              >
+              <div style="width: 100%" v-if="selectedIndex == 7" class="head">
                 <div
                   v-for="(arrayData, index) in displayedData"
                   :key="index"
-                  style="margin: 0px 10px"
+                  class="item animation-active"
+                  :class="{
+                    //判断当前hover的元素下标
+                    active: activeIndex == index,
+                    //如果下标为6给第一个元素加样式，看样式表
+                    itemOne: activeIndex == 6,
+                  }"
+                  @mouseenter="hovered(index)"
+                  @mouseleave="leave()"
                 >
+                  <!-- 周几和时间 -->
                   <div
                     style="
                       width: 75px;
@@ -624,18 +805,37 @@
                     </div>
                     <div>{{ arrayData.updateTime }}</div>
                   </div>
-
+                  <!-- 图片 -->
                   <div
                     style="
-                      width: 250px;
-                      height: 200px;
+                      width: 100%;
+                      height: 350px;
                       border-radius: 10px;
                       background-color: #909399;
                       cursor: pointer;
                     "
                   >
-                    <slot name="inPicture" v-bind="arrayData"></slot>
+                    <!-- 视频模式 -->
+                    <div
+                      v-if="isVideo == true && activeIndex == index"
+                      style="width: 100%; height: 350px"
+                    >
+                      <video
+                        src="/cx.mp4"
+                        width="100%"
+                        height="100%"
+                        muted="muted"
+                        autoplay="autoplay"
+                        style="
+                          width: 100%;
+                          height: 100%;
+                          object-fit: fill;
+                          border-radius: 10px;
+                        "
+                      ></video>
+                    </div>
                   </div>
+                  <!-- 名字 -->
                   <p style="cursor: pointer" class="toBlue">
                     {{ arrayData.name }}
                   </p>
@@ -689,17 +889,21 @@
                   <div
                     style="
                       display: flex;
-                      height: 50px;
+                      height: 70px;
                       border-radius: 7px;
-                      margin-top: -51px;
+                      border-top-left-radius: 0px;
+                      border-top-right-radius: 0px;
+                      border-bottom-right-radius: 7px;
+                      border-bottom-left-radius: 7px;
+                      margin-top: -7px;
+                      padding: 0px 10px;
                       align-items: center;
-                      background-color: rgb(0 0 0 / 10%);
-                      backdrop-filter: blur(-3px);
+                      background-color: rgba(0, 0, 0, 0.1);
                     "
                   >
                     <div
                       style="
-                        font-size: 30px;
+                        font-size: 50px;
                         color: black;
                         font-family: math;
                         font-style: oblique;
@@ -707,11 +911,13 @@
                     >
                       {{ slotProps.rank }}
                     </div>
-                    <div
-                      style="font-size: 18px; margin-left: 10px"
-                      class="toBlue"
-                    >
-                      {{ slotProps.name }}
+                    <div style="text-align: center; margin-left: 30px">
+                      <div style="font-size: 16px" class="toBlue">
+                        {{ slotProps.name }}
+                      </div>
+                      <div style="font-size: 14px; margin-top: 10px">
+                        简短介绍
+                      </div>
                     </div>
                   </div>
                 </template>
@@ -909,7 +1115,7 @@
           <!-- 猜你喜欢 -->
           <div style="margin-top: 30px; width: 100%">
             <h2>猜你喜欢</h2>
-            <test></test>
+            <mutil-pic-vid></mutil-pic-vid>
           </div>
           <!-- 热门热血番剧榜 -->
           <div></div>
@@ -927,12 +1133,12 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
 import DataCarousel from "@/components/DataCarousel.vue";
-import test from "@/components/test.vue";
+import MutilPicVid from "@/components/MutilPicVid.vue";
 import getTime from "@/hooks/getTime";
 import { CaretRight, StarFilled } from "@element-plus/icons-vue";
 export default {
   name: "animeall",
-  components: { HeaderNav, DataCarousel, CaretRight, StarFilled, test },
+  components: { HeaderNav, DataCarousel, CaretRight, StarFilled, MutilPicVid },
 
   setup() {
     // 跳转和vuex
@@ -1041,6 +1247,36 @@ export default {
       },
       {
         name: "番剧名4-2",
+        progress: 11,
+        episode: "第14话",
+        updateDay: "周一",
+        updateTime: "17:25",
+        bgColor: "#f78989",
+        score: 8.5,
+        rank: 7,
+      },
+      {
+        name: "番剧名4-3",
+        progress: 11,
+        episode: "第14话",
+        updateDay: "周一",
+        updateTime: "17:25",
+        bgColor: "#f78989",
+        score: 8.5,
+        rank: 7,
+      },
+      {
+        name: "番剧名4-4",
+        progress: 11,
+        episode: "第14话",
+        updateDay: "周一",
+        updateTime: "17:25",
+        bgColor: "#f78989",
+        score: 8.5,
+        rank: 7,
+      },
+      {
+        name: "番剧名4-5",
         progress: 11,
         episode: "第14话",
         updateDay: "周一",
@@ -1175,18 +1411,20 @@ export default {
       selectedIndex: -1,
       arrayData: mySub,
       startIndex: 0,
-      endIndex: 5,
+      endIndex: 6,
+      activeIndex: -1,
+      isVideo: false,
       displayedData: computed(() =>
         timeUL.arrayData.slice(timeUL.startIndex, timeUL.endIndex + 1)
       ),
 
       scroll: (direction) => {
         if (direction === 1 && timeUL.endIndex < timeUL.arrayData.length - 1) {
-          timeUL.startIndex += 6;
-          timeUL.endIndex += 6;
+          timeUL.startIndex += 7;
+          timeUL.endIndex += 7;
         } else if (direction === -1 && timeUL.startIndex > 0) {
-          timeUL.startIndex -= 6;
-          timeUL.endIndex -= 6;
+          timeUL.startIndex -= 7;
+          timeUL.endIndex -= 7;
         }
       },
       // 点击事件处理函数
@@ -1222,6 +1460,17 @@ export default {
 
       filteredDataByDay: (day) => {
         return mySub.filter((item) => item.updateDay === day);
+      },
+
+      hovered(index) {
+        timeUL.activeIndex = index;
+        setTimeout(() => {
+          timeUL.isVideo = true;
+        }, 500);
+      },
+      leave(index) {
+        timeUL.activeIndex = -1;
+        timeUL.isVideo = false;
       },
     });
     let testVideo = [
@@ -1422,14 +1671,14 @@ export default {
   transform: scale(1); /* 放大的缩放比例 */
 }
 .left {
-  top: 110px;
+  top: 190px;
   left: -20px;
   cursor: pointer;
 }
 
 .right {
-  left: 1580px;
-  top: 110px;
+  left: 1595px;
+  top: 190px;
   cursor: pointer;
 }
 .arrowFont {
@@ -1437,4 +1686,35 @@ export default {
   text-align: center;
   color: #79bbff;
 }
+//-----------------------------------------------
+// 最外部div设置overflow: hidden做出溢出隐藏
+.head {
+  display: flex;
+  justify-content: flex-start;
+  overflow: hidden;
+  max-width: 100%;
+}
+// 每个元素的默认样式
+.head .item {
+  flex: 0 0 calc(14.29% - 17.14px);
+  width: calc(14.29% - 17.14px);
+  margin-right: 20px;
+}
+// 最后一个元素的样式
+.head .item:last-child {
+  margin-right: 0;
+}
+// 动画效果
+.animation-active {
+  transition: all 0.5s ease;
+}
+// hover时的效果（变宽）
+.head .item.active {
+  flex: 0 0 calc(28.57% - 14.29px);
+}
+// 当hover最后一个元素时给第一个元素左移（通过index判断）
+.head .item:first-child.itemOne {
+  margin-left: -235px !important;
+}
+//-------------------------------------------------------------
 </style>
