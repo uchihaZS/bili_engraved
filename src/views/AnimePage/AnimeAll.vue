@@ -190,6 +190,7 @@
                 picHeight="200px"
                 picWidth="250px"
                 arrowTop="70px"
+                :showNum="6"
               >
                 <template v-slot:inPicture="slotProps">
                   <div
@@ -870,6 +871,7 @@
                 picHeight="350px"
                 picWidth="250px"
                 arrowTop="150px"
+                :showNum="6"
               >
                 <template v-slot:inPicture="slotProps">
                   <div
@@ -1085,6 +1087,7 @@
                 picHeight="200px"
                 picWidth="250px"
                 arrowTop="70px"
+                :showNum="6"
               >
               </data-carousel>
             </div>
@@ -1108,6 +1111,7 @@
                 picHeight="200px"
                 picWidth="250px"
                 arrowTop="70px"
+                :showNum="6"
               >
               </data-carousel>
             </div>
@@ -1117,8 +1121,151 @@
             <h2>猜你喜欢</h2>
             <mutil-pic-vid></mutil-pic-vid>
           </div>
-          <!-- 热门热血番剧榜 -->
-          <div></div>
+        </div>
+        <!-- 热门热血番剧榜 -->
+        <div>
+          <div
+            style="
+              margin-top: 30px;
+              width: 100%;
+              height: auto;
+              padding: 0px 135px;
+              background-color: #d1dbe5
+            "
+          >
+            <!-- 头部栏 -->
+            <div style="display: flex; width: 86%; height: 525px;">
+              <div style="margin-top: 280px; margin-right: 45px; width: 450px">
+                <div style="font-size: 35px">热门漫画改番剧榜</div>
+                <div style="font-size: 16px; margin-top: 15px">每小时更新</div>
+              </div>
+              <div style="width: 100%">
+                <!-- 左箭头 -->
+                <div
+                  class="arrow"
+                  style="position: relative; top: 230px; left: -25px"
+                  @click="scroll(-1)"
+                  v-show="hbrarrayData.length > 1"
+                >
+                  <div class="arrowFont">&lt;</div>
+                </div>
+
+                <!-- 列表 -->
+                <div style="width: 100%" class="head">
+                  <div
+                    v-for="(hbrarrayData, index) in hbrdisplayedData"
+                    :key="index"
+                    class="hbritem animation-active"
+                    :class="{
+                      //判断当前hover的元素下标
+                      hbractive: hbractiveIndex == index,
+                      //如果下标为6给第一个元素加样式，看样式表
+                      hbritemOne: hbractiveIndex == 4,
+                    }"
+                    @mouseenter="hbrhovered(index)"
+                    @mouseleave="hbrleave()"
+                  >
+                    <!-- 图片 -->
+                    <div
+                      style="
+                        width: 100%;
+                        height: 350px;
+                        border-radius: 10px;
+                        background-color: #909399;
+                        cursor: pointer;
+                      "
+                    >
+                      <!-- 图文模式 -->
+                      <div
+                        :style="{
+                          display:
+                            hbrisVideo == true && hbractiveIndex == index
+                              ? 'none'
+                              : 'inline-block',
+                        }"
+                        style="
+                          margin: 300px 0px 10px 75%;
+                          font-size: 35px;
+                          color: white;
+                          font-family: math;
+                          font-style: oblique;
+                        "
+                      >
+                        {{ hbrarrayData.score }}
+                      </div>
+                      <!-- 视频模式 -->
+                      <div
+                        v-if="hbrisVideo == true && hbractiveIndex == index"
+                        style="width: 100%; height: 350px"
+                      >
+                        <video
+                          src="/cx.mp4"
+                          width="100%"
+                          height="100%"
+                          muted="muted"
+                          autoplay="autoplay"
+                          style="
+                            width: 100%;
+                            height: 100%;
+                            object-fit: fill;
+                            border-radius: 10px;
+                          "
+                        ></video>
+                      </div>
+                    </div>
+                    <!-- 名字 -->
+                    <div
+                      style="
+                        display: flex;
+                        height: 70px;
+                        border-radius: 7px;
+                        border-top-left-radius: 0px;
+                        border-top-right-radius: 0px;
+                        border-bottom-right-radius: 7px;
+                        border-bottom-left-radius: 7px;
+                        margin-top: -7px;
+                        padding: 0px 10px;
+                        align-items: center;
+                        background-color: #bed1e3;
+                      "
+                    >
+                      <div
+                        style="
+                          font-size: 50px;
+                          color: #8ab8e5;
+                          font-family: math;
+                          font-style: oblique;
+                        "
+                      >
+                        {{ hbrarrayData.rank }}
+                      </div>
+                      <div style="text-align: center; margin-left: 30px">
+                        <div style="font-size: 16px" class="toBlue">
+                          {{ hbrarrayData.name }}
+                        </div>
+                        <div style="font-size: 14px; margin-top: 10px">
+                          简短介绍
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 右箭头 -->
+                <div
+                  class="arrow"
+                  style="left: 1200px; bottom: 255px; position: relative"
+                  @click="scroll(1)"
+                  v-show="hbrarrayData.length > 1"
+                >
+                  <div class="arrowFont">&gt;</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 排列栏 -->
+          <div style="width:86%;padding:0px 135px;margin-top:30px"><mutil-pic-vid></mutil-pic-vid></div>
         </div>
       </el-main>
     </el-container>
@@ -1517,6 +1664,46 @@ export default {
         name: "视频名11",
       },
     ];
+
+    let hotBloodRank = reactive({
+      hbrselectedIndex: -1,
+      hbrarrayData: mySub,
+      hbrstartIndex: 0,
+      hbrendIndex: 4,
+      hbractiveIndex: -1,
+      hbrisVideo: false,
+      hbrdisplayedData: computed(() =>
+        hotBloodRank.hbrarrayData.slice(
+          hotBloodRank.hbrstartIndex,
+          hotBloodRank.hbrendIndex + 1
+        )
+      ),
+
+      scroll: (direction) => {
+        if (
+          direction === 1 &&
+          hotBloodRank.hbrendIndex < hotBloodRank.hbrarrayData.length - 1
+        ) {
+          hotBloodRank.hbrstartIndex += 4;
+          hotBloodRank.hbrendIndex += 4;
+        } else if (direction === -1 && hotBloodRank.hbrstartIndex > 0) {
+          hotBloodRank.hbrstartIndex -= 4;
+          hotBloodRank.hbrendIndex -= 4;
+        }
+      },
+
+      hbrhovered(index) {
+        hotBloodRank.hbractiveIndex = index;
+        setTimeout(() => {
+          hotBloodRank.hbrisVideo = true;
+        }, 500);
+      },
+      hbrleave(index) {
+        hotBloodRank.hbractiveIndex = -1;
+        hotBloodRank.hbrisVideo = false;
+      },
+    });
+
     // 跳转函数
     let skipFun = reactive({
       toMessage() {
@@ -1596,6 +1783,7 @@ export default {
       CaretRight,
       StarFilled,
       testVideo,
+      ...toRefs(hotBloodRank),
     };
   },
 };
@@ -1666,6 +1854,7 @@ export default {
   backdrop-filter: blur(10px); /* 模糊效果，可以根据需要调整模糊半径 */
   transform: scale(0.8); /* 初始缩放比例 */
   transition: transform 0.3s ease; /* 过渡动画效果，可以根据需要调整时间和缓动函数 */
+  cursor: pointer;
 }
 .arrow:hover {
   transform: scale(1); /* 放大的缩放比例 */
@@ -1715,6 +1904,29 @@ export default {
 // 当hover最后一个元素时给第一个元素左移（通过index判断）
 .head .item:first-child.itemOne {
   margin-left: -235px !important;
+}
+//-------------------------------------------------------------
+
+//-----------------------------------------------
+// 以下为热门热血榜样式
+// 每个元素的默认样式
+.head .hbritem {
+  flex: 0 0 calc(20% - 17.14px);
+  width: calc(20% - 17.14px);
+  margin-right: 20px;
+}
+// 最后一个元素的样式
+.head .hbritem:last-child {
+  margin-right: 0;
+}
+
+// hover时的效果（变宽）
+.head .hbritem.hbractive {
+  flex: 0 0 calc(40% - 14.29px);
+}
+// 当hover最后一个元素时给第一个元素左移（通过index判断）
+.head .hbritem:first-child.hbritemOne {
+  margin-left: -250px !important;
 }
 //-------------------------------------------------------------
 </style>

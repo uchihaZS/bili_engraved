@@ -45,13 +45,14 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, toRef, computed } from "vue";
 export default {
   props: {
     arrayData: Array,
     picWidth: String,
     picHeight: String,
     arrowTop: { type: String, default: "70px" },
+    showNum: Number,
   },
   setup(props) {
     let arrayData = props.arrayData;
@@ -59,18 +60,19 @@ export default {
     let picHeight = props.picHeight;
     let arrowTop = props.arrowTop;
     let startIndex = ref(0);
-    let endIndex = ref(5);
+    let showNum = props.showNum;
+    let endIndex = ref(showNum - 1);
     let displayedData = computed(() =>
       arrayData.slice(startIndex.value, endIndex.value + 1)
     );
 
     let scroll = (direction) => {
       if (direction === 1 && endIndex.value < arrayData.length - 1) {
-        startIndex.value += 6;
-        endIndex.value += 6;
+        startIndex.value += showNum - 1;
+        endIndex.value += showNum - 1;
       } else if (direction === -1 && startIndex.value > 0) {
-        startIndex.value -= 6;
-        endIndex.value -= 6;
+        startIndex.value -= showNum - 1;
+        endIndex.value -= showNum - 1;
       }
     };
 
@@ -79,6 +81,7 @@ export default {
       picHeight,
       picWidth,
       arrowTop,
+      showNum,
       displayedData,
       scroll,
     };
