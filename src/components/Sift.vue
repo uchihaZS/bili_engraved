@@ -13,24 +13,54 @@
       <!-- 排序栏 -->
       <div
         style="
-          width: 384px;
+          width: 450px;
           display: flex;
           justify-content: space-between;
-          margin-left: 50px;
+          margin-left: 55px;
         "
       >
-        <el-button text plain style="font-size: 18px" @click="fansort"
-          >追番人数</el-button
+        <div
+          style="font-size: 18px; display: flex; cursor: pointer; height: 30px"
+          :class="{ active: fansType != 0 }"
+          @click="fansort()"
         >
-        <el-button text plain style="font-size: 18px" @click="scoresort"
-          >最高评分</el-button
+          <div>追番人数</div>
+          <div style="margin-left: 5px; width: 10px; height: 85px">
+            <top-bottom-arrow :size="15" ref="fanRef"></top-bottom-arrow>
+          </div>
+        </div>
+        <div
+          style="font-size: 18px; display: flex; cursor: pointer"
+          :class="{ active: scoreType != 0 }"
+          @click="scoresort()"
         >
-        <el-button text plain style="font-size: 18px" @click="playnumsort"
-          >播放数量</el-button
+          <div>最高评分</div>
+          <div>
+            <el-icon size="15" :color="{ scoreColor: scoreType != 0 }"
+              ><CaretBottom
+            /></el-icon>
+          </div>
+        </div>
+        <div
+          style="font-size: 18px; display: flex; cursor: pointer; height: 30px"
+          :class="{ active: playnumType != 0 }"
+          @click="playnumsort()"
         >
-        <el-button text plain style="font-size: 18px" @click="starttimesort"
-          >开播时间</el-button
+          <div>播放数量</div>
+          <div style="margin-left: 5px; width: 10px; height: 85px">
+            <top-bottom-arrow :size="15" ref="playRef"></top-bottom-arrow>
+          </div>
+        </div>
+        <div
+          style="font-size: 18px; display: flex; cursor: pointer; height: 30px"
+          :class="{ active: starttimeType != 0 }"
+          @click="starttimesort()"
         >
+          <div>开播时间</div>
+          <div style="margin-left: 5px; width: 10px; height: 85px">
+            <top-bottom-arrow :size="15" ref="stRef"></top-bottom-arrow>
+          </div>
+        </div>
       </div>
       <!-- 列表栏 -->
       <div v-if="textdata.length">
@@ -72,7 +102,11 @@
             class="toBlue"
             v-for="(i, index) in data.type"
             :key="index"
-            style="margin-left: 10px"
+            :class="{
+              active: typeIndex == index,
+            }"
+            @click="typeClick(index)"
+            style="margin-left: 10px; cursor: pointer"
             >{{ i }}</span
           >
         </div>
@@ -83,7 +117,11 @@
             class="toBlue"
             v-for="(i, index) in data.voice"
             :key="index"
-            style="margin-left: 10px"
+            :class="{
+              active: voiceIndex == index,
+            }"
+            @click="voiceClick(index)"
+            style="margin-left: 10px; cursor: pointer"
             >{{ i }}</span
           >
         </div>
@@ -94,7 +132,11 @@
             class="toBlue"
             v-for="(i, index) in data.area"
             :key="index"
-            style="margin-left: 10px"
+            :class="{
+              active: areaIndex == index,
+            }"
+            @click="areaClick(index)"
+            style="margin-left: 10px; cursor: pointer"
             >{{ i }}</span
           >
         </div>
@@ -105,7 +147,11 @@
             class="toBlue"
             v-for="(i, index) in data.state"
             :key="index"
-            style="margin-left: 10px"
+            :class="{
+              active: stateIndex == index,
+            }"
+            @click="stateClick(index)"
+            style="margin-left: 10px; cursor: pointer"
             >{{ i }}</span
           >
         </div>
@@ -116,7 +162,11 @@
             class="toBlue"
             v-for="(i, index) in data.copyright"
             :key="index"
-            style="margin-left: 10px"
+            :class="{
+              active: copyrightIndex == index,
+            }"
+            @click="copyrightClick(index)"
+            style="margin-left: 10px; cursor: pointer"
             >{{ i }}</span
           >
         </div>
@@ -127,7 +177,11 @@
             class="toBlue"
             v-for="(i, index) in data.ispay"
             :key="index"
-            style="margin-left: 10px"
+            :class="{
+              active: ispayIndex == index,
+            }"
+            @click="ispayClick(index)"
+            style="margin-left: 10px; cursor: pointer"
             >{{ i }}</span
           >
         </div>
@@ -138,7 +192,11 @@
             class="toBlue"
             v-for="(i, index) in data.season"
             :key="index"
-            style="margin-left: 10px"
+            :class="{
+              active: seasonIndex == index,
+            }"
+            @click="seasonClick(index)"
+            style="margin-left: 10px; cursor: pointer"
             >{{ i }}</span
           >
         </div>
@@ -157,7 +215,11 @@
               class="toBlue"
               v-for="(i, index) in data.year"
               :key="index"
-              style="margin: 0px 10px 10px 0px"
+              :class="{
+                active: yearIndex == index,
+              }"
+              @click="yearClick(index)"
+              style="margin: 0px 10px 10px 0px; cursor: pointer"
               >{{ i }}</span
             >
           </div>
@@ -177,7 +239,11 @@
               class="toBlue"
               v-for="(i, index) in data.style"
               :key="index"
-              style="margin: 0px 10px 10px 0px"
+              :class="{
+                active: styleIndex == index,
+              }"
+              @click="styleClick(index)"
+              style="margin: 0px 10px 10px 0px; cursor: pointer"
               >{{ i }}</span
             >
           </div>
@@ -189,12 +255,14 @@
 
 <script>
 import { onMounted, reactive, toRefs } from "vue";
+import { CaretBottom, DCaret } from "@element-plus/icons-vue";
 import PicAndText from "./PicAndText.vue";
+import TopBottomArrow from "./TopBottomArrow.vue";
 export default {
   props: {
     data: Object,
   },
-  components: { PicAndText },
+  components: { PicAndText, CaretBottom, DCaret, TopBottomArrow },
   setup() {
     let animeSiftData = reactive({
       type: ["全部", "正片", "电影", "其他"],
@@ -429,11 +497,54 @@ export default {
           episode: 54,
         },
       ],
+      typeIndex: -1,
+      voiceIndex: -1,
+      areaIndex: -1,
+      stateIndex: -1,
+      copyrightIndex: -1,
+      ispayIndex: -1,
+      seasonIndex: -1,
+      yearIndex: -1,
+      styleIndex: -1,
       fansType: 0,
       scoreType: 0,
       playnumType: 0,
       starttimeType: 0,
       arrType: 1,
+      fanColor: "#909399",
+      scoreColor: "#909399",
+      stColor: "#909399",
+      playColor: "#909399",
+      fanRef: null,
+      playRef: null,
+      stRef: null,
+      typeClick(index) {
+        animeSiftData.typeIndex = index;
+      },
+      voiceClick(index) {
+        animeSiftData.voiceIndex = index;
+      },
+      areaClick(index) {
+        animeSiftData.areaIndex = index;
+      },
+      stateClick(index) {
+        animeSiftData.stateIndex = index;
+      },
+      copyrightClick(index) {
+        animeSiftData.copyrightIndex = index;
+      },
+      ispayClick(index) {
+        animeSiftData.ispayIndex = index;
+      },
+      seasonClick(index) {
+        animeSiftData.seasonIndex = index;
+      },
+      yearClick(index) {
+        animeSiftData.yearIndex = index;
+      },
+      styleClick(index) {
+        animeSiftData.styleIndex = index;
+      },
     });
 
     // 根据元素排序
@@ -449,6 +560,10 @@ export default {
     function fansort() {
       animeSiftData.arrType = 1;
       animeSiftData.fansType++;
+      animeSiftData.scoreType = 0;
+      animeSiftData.starttimeType = 0;
+      animeSiftData.playnumType = 0;
+      animeSiftData.fanRef.check();
       getOnlyText.check();
       console.log(animeSiftData.arrType, "fansType:" + animeSiftData.fansType);
     }
@@ -458,6 +573,10 @@ export default {
     function playnumsort() {
       animeSiftData.arrType = 3;
       animeSiftData.playnumType++;
+      animeSiftData.scoreType = 0;
+      animeSiftData.starttimeType = 0;
+      animeSiftData.fansType = 0;
+      animeSiftData.playRef.check();
       getOnlyText.check();
       console.log(
         animeSiftData.arrType,
@@ -470,6 +589,10 @@ export default {
     function starttimesort() {
       animeSiftData.arrType = 4;
       animeSiftData.starttimeType++;
+      animeSiftData.scoreType = 0;
+      animeSiftData.fansType = 0;
+      animeSiftData.playnumType = 0;
+      animeSiftData.stRef.check();
       getOnlyText.check();
       console.log(
         animeSiftData.arrType,
@@ -482,6 +605,9 @@ export default {
     function scoresort() {
       animeSiftData.arrType = 2;
       animeSiftData.scoreType++;
+      animeSiftData.starttimeType = 0;
+      animeSiftData.playnumType = 0;
+      animeSiftData.fansType = 0;
       getOnlyText.check();
       console.log(
         animeSiftData.arrType,
@@ -624,7 +750,16 @@ export default {
     });
     onMounted(() => {
       fansort();
-      console.log("mounted");
+      // console.log("mounted");
+      animeSiftData.typeClick(0);
+      animeSiftData.voiceClick(0);
+      animeSiftData.areaClick(0);
+      animeSiftData.ispayClick(0);
+      animeSiftData.seasonClick(0);
+      animeSiftData.yearClick(0);
+      animeSiftData.copyrightClick(0);
+      animeSiftData.styleClick(0);
+      animeSiftData.stateClick(0);
       // console.log(onlytext.textdata);
     });
 
@@ -657,7 +792,9 @@ export default {
   flex-direction: row;
   flex-wrap: nowrap;
 }
-
+.active {
+  color: #409eff;
+}
 .toBlue:hover {
   color: #409eff;
 }
