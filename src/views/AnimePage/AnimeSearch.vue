@@ -366,7 +366,7 @@
                 </div>
               </div>
               <el-divider></el-divider>
-              <!-- 索引列表 -->
+              <!-- 动画导航 -->
               <div
                 style="
                   display: flex;
@@ -376,15 +376,36 @@
                   justify-content: space-evenly;
                 "
               >
-                <span class="avatag" @click="toAnimeAll">全部</span>
-                <span class="avatag" @click="toAnimeSerialize">连载动画</span>
-                <span class="avatag" @click="toAnimeEnd">完结动画</span>
-                <span class="avatag" @click="toAnimeMsg">资讯</span>
-                <span class="avatag" @click="toAnimeOffical">官方延伸</span>
-                <span class="avatag" @click="toAnimeTimeline">新番时间表</span>
+                <span class="avatag" style="cursor: pointer" @click="toAnimeAll"
+                  >全部</span
+                >
                 <span
                   class="avatag"
-                  style="color: #409eff"
+                  style="cursor: pointer"
+                  @click="toAnimeSerialize"
+                  >连载动画</span
+                >
+                <span class="avatag" @click="toAnimeEnd" style="cursor: pointer"
+                  >完结动画</span
+                >
+                <span class="avatag" style="cursor: pointer" @click="toAnimeMsg"
+                  >资讯</span
+                >
+                <span
+                  class="avatag"
+                  style="cursor: pointer"
+                  @click="toAnimeOffical"
+                  >官方延伸</span
+                >
+                <span
+                  class="avatag"
+                  style="cursor: pointer"
+                  @click="toAnimeTimeline"
+                  >新番时间表</span
+                >
+                <span
+                  class="avatag"
+                  style="cursor: pointer; color: #409eff"
                   @click="toAnimeSearch"
                   >番剧索引</span
                 >

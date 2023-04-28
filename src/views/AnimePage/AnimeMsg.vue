@@ -366,7 +366,7 @@
                 </div>
               </div>
               <el-divider></el-divider>
-              <!-- 时间线列表 -->
+              <!-- 动画导航 -->
               <div
                 style="
                   display: flex;
@@ -376,15 +376,42 @@
                   justify-content: space-evenly;
                 "
               >
-                <span class="avatag" @click="toAnimeAll">全部</span>
-                <span class="avatag" @click="toAnimeSerialize">连载动画</span>
-                <span class="avatag" @click="toAnimeEnd">完结动画</span>
-                <span class="avatag" @click="toAnimeMsg" style="color: #409eff"
+                <span class="avatag" style="cursor: pointer" @click="toAnimeAll"
+                  >全部</span
+                >
+                <span
+                  class="avatag"
+                  style="cursor: pointer"
+                  @click="toAnimeSerialize"
+                  >连载动画</span
+                >
+                <span class="avatag" @click="toAnimeEnd" style="cursor: pointer"
+                  >完结动画</span
+                >
+                <span
+                  class="avatag"
+                  style="cursor: pointer; color: #409eff"
+                  @click="toAnimeMsg"
                   >资讯</span
                 >
-                <span class="avatag" @click="toAnimeOffical">官方延伸</span>
-                <span class="avatag" @click="toAnimeTimeline">新番时间表</span>
-                <span class="avatag" @click="toAnimeSearch">番剧索引</span>
+                <span
+                  class="avatag"
+                  style="cursor: pointer"
+                  @click="toAnimeOffical"
+                  >官方延伸</span
+                >
+                <span
+                  class="avatag"
+                  style="cursor: pointer"
+                  @click="toAnimeTimeline"
+                  >新番时间表</span
+                >
+                <span
+                  class="avatag"
+                  style="cursor: pointer"
+                  @click="toAnimeSearch"
+                  >番剧索引</span
+                >
               </div>
               <anime-com-use></anime-com-use>
             </el-col>
@@ -426,7 +453,7 @@ import HeaderNav from "../../components/HeaderNav.vue";
 import { reactive, onMounted, toRefs } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import AnimeComUse from '@/components/AnimeComUse.vue';
+import AnimeComUse from "@/components/AnimeComUse.vue";
 export default {
   name: "animemsg",
   components: { HeaderNav, AnimeComUse },

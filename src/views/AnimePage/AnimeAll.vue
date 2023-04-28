@@ -863,7 +863,7 @@
               "
             >
               <h2>番剧热播榜</h2>
-              <el-button @click="toPerSub">查看全部></el-button>
+              <el-button>查看全部></el-button>
             </div>
             <div>
               <data-carousel
@@ -1130,11 +1130,11 @@
               width: 100%;
               height: auto;
               padding: 0px 135px;
-              background-color: #d1dbe5
+              background-color: #d1dbe5;
             "
           >
             <!-- 头部栏 -->
-            <div style="display: flex; width: 86%; height: 525px;">
+            <div style="display: flex; width: 86%; height: 525px">
               <div style="margin-top: 280px; margin-right: 45px; width: 450px">
                 <div style="font-size: 35px">热门漫画改番剧榜</div>
                 <div style="font-size: 16px; margin-top: 15px">每小时更新</div>
@@ -1265,7 +1265,9 @@
           </div>
 
           <!-- 排列栏 -->
-          <div style="width:86%;padding:0px 135px;margin-top:30px"><mutil-pic-vid></mutil-pic-vid></div>
+          <div style="width: 86%; padding: 0px 135px; margin-top: 30px">
+            <mutil-pic-vid></mutil-pic-vid>
+          </div>
         </div>
       </el-main>
     </el-container>
