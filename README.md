@@ -20,5 +20,6 @@ npm run build
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-remember 在js里引用静态资源用相对路径publicPath的值加名字，在css里引用要写绝对路径
-
+remember 
+1.在js里引用静态资源用相对路径publicPath的值加名字，在css里引用要写绝对路径
+2.vercel部署的话，所有本地静态资源都需要相对路径

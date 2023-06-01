@@ -96,14 +96,14 @@
                 padding: 15px;
               "
             >
-              <h3 class="toBlue">番剧索引 &gt;</h3>
+              <h3 class="toBlue" @click="toAnimeSearch">番剧索引 &gt;</h3>
               <div>
-                <span class="toBlue">追番人数</span>
-                <span class="toBlue" style="margin-left: 15px">最高评分</span>
+                <span class="toBlue" @click="toAnimeSearch">追番人数</span>
+                <span class="toBlue" style="margin-left: 15px" @click="toAnimeSearch">最高评分</span>
               </div>
               <div style="margin-top: 10px">
-                <span class="toBlue">更新时间</span>
-                <span class="toBlue" style="margin-left: 15px">播放数量</span>
+                <span class="toBlue" @click="toAnimeSearch">更新时间</span>
+                <span class="toBlue" style="margin-left: 15px" @click="toAnimeSearch">播放数量</span>
               </div>
             </div>
             <!-- 类型风格 -->
@@ -116,13 +116,14 @@
                 padding: 15px;
               "
             >
-              <h3 class="toBlue">类型风格 &gt;</h3>
+              <h3 class="toBlue" @click="toAnimeSearch">类型风格 &gt;</h3>
               <div style="display: flex; flex-wrap: wrap; width: 310px">
                 <span
                   v-for="i in style"
                   :key="i"
                   class="toBlue"
                   style="margin: 0px 10px 10px 0px"
+                  @click="toAnimeSearch"
                   >{{ i }}</span
                 >
               </div>
@@ -137,13 +138,14 @@
                 padding: 15px;
               "
             >
-              <h3 class="toBlue">首播时间 &gt;</h3>
+              <h3 class="toBlue" @click="toAnimeSearch">首播时间 &gt;</h3>
               <div style="display: flex; flex-wrap: wrap; width: 310px">
                 <span
                   v-for="i in startTime"
                   :key="i"
                   class="toBlue"
                   style="margin: 0px 10px 10px 0px"
+                  @click="toAnimeSearch"
                   >{{ i }}</span
                 >
               </div>
@@ -935,7 +937,7 @@
                   autoplay="autoplay"
                   controls="controls"
                   muted="muted"
-                  src="C:\fake-bilibli\public\cx.mp4"
+                  :src="videoUrl"
                   style="
                     z-index: 800;
                     position: relative;
@@ -1035,7 +1037,7 @@
                       border: 5px solid rgb(229, 234, 243);
                       border-radius: 11px;
                     "
-                    :style="{ backgroundImage: `url(${newHotPic})` }"
+                    :style="{backgroundImage:`url(${newHotPic})`}"
                   ></div>
                   <div
                     style="
@@ -1199,7 +1201,7 @@
                         style="width: 100%; height: 350px"
                       >
                         <video
-                          src="/cx.mp4"
+                          :src="videoUrl"
                           width="100%"
                           height="100%"
                           muted="muted"
@@ -1290,8 +1292,7 @@ export default {
   components: { HeaderNav, DataCarousel, CaretRight, StarFilled, MutilPicVid },
 
   setup() {
-    const newHotPic='./fm.jpg'
-
+    
     // 跳转和vuex
     var router = useRouter();
     const store = useStore();
@@ -1775,7 +1776,8 @@ export default {
     });
 
     return {
-      newHotPic,
+      newHotPic:require('@/assets/fm.jpg'),
+      videoUrl:require('@/assets/cx.mp4'),
       goToPage,
       ...toRefs(skipFun),
       ...toRefs(timeUL),

@@ -998,12 +998,16 @@ export default {
       router.push({ path: link });
       // console.log(link);
     };
+
+    const fengmian=require('@/assets/fm.jpg')
+
     // 推荐视频列表
     let videoList = reactive({
+      
       vList: [
         {
           vname: "鬼灭之刃游郭篇《残響散歌》真.完整粤语版",
-          poster: "./fm.jpg",
+          poster: fengmian,
           author: "不是词神",
           link: "/playpage",
         },
@@ -1209,6 +1213,7 @@ export default {
     });
 
     return {
+      
       goToPage,
       ...toRefs(skipFun),
       ...toRefs(videoList),

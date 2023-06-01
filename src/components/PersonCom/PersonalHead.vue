@@ -324,7 +324,7 @@ export default {
   top: 25px;
 }
 .bgImg {
-  background-image: url("C:\fake-bilibli\public\personalBGimg.webp");
+  background-image: url("@/assets/personalBGimg.webp");
   box-shadow: inset 0px -55px 55px rgba(14, 13, 13, 0.719);
   background-size: cover;
   width: 100%;

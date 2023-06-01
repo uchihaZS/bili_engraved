@@ -19,7 +19,7 @@
                 style="background-color: rgba(255, 255, 255, 0.8)"
               >
                 <p
-                  style="text-align: center; font-size: 20px; font-weight: 600"
+                  style="text-align: center; font-size: 20px; font-weight: 600;cursor: pointer;"
                 >
                   消息中心
                 </p>
@@ -41,6 +41,7 @@
                       padding: 0px;
                       font-weight: 600;
                       text-indent: 0px;
+                      cursor: pointer;
                     "
                   >
                     <li @click="answerMe" tabindex="1">回复我的</li>
@@ -58,6 +59,7 @@
                     font-weight: 600;
                     margin-top: 15px;
                     color: #6b757b;
+                    cursor: pointer;
                   "
                   class="asideOpt"
                   @click="MsgOpt"
@@ -232,7 +234,7 @@ export default {
   overflow-y: auto;
   justify-content: center;
   --el-main-padding: 0px;
-  background-image: url("C:\fake-bilibli\public\infocenterbg.jpg");
+  background-image: url('@/assets/infocenterbg.jpg');
   background-position-x: center;
   background-position-y: top;
   background-size: cover;

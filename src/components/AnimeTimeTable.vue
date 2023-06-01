@@ -695,7 +695,7 @@ export default {
   color: #409eff;
 }
 .noData {
-  background-image: url("C:\fake-bilibli\public\empty-2.png");
+  background-image: url('@/assets/empty-2.png');
   background-position-x: center;
   background-position-y: top;
   background-size: cover;

@@ -38,7 +38,7 @@
               style="width: 100%; height: 350px"
             >
               <video
-                src="/cx.mp4"
+                :src="videoUrl"
                 width="100%"
                 height="100%"
                 muted="muted"
@@ -97,7 +97,7 @@
               style="width: 100%; height: 350px"
             >
               <video
-                src="/cx.mp4"
+                :src="videoUrl"
                 width="100%"
                 height="100%"
                 muted="muted"
@@ -156,7 +156,7 @@
               style="width: 100%; height: 350px"
             >
               <video
-                src="/cx.mp4"
+                :src="videoUrl"
                 width="100%"
                 height="100%"
                 muted="muted"
@@ -215,7 +215,7 @@
               style="width: 100%; height: 350px"
             >
               <video
-                src="/cx.mp4"
+                :src="videoUrl"
                 width="100%"
                 height="100%"
                 muted="muted"
@@ -322,6 +322,7 @@ export default {
     });
 
     return {
+      videoUrl:require('@/assets/cx.mp4'),
       ...toRefs(arr1),
       ...toRefs(arr2),
       ...toRefs(arr3),
