@@ -96,7 +96,7 @@
                 padding: 15px;
               "
             >
-              <h3 class="toBlue">番剧索引 ></h3>
+              <h3 class="toBlue">番剧索引 &gt;</h3>
               <div>
                 <span class="toBlue">追番人数</span>
                 <span class="toBlue" style="margin-left: 15px">最高评分</span>
@@ -116,7 +116,7 @@
                 padding: 15px;
               "
             >
-              <h3 class="toBlue">类型风格 ></h3>
+              <h3 class="toBlue">类型风格 &gt;</h3>
               <div style="display: flex; flex-wrap: wrap; width: 310px">
                 <span
                   v-for="i in style"
@@ -137,7 +137,7 @@
                 padding: 15px;
               "
             >
-              <h3 class="toBlue">首播时间 ></h3>
+              <h3 class="toBlue">首播时间 &gt;</h3>
               <div style="display: flex; flex-wrap: wrap; width: 310px">
                 <span
                   v-for="i in startTime"
@@ -935,7 +935,7 @@
                   autoplay="autoplay"
                   controls="controls"
                   muted="muted"
-                  src="/cx.mp4"
+                  src="C:\fake-bilibli\public\cx.mp4"
                   style="
                     z-index: 800;
                     position: relative;
@@ -1035,7 +1035,7 @@
                       border: 5px solid rgb(229, 234, 243);
                       border-radius: 11px;
                     "
-                    :style="{ backgroundImage: `url('/fm.jpg')` }"
+                    :style="{ backgroundImage: `url(${newHotPic})` }"
                   ></div>
                   <div
                     style="
@@ -1290,6 +1290,8 @@ export default {
   components: { HeaderNav, DataCarousel, CaretRight, StarFilled, MutilPicVid },
 
   setup() {
+    const newHotPic='./fm.jpg'
+
     // 跳转和vuex
     var router = useRouter();
     const store = useStore();
@@ -1773,6 +1775,7 @@ export default {
     });
 
     return {
+      newHotPic,
       goToPage,
       ...toRefs(skipFun),
       ...toRefs(timeUL),
@@ -1841,6 +1844,9 @@ export default {
   display: none;
 }
 
+.toBlue{
+  cursor: pointer;
+}
 .toBlue:hover {
   color: #409eff;
 }
