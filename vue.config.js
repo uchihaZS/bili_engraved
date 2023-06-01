@@ -3,7 +3,7 @@ module.exports = defineConfig({
     publicPath: './',
     transpileDependencies: true,
     outputDir:"docs",
-    lintOnSave: false,
+    lintOnSave: false, 
     devServer: {
         proxy: {
             '/api': { //请求路径关键字
