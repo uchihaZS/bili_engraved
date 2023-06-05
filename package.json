@@ -24,7 +24,8 @@
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "less": "^4.0.0",
-    "less-loader": "^8.0.0"
+    "less-loader": "^8.0.0",
+    "postcss-px-to-viewport": "^1.1.1"
   },
   "browserslist": [
     "> 1%",
