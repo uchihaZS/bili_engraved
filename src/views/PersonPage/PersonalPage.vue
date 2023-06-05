@@ -93,7 +93,7 @@
                     <div
                       v-for="i in 10"
                       :key="i"
-                      style="width: 200px; height: 260px"
+                      style="width: 216px; height: 260px"
                     >
                       <div
                         style="
@@ -312,7 +312,7 @@
                     <div
                       v-for="i in 10"
                       :key="i"
-                      style="width: 200px; height: 260px"
+                      style="width: 216px; height: 260px"
                     >
                       <div
                         style="
