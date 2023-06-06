@@ -851,19 +851,22 @@
 
 <script>
 import { reactive, onMounted, toRefs } from "vue";
-import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 export default {
   name: "HeaderNav",
   setup() {
     var router = useRouter();
-    const store = useStore();
+
     // 菜单栏
     let headmenu = reactive({
       searchValue: "",
-      goToSearchPage(searchValue) {
-        store.dispatch("updateSearchValue", searchValue);
-        router.push({ path: "/searchpage" });
+      goToSearchPage() {
+        router.push({
+          path: "/searchpage",
+          query: {
+            searchValue: headmenu.searchValue,
+          },
+        });
       },
     });
     // logo
@@ -1187,7 +1190,7 @@ export default {
   width: 200px;
   height: 380px;
   position: absolute;
-  left: 1175px;
+  left: 1170px;
   border-radius: 20px;
   top: 65px;
 }

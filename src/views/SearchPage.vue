@@ -8,7 +8,7 @@
             <!-- 左边空白 -->
             <el-col :span="1">
               <div
-                style="background-color: green; width: 100%; height: 100%"
+                style="background-color: white; width: 100%; height: 100%"
               ></div>
             </el-col>
             <!-- 中间主要内容 -->
@@ -31,7 +31,11 @@
                   type="text"
                   style="width: 460px; height: 50px; font-size: 18px"
                 />
-                <el-button type="primary" size="large" style="height: 50px"
+                <el-button
+                  type="primary"
+                  size="large"
+                  style="height: 50px"
+                  @click="toSearch"
                   >搜索</el-button
                 >
               </div>
@@ -156,7 +160,7 @@
                         </div>
                       </el-collapse-item>
                     </el-collapse>
-                    <!-- 视频渲染 -->
+                    <!-- 视频列表 -->
                     <div
                       style="
                         width: 100%;
@@ -165,14 +169,19 @@
                         flex-direction: row;
                         flex-wrap: wrap;
                         align-items: center;
-                        justify-content: space-around;
+                        justify-content: flex-start;
                         margin-top: 10px;
                       "
                     >
                       <div
-                        v-for="(i, index) in videoData"
+                        v-for="(i, index) in realData"
                         :key="index"
-                        style="width: 16%; height: 15%; margin-bottom: 35px"
+                        style="
+                          width: 16%;
+                          height: 15%;
+                          margin-bottom: 35px;
+                          margin-right: 10px;
+                        "
                       >
                         <div
                           style="
@@ -194,13 +203,6 @@
                           </div>
                         </div>
                       </div>
-                      <el-pagination
-                        background
-                        :current-page="1"
-                        :page-size="36"
-                        layout="prev, pager, next"
-                        :total="36"
-                      />
                     </div>
                   </el-tab-pane>
 
@@ -367,12 +369,18 @@
                         >
                           头像
                         </div>
-                        <div style="line-height: 0px; margin-left: 10px;width: 80%;">
+                        <div
+                          style="
+                            line-height: 0px;
+                            margin-left: 10px;
+                            width: 80%;
+                          "
+                        >
                           <p style="font-size: 16px">作者名{{ i }}</p>
-                          <div style="display: flex;width:100%">
+                          <div style="display: flex; width: 100%">
                             <p>粉丝数</p>
-                            <p style="margin-left:10px">视频数</p>
-                            <p style="margin-left:10px">简介</p>
+                            <p style="margin-left: 10px">视频数</p>
+                            <p style="margin-left: 10px">简介</p>
                           </div>
                           <el-button type="primary" size="large"
                             >关注</el-button
@@ -390,11 +398,29 @@
                   </el-tab-pane>
                 </el-tabs>
               </div>
+              <!-- 分页 -->
+              <div
+                style="
+                  display: flex;
+                  flex-wrap: nowrap;
+                  justify-content: center;
+                  margin-top: 20px;
+                "
+              >
+                <el-pagination
+                  background
+                  layout="prev, pager, next,jumper"
+                  :total="videoLength"
+                  :page-size="36"
+                  v-model:current-page="nowPage"
+                  @current-change="handleCurrentChange(nowPage)"
+                />
+              </div>
             </el-col>
             <!-- 右边空白 -->
             <el-col :span="1">
               <div
-                style="background-color: green; width: 100%; height: 100%"
+                style="background-color: white; width: 100%; height: 100%"
               ></div
             ></el-col>
           </el-row>
@@ -405,40 +431,75 @@
 </template>
 
 <script>
-import { onMounted, reactive, toRefs, ref } from "vue";
-import { useStore } from "vuex";
+import { reactive, toRefs, ref, onBeforeMount } from "vue";
 import HeaderNav from "@/components/HeaderNav.vue";
+import { useRoute, useRouter } from "vue-router";
 export default {
   components: { HeaderNav },
   setup() {
-    const store = useStore();
-    var searchValue = ref(store.state.searchValue);
+    let route = useRoute();
+    let router = useRouter();
+    var searchValue = ref(route.query.searchValue);
+    function toSearch(params) {
+      router.push({
+        path: "/searchpage",
+        query: {
+          searchValue: searchValue.value,
+        },
+      });
+    }
     let video = reactive({
-      videoData: [],      
+      // 原始数组
+      videoData: [],
+      // 原始数组长度
       videoLength: 0,
+      // 将要显示的集合数组
+      displayData: [],
+      // 显示用的数组
+      realData: [],
+      // 当前的页码
+      nowPage: 1,
       //   初始化数据
       addData() {
         let tempobj = {};
-        let temp = [];
         let name = "作品名";
         let author = "作者名";
-        for (let i = 1; i <= 36; i++) {
+        for (let i = 1; i <= 290; i++) {
           tempobj = { artname: name + i, artist: author + i };
-          temp.push(tempobj);
+          video.videoData.push(tempobj);
         }
-        video.videoData = temp;
-        video.videoLength = temp.length;
-        // console.log(video.videoData);
-        // console.log("长度" + videoLength);
+        video.videoLength = video.videoData.length;
+        if (video.videoLength >= 40) {
+          video.processData();
+        }
+      },
+      processData() {
+        let temp = [];
+        for (let i = 0; i < video.videoLength; i += 36) {
+          temp.push(video.videoData.slice(i, i + 36));
+        }
+        video.displayData = temp;
+        for (let i = 0; i < temp.length; i++) {
+          console.log(temp[i]);
+        }
+        video.realData = video.displayData[0];
+      },
+      handleCurrentChange(nowPage) {
+        let startIndex = (nowPage - 1) * 36;
+        let endIndex = startIndex + 36;
+        let itemsToDisplay = video.videoData.slice(startIndex, endIndex);
+        video.realData = itemsToDisplay;
       },
     });
 
-    onMounted(() => {
+    onBeforeMount(() => {
       video.addData();
     });
+
     return {
       ...toRefs(video),
       searchValue,
+      toSearch,
     };
   },
 };
