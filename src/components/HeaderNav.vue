@@ -905,9 +905,9 @@ export default {
       avatarState: false,
       percentage: 0,
       avatarName: "用户名",
-      avatarOri: "margin-top: 9px;z-index:999",
-      avatarUse: "margin-top: 9px;z-index:999",
-      avatarCss: "position: relative;top:30px;z-index:999",
+      avatarOri: "margin-top: 9px;z-index:999;",
+      avatarUse: "margin-top: 9px;z-index:999;",
+      avatarCss: "top:30px;z-index:999;position: relative;",
       level: "",
       levelCss: "",
       xp: 10000,
@@ -1190,9 +1190,11 @@ export default {
   width: 200px;
   height: 380px;
   position: absolute;
-  left: 1170px;
+  left: 61.4%;
   border-radius: 20px;
   top: 65px;
+  visibility: visible;
+  transition: visibility 0.5s ease;
 }
 .username:hover {
   color: #409eff;
